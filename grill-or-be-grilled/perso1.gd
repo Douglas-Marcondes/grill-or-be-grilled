@@ -1,25 +1,30 @@
 extends CharacterBody2D
 
+# Configurações de física (ajustáveis pelo painel Inspetor)
+@export var speed: float = 250.0
+@export var jump_velocity: float = -420.0
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
+# Puxa o valor da gravidade padrão configurado no projeto da Godot
+var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	# 1. Aplica gravidade contínua quando o personagem não estiver no chão
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity.y += gravity * delta
 
-	# Handle jump.
+	# 2. Lida com o pulo (tecla Espaço ou seta para cima por padrão na ação ui_accept)
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jump_velocity
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	# 3. Lê o movimento horizontal do teclado (Setas Esquerda/Direita ou Teclas A/D)
 	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
+	if direction != 0:
+		velocity.x = direction * speed
+		# Inverte o sprite horizontalmente para olhar na direção que anda
+		$Sprite2D.flip_h = (direction < 0)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		# Desaceleração suave ao soltar as teclas
+		velocity.x = move_toward(velocity.x, 0, speed)
 
+	# 4. Executa o cálculo de física contra chão e paredes
 	move_and_slide()
