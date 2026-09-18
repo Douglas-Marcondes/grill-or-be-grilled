@@ -1,4 +1,4 @@
-# Magic_Hungry
+# Grill or Be Grilled
 
 Projetinho de criação de jogo com Douglas e Jorge (Doujor/ Dojór)
 
