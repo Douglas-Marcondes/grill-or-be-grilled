@@ -1,5 +1,12 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1789757768
+::res://::1789778439
+fase1.tscn::PackedScene::5340414391180428431::1789759933::0::1::::<><><>0<>0<><>::uid://dw4n82qsmkof3::::res://icon.svg<>uid://e3j48kauxj::::res://perso1.tscn
 icon.svg::CompressedTexture2D::8764133261770182350::1789756284::1789756293::1::::<><><>0<>0<>a5d30c15c3d27a0ed74d2e591ac9cd65<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-fase1.tscn::PackedScene::5340414391180428431::1789757701::0::1::::<><><>0<>0<><>::uid://dw4n82qsmkof3::::res://icon.svg
-inimigo_1.png::CompressedTexture2D::6222734445205465492::1789757768::1789757768::1::::<><><>0<>0<>1c7433180fbf6b51b330247cce8792ef<>res://.godot/imported/inimigo_1.png-fcd459fe19b1cd53c79b21f31e804a78.ctex::
+perso1.gd::GDScript::6998719361846705627::1789759250::0::1::::<>CharacterBody2D<><>0<>0<><>::
+perso1.tscn::PackedScene::293389222638567::1789778081::0::1::::<><><>0<>0<><>::uid://cuwlr6nqomxuq::::res://Artes/inimigo_1.png<>uid://c6yh5dqlxcya2::::res://perso1.gd
+::res://Artes/::1789778702
+GalinhaAndando1.png::CompressedTexture2D::2969097609973778222::1789778702::1789778703::1::::<><><>0<>0<>cfadec6180a574ca71ebce0202493cb4<>res://.godot/imported/GalinhaAndando1.png-94020cdfd4a3b6e190e7b71190868f2d.ctex::
+GalinhaAndando2.png::CompressedTexture2D::6811357975742650108::1789778702::1789778703::1::::<><><>0<>0<>b2672bb6f262c7bd0004739b71eed609<>res://.godot/imported/GalinhaAndando2.png-7eb791f668730561283bd6a305b1c1b6.ctex::
+GalinhaAndando3.png::CompressedTexture2D::792903550662206421::1789778702::1789778703::1::::<><><>0<>0<>cae497fdc389eb2cbd98b7f665bbff7a<>res://.godot/imported/GalinhaAndando3.png-da69d4f66ed9c89a8c301381b6f48176.ctex::
+GalinhaAndando4.png::CompressedTexture2D::1981350758946951603::1789778702::1789778703::1::::<><><>0<>0<>df89ba5062340ba4cef4884741eb9a5a<>res://.godot/imported/GalinhaAndando4.png-987623c7d7f1a4817208dfc90e5e98b3.ctex::
+inimigo_1.png::CompressedTexture2D::6222734445205465492::1789757768::1789778081::1::::<><><>0<>0<>2804d8743a908736390b5798a377d99b<>res://.godot/imported/inimigo_1.png-99e73bd53f4aa48550487d953c4c5b6e.ctex::

@@ -1,6 +1,10 @@
-Camera2D
+ShapeCast2D
+CanvasLayer
+TextureRect
 CharacterBody2D
+CollisionPolygon2D
 CollisionShape2D
-Sprite2D
 AnimatedSprite2D
+Camera2D
+Sprite2D
 TileMapLayer

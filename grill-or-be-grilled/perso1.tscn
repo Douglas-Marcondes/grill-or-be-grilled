@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://e3j48kauxj"]
 
-[ext_resource type="Texture2D" uid="uid://cuwlr6nqomxuq" path="res://inimigo_1.png" id="1_8n4ai"]
+[ext_resource type="Texture2D" uid="uid://cuwlr6nqomxuq" path="res://Artes/inimigo_1.png" id="1_8n4ai"]
 [ext_resource type="Script" uid="uid://c6yh5dqlxcya2" path="res://perso1.gd" id="1_jrw1j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1fe0e"]
@@ -18,6 +18,7 @@ scale = Vector2(0.40625, 0.40625)
 shape = SubResource("CircleShape2D_1fe0e")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=206532303]
+texture_filter = 1
 scale = Vector2(0.40625, 0.40625)
 texture = ExtResource("1_8n4ai")
 
