@@ -1,10 +1,12 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1789778439
-fase1.tscn::PackedScene::5340414391180428431::1789759933::0::1::::<><><>0<>0<><>::uid://dw4n82qsmkof3::::res://icon.svg<>uid://e3j48kauxj::::res://perso1.tscn
+::res://::1790343480
+fase1.tscn::PackedScene::5340414391180428431::1790011406::0::1::::<><><>0<>0<><>::uid://dw4n82qsmkof3::::res://icon.svg<>uid://e3j48kauxj::::res://perso1.tscn<>uid://krwr3dbdfhuk::::res://galinha.tscn
+galinha.gd::GDScript::1659519008957732581::1790011340::0::1::::<>CharacterBody2D<><>0<>0<><>::
+galinha.tscn::PackedScene::738350465874452486::1790011362::0::1::::<><><>0<>0<><>::uid://xv5bhf7wax4p::::res://galinha.gd<>uid://bikiusbsyousk::::res://Artes/GalinhaAndando1.png<>uid://c4bqcn0eqpa3m::::res://Artes/GalinhaAndando2.png<>uid://lkdagrp6fty8::::res://Artes/GalinhaAndando3.png<>uid://3h1s7q2h6e72::::res://Artes/GalinhaAndando4.png
 icon.svg::CompressedTexture2D::8764133261770182350::1789756284::1789756293::1::::<><><>0<>0<>a5d30c15c3d27a0ed74d2e591ac9cd65<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-perso1.gd::GDScript::6998719361846705627::1789759250::0::1::::<>CharacterBody2D<><>0<>0<><>::
-perso1.tscn::PackedScene::293389222638567::1789778081::0::1::::<><><>0<>0<><>::uid://cuwlr6nqomxuq::::res://Artes/inimigo_1.png<>uid://c6yh5dqlxcya2::::res://perso1.gd
-::res://Artes/::1789778702
+perso1.gd::GDScript::6998719361846705627::1790010923::0::1::::<>CharacterBody2D<><>0<>0<><>::
+perso1.tscn::PackedScene::293389222638567::1789998034::0::1::::<><><>0<>0<><>::uid://cuwlr6nqomxuq::::res://Artes/inimigo_1.png<>uid://c6yh5dqlxcya2::::res://perso1.gd
+::res://Artes/::1789778703
 GalinhaAndando1.png::CompressedTexture2D::2969097609973778222::1789778702::1789778703::1::::<><><>0<>0<>cfadec6180a574ca71ebce0202493cb4<>res://.godot/imported/GalinhaAndando1.png-94020cdfd4a3b6e190e7b71190868f2d.ctex::
 GalinhaAndando2.png::CompressedTexture2D::6811357975742650108::1789778702::1789778703::1::::<><><>0<>0<>b2672bb6f262c7bd0004739b71eed609<>res://.godot/imported/GalinhaAndando2.png-7eb791f668730561283bd6a305b1c1b6.ctex::
 GalinhaAndando3.png::CompressedTexture2D::792903550662206421::1789778702::1789778703::1::::<><><>0<>0<>cae497fdc389eb2cbd98b7f665bbff7a<>res://.godot/imported/GalinhaAndando3.png-da69d4f66ed9c89a8c301381b6f48176.ctex::
