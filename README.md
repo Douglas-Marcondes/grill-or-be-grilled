@@ -35,3 +35,18 @@ O projeto Godot fica em `grill-or-be-grilled/`.
            -
            -
            -
+
+## Primeira fase jogável
+
+O projeto principal é `grill-or-be-grilled/`; a cena inicial jogável é `jogo.tscn`.
+Ao iniciar, escolha Guerreiro (espada), Arqueiro (arco) ou Mago (varinha). Atravesse
+a dungeon, derrote as cinco galinhas que perseguem o jogador, recolha seus ovos e
+vença a Galinha Real. Os ovos têm cinco raridades e são vendidos automaticamente
+na vitória. O boss tem investida, bicada e disparo de penas; sua armadura cômica
+(bico, crista e barbela) tem 90% de chance de drop. A loja entre tentativas vende
+armas e melhorias permanentes, salvas localmente. Morrer reinicia o nível e perde
+os ovos da tentativa.
+
+Controles: A/D ou setas para andar, Espaço ou seta para cima para pular, J ou clique
+esquerdo para atacar. A arte atual é feita com formas pixeladas provisórias no jogo;
+as artes finais de armas podem substituir os desenhos temporários depois.
