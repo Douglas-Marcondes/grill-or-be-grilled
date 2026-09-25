@@ -1,11 +1,14 @@
 extends CharacterBody2D
 
+const Movement = preload("res://scripts/character_movement.gd")
+
+## Chicken patrol policy. Shared physical behavior lives in CharacterMovement.
+
 @export var speed: float = 60.0
 @export var gravidade: float = 980.0
 
 var direcao: float = 1.0
 
-# Usar get_node_or_null para evitar travamento caso o nó tenha outro nome
 @onready var sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
 
 func _ready() -> void:
@@ -14,18 +17,12 @@ func _ready() -> void:
 			sprite.play("andar")
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravidade * delta
+	Movement.apply_gravity(self, delta, gravidade)
 
 	if is_on_wall():
 		direcao *= -1.0
 
-	velocity.x = direcao * speed
-
-	if sprite:
-		if direcao > 0:
-			sprite.flip_h = false
-		elif direcao < 0:
-			sprite.flip_h = true
+	Movement.set_horizontal_speed(self, direcao, speed)
+	Movement.face_direction(self, direcao)
 
 	move_and_slide()

@@ -2,6 +2,19 @@
 
 Projetinho de criação de jogo com Douglas e Jorge (Doujor/ Dojór)
 
+## Estrutura de código
+
+O projeto Godot fica em `grill-or-be-grilled/`.
+
+- `perso1.gd`: política de entrada e controle do jogador.
+- `galinha.gd`: comportamento de patrulha e animação da galinha inimiga.
+- `scripts/character_movement.gd`: primitivas compartilhadas de movimento para `CharacterBody2D`.
+- Arquivos `.tscn`: composição dos personagens e das fases; mantenha caminhos de recursos alinhados com os scripts anexados.
+
+### Primitivas compartilhadas
+
+`CharacterMovement` concentra gravidade, velocidade horizontal, desaceleração e orientação do sprite. Controladores decidem *quando* chamar cada operação (entrada do jogador ou IA do inimigo); regras físicas comuns são alteradas uma vez no módulo compartilhado. Para novas entidades, reutilize essas funções e mantenha no controlador apenas as decisões específicas da entidade.
+
 1.
    Primeira fase: Criação de ideia:
         -> Conceito do jogo:
