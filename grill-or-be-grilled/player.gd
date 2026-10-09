@@ -26,7 +26,7 @@ func _ready() -> void:
 	shape.position.y = -17
 	add_child(shape)
 	var camera := Camera2D.new()
-	camera.position = Vector2(0, -150)
+	camera.position = Vector2(0, -120)
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
 	add_child(camera)
