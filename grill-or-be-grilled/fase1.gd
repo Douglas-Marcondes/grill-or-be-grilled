@@ -22,6 +22,9 @@ var message_timer := 0.0
 var end_message := ""
 
 func _ready() -> void:
+	var editor_preview := get_node_or_null("EditorPreview")
+	if editor_preview:
+		editor_preview.hide()
 	add_to_group("game")
 	randomize()
 	_build_backdrop()
