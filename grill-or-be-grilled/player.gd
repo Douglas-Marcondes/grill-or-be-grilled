@@ -3,8 +3,8 @@ extends CharacterBody2D
 var speed := 270.0
 var jump_velocity := -520.0
 var gravity := 1300.0
-var max_health := 5
-var health := 5
+var max_health := 50
+var health := 50
 var facing := 1.0
 var attack_timer := 0.0
 var invulnerability := 0.0
