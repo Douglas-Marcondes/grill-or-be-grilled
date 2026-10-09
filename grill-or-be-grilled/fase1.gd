@@ -6,8 +6,18 @@ const BossScript = preload("res://chicken_boss.gd")
 const EggScript = preload("res://egg_pickup.gd")
 const EffectScript = preload("res://pixel_effect.gd")
 
-const LEVEL_END := 2200.0
-const CHICKEN_POSITIONS := [360.0, 710.0, 1080.0, 1420.0, 1725.0]
+const LEVEL_END := 4000.0
+const CHICKEN_POSITIONS := [
+	Vector2(360.0, 486.0),
+	Vector2(760.0, 446.0),
+	Vector2(1020.0, 446.0),
+	Vector2(1420.0, 406.0),
+	Vector2(1780.0, 486.0),
+	Vector2(2140.0, 486.0),
+	Vector2(2480.0, 426.0),
+	Vector2(2860.0, 376.0),
+	Vector2(3160.0, 376.0),
+]
 
 var ui: CanvasLayer
 var player: CharacterBody2D
@@ -36,20 +46,22 @@ func _process(delta: float) -> void:
 		message_timer -= delta
 		if message_timer <= 0.0 and notice_label:
 			notice_label.text = ""
+	if boss_bar:
+		boss_bar.visible = screen == "playing" and is_instance_valid(player) and is_instance_valid(boss) and absf(player.global_position.x - boss.global_position.x) < 700.0
 
 func _draw() -> void:
-	draw_rect(Rect2(-1000, -1000, 5000, 2000), Color("302a48"), true)
-	for i in 12:
+	draw_rect(Rect2(-1000, -1000, 6000, 2000), Color("302a48"), true)
+	for i in 20:
 		var x := float(i) * 235.0 - 120.0
 		var height := 115.0 + float((i * 47) % 125)
 		draw_rect(Rect2(x, 285.0 - height, 170.0, height), Color("403553"), true)
 		draw_rect(Rect2(x + 24.0, 300.0 - height, 12.0, 27.0), Color("55436a"), true)
-	for i in 10:
+	for i in 18:
 		var x := float(i) * 252.0 + 40.0
 		draw_rect(Rect2(x, 104.0 + float((i * 23) % 110), 3, 3), Color("e7c982"), true)
 
 func _build_backdrop() -> void:
-	for x in [80.0, 284.0, 520.0, 842.0, 1175.0, 1500.0, 1840.0, 2150.0]:
+	for x in [80.0, 284.0, 520.0, 842.0, 1175.0, 1500.0, 1840.0, 2150.0, 2460.0, 2780.0, 3110.0, 3450.0, 3740.0]:
 		var torch := Node2D.new()
 		torch.position = Vector2(x, 330.0)
 		var art := Polygon2D.new()
@@ -107,6 +119,7 @@ func _make_floor(x: float, top: float, width: float, height: float = 240.0) -> v
 	body.position = Vector2(x + width / 2.0, top + height / 2.0)
 	body.collision_layer = 1
 	body.collision_mask = 1
+	# Uma única forma retangular controla a colisão; art e lip são só visuais.
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
 	rect.size = Vector2(width, height)
@@ -121,6 +134,27 @@ func _make_floor(x: float, top: float, width: float, height: float = 240.0) -> v
 	lip.color = Color("92a45c")
 	body.add_child(lip)
 	_register_level_object(body)
+
+func _make_nest_art() -> void:
+	var nest := Node2D.new()
+	nest.name = "NinhoDaGalinhaReal"
+	nest.position = Vector2(3695.0, 490.0)
+	for row in 5:
+		var strand := Line2D.new()
+		strand.points = PackedVector2Array([
+			Vector2(-260.0, -8.0 + row * 8.0),
+			Vector2(-220.0, 10.0 + row * 8.0),
+			Vector2(-150.0, 23.0 + row * 8.0),
+			Vector2(0.0, 33.0 + row * 8.0),
+			Vector2(150.0, 23.0 + row * 8.0),
+			Vector2(220.0, 10.0 + row * 8.0),
+			Vector2(260.0, -8.0 + row * 8.0),
+		])
+		strand.width = 6.0
+		strand.default_color = Color("9a633f") if row % 2 == 0 else Color("bd8956")
+		nest.add_child(strand)
+	add_child(nest)
+	level_objects.append(nest)
 
 func choose_class(class_choice: String) -> void:
 	GameData.selected_class = class_choice
@@ -139,18 +173,25 @@ func start_level() -> void:
 	chickens_defeated = 0
 	screen = "playing"
 	boss_bar.visible = false
-	_make_floor(0.0, 490.0, 570.0)
-	_make_floor(665.0, 490.0, 465.0)
-	_make_floor(1220.0, 490.0, 980.0)
-	_make_floor(565.0, 400.0, 120.0, 24.0)
-	_make_floor(820.0, 365.0, 140.0, 24.0)
-	_make_floor(1090.0, 395.0, 100.0, 24.0)
-	_make_floor(1480.0, 390.0, 135.0, 24.0)
-	_make_floor(1780.0, 355.0, 120.0, 24.0)
-	for position_x in CHICKEN_POSITIONS:
+	# Cada trecho de chão marca um passo da subida e termina antes do próximo salto.
+	_make_floor(0.0, 490.0, 520.0)
+	_make_floor(660.0, 450.0, 430.0)
+	_make_floor(1230.0, 410.0, 380.0)
+	_make_floor(1750.0, 490.0, 450.0)
+	_make_floor(2340.0, 430.0, 450.0)
+	_make_floor(2930.0, 380.0, 400.0)
+	_make_floor(3390.0, 490.0, 610.0)
+	_make_nest_art()
+	# Apoios ficam nos vãos; não há plataforma suspensa sobre chão contínuo.
+	_make_floor(560.0, 430.0, 60.0, 24.0)
+	_make_floor(1130.0, 390.0, 60.0, 24.0)
+	_make_floor(1650.0, 370.0, 60.0, 24.0)
+	_make_floor(2240.0, 420.0, 60.0, 24.0)
+	_make_floor(2830.0, 365.0, 60.0, 24.0)
+	for spawn_position in CHICKEN_POSITIONS:
 		var chicken := CharacterBody2D.new()
 		chicken.set_script(ChickenScript)
-		chicken.position = Vector2(position_x, 486.0)
+		chicken.position = spawn_position
 		_register_level_object(chicken)
 	player = CharacterBody2D.new()
 	player.set_script(PlayerScript)
@@ -164,9 +205,10 @@ func start_level() -> void:
 		camera.limit_top = 0
 		camera.limit_bottom = 700
 		camera.make_current()
+	_spawn_boss()
 	var sign := Label.new()
-	sign.position = Vector2(1940, 360)
-	sign.text = "ARENA DA GALINHA REAL"
+	sign.position = Vector2(3490, 340)
+	sign.text = "NINHO DA GALINHA REAL"
 	sign.add_theme_color_override("font_color", Color("ffe49c"))
 	_register_level_object(sign)
 	show_hud()
@@ -185,16 +227,15 @@ func spawn_egg(at: Vector2) -> void:
 func enemy_defeated() -> void:
 	chickens_defeated += 1
 	update_hud()
-	if chickens_defeated == CHICKEN_POSITIONS.size():
-		show_message("As portas da arena se abriram! A GALINHA REAL chegou!", 3.5)
-		_spawn_boss()
 
 func _spawn_boss() -> void:
+	if is_instance_valid(boss):
+		return
 	boss = CharacterBody2D.new()
 	boss.set_script(BossScript)
-	boss.position = Vector2(2070.0, 455.0)
+	boss.position = Vector2(3700.0, 455.0)
 	_register_level_object(boss)
-	boss_bar.visible = true
+	boss_bar.visible = false
 	boss_bar.max_value = 24
 	boss_bar.value = 24
 
@@ -255,7 +296,7 @@ func update_hud() -> void:
 	if not hud_label:
 		return
 	if screen == "playing" and is_instance_valid(player):
-		hud_label.text = "%s  ♥ %d/%d   Valor dos ovos: %d   Galinhas: %d/5" % [GameData.selected_class, player.health, player.max_health, GameData.run_eggs, chickens_defeated]
+		hud_label.text = "%s  ♥ %d/%d   Valor dos ovos: %d   Galinhas: %d/%d" % [GameData.selected_class, player.health, player.max_health, GameData.run_eggs, chickens_defeated, CHICKEN_POSITIONS.size()]
 	else:
 		hud_label.text = "Ovos: %d   Moedas: %d" % [GameData.run_eggs, GameData.gold]
 

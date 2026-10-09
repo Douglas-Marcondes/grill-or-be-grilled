@@ -33,6 +33,11 @@ func _physics_process(delta: float) -> void:
 		return
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	# O boss aguarda na arena final e só começa o combate quando o jogador se aproxima.
+	if absf(target.global_position.x - global_position.x) > 620.0:
+		velocity.x = 0.0
+		move_and_slide()
+		return
 	facing = signf(target.global_position.x - global_position.x)
 	if is_zero_approx(facing):
 		facing = -1.0
