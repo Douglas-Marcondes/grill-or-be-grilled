@@ -8,134 +8,1225 @@ script = ExtResource("1_game")
 [node name="EditorPreview" type="Node2D" parent="." unique_id=579791678]
 z_index = -5
 
-[node name="Cenario" type="Node2D" parent="EditorPreview" unique_id=592946440]
+[node name="Cenario" type="Node2D" parent="EditorPreview" unique_id=371272298]
 
-[node name="Fundo" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1419257971]
+[node name="Fundo" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1742101909]
+position = Vector2(-2, 13)
 color = Color(0.188235, 0.164706, 0.282353, 1)
-polygon = PackedVector2Array(-100, -100, 4100, -100, 4100, 520, -100, 520)
+polygon = PackedVector2Array(-100, -100, 11000, -100, 11000, 700, -100, 700)
 
-[node name="Parede" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1776196258]
+[node name="Parede" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=810766710]
 color = Color(0.25098, 0.207843, 0.32549, 1)
-polygon = PackedVector2Array(-100, 0, 4100, 0, 4100, 330, -100, 330)
+polygon = PackedVector2Array(-100, 0, 11000, 0, 11000, 330, -100, 330)
 
-[node name="Chao1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=262359289]
+[node name="Edificio1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1108670017]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(-120, 170, 50, 170, 50, 285, -120, 285)
+
+[node name="Janela1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1521191607]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(-96, 185, -84, 185, -84, 212, -96, 212)
+
+[node name="Edificio2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1421750147]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(115, 123, 285, 123, 285, 285, 115, 285)
+
+[node name="Janela2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1254687754]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(139, 138, 151, 138, 151, 165, 139, 165)
+
+[node name="Edificio3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2139942943]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(350, 76, 520, 76, 520, 285, 350, 285)
+
+[node name="Janela3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1318032874]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(374, 91, 386, 91, 386, 118, 374, 118)
+
+[node name="Edificio4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1376216691]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(585, 154, 755, 154, 755, 285, 585, 285)
+
+[node name="Janela4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=480892462]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(609, 169, 621, 169, 621, 196, 609, 196)
+
+[node name="Edificio5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1744394068]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(820, 107, 990, 107, 990, 285, 820, 285)
+
+[node name="Janela5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=243627574]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(844, 122, 856, 122, 856, 149, 844, 149)
+
+[node name="Edificio6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=388829636]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(1055, 60, 1225, 60, 1225, 285, 1055, 285)
+
+[node name="Janela6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1706236443]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(1079, 75, 1091, 75, 1091, 102, 1079, 102)
+
+[node name="Edificio7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=41674281]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(1290, 138, 1460, 138, 1460, 285, 1290, 285)
+
+[node name="Janela7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1458530041]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(1314, 153, 1326, 153, 1326, 180, 1314, 180)
+
+[node name="Edificio8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=6726250]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(1525, 91, 1695, 91, 1695, 285, 1525, 285)
+
+[node name="Janela8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1429601492]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(1549, 106, 1561, 106, 1561, 133, 1549, 133)
+
+[node name="Edificio9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1394215118]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(1760, 169, 1930, 169, 1930, 285, 1760, 285)
+
+[node name="Janela9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1505346434]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(1784, 184, 1796, 184, 1796, 211, 1784, 211)
+
+[node name="Edificio10" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=102821588]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(1995, 122, 2165, 122, 2165, 285, 1995, 285)
+
+[node name="Janela10" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1787030462]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(2019, 137, 2031, 137, 2031, 164, 2019, 164)
+
+[node name="Edificio11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1525978335]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(2230, 75, 2400, 75, 2400, 285, 2230, 285)
+
+[node name="Janela11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1546246970]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(2254, 90, 2266, 90, 2266, 117, 2254, 117)
+
+[node name="Edificio12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=322243858]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(2465, 153, 2635, 153, 2635, 285, 2465, 285)
+
+[node name="Janela12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1223990612]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(2489, 168, 2501, 168, 2501, 195, 2489, 195)
+
+[node name="Edificio13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1922720141]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(2700, 106, 2870, 106, 2870, 285, 2700, 285)
+
+[node name="Janela13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1242523384]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(2724, 121, 2736, 121, 2736, 148, 2724, 148)
+
+[node name="Edificio14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=839344540]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(2935, 59, 3105, 59, 3105, 285, 2935, 285)
+
+[node name="Janela14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1538132828]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(2959, 74, 2971, 74, 2971, 101, 2959, 101)
+
+[node name="Edificio15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=977615904]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(3170, 137, 3340, 137, 3340, 285, 3170, 285)
+
+[node name="Janela15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1783492119]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(3194, 152, 3206, 152, 3206, 179, 3194, 179)
+
+[node name="Edificio16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1169936869]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(3405, 90, 3575, 90, 3575, 285, 3405, 285)
+
+[node name="Janela16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=763305558]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(3429, 105, 3441, 105, 3441, 132, 3429, 132)
+
+[node name="Edificio17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=919097332]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(3640, 168, 3810, 168, 3810, 285, 3640, 285)
+
+[node name="Janela17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1217000781]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(3664, 183, 3676, 183, 3676, 210, 3664, 210)
+
+[node name="Edificio18" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=586405307]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(3875, 121, 4045, 121, 4045, 285, 3875, 285)
+
+[node name="Janela18" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=654093197]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(3899, 136, 3911, 136, 3911, 163, 3899, 163)
+
+[node name="Edificio19" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1503464430]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(4110, 74, 4280, 74, 4280, 285, 4110, 285)
+
+[node name="Janela19" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=440128812]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(4134, 89, 4146, 89, 4146, 116, 4134, 116)
+
+[node name="Edificio20" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1213471322]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(4345, 152, 4515, 152, 4515, 285, 4345, 285)
+
+[node name="Janela20" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=363500232]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(4369, 167, 4381, 167, 4381, 194, 4369, 194)
+
+[node name="Edificio21" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1227062227]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(4580, 105, 4750, 105, 4750, 285, 4580, 285)
+
+[node name="Janela21" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1208885345]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(4604, 120, 4616, 120, 4616, 147, 4604, 147)
+
+[node name="Edificio22" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1541688322]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(4815, 58, 4985, 58, 4985, 285, 4815, 285)
+
+[node name="Janela22" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1821022599]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(4839, 73, 4851, 73, 4851, 100, 4839, 100)
+
+[node name="Edificio23" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1524224311]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(5050, 136, 5220, 136, 5220, 285, 5050, 285)
+
+[node name="Janela23" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=914566702]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(5074, 151, 5086, 151, 5086, 178, 5074, 178)
+
+[node name="Edificio24" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1402191173]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(5285, 89, 5455, 89, 5455, 285, 5285, 285)
+
+[node name="Janela24" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1480641420]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(5309, 104, 5321, 104, 5321, 131, 5309, 131)
+
+[node name="Edificio25" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=433461091]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(5520, 167, 5690, 167, 5690, 285, 5520, 285)
+
+[node name="Janela25" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=959979581]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(5544, 182, 5556, 182, 5556, 209, 5544, 209)
+
+[node name="Edificio26" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1363377656]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(5755, 120, 5925, 120, 5925, 285, 5755, 285)
+
+[node name="Janela26" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1259093912]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(5779, 135, 5791, 135, 5791, 162, 5779, 162)
+
+[node name="Edificio27" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1288428128]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(5990, 73, 6160, 73, 6160, 285, 5990, 285)
+
+[node name="Janela27" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=808653551]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(6014, 88, 6026, 88, 6026, 115, 6014, 115)
+
+[node name="Edificio28" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=878745389]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(6225, 151, 6395, 151, 6395, 285, 6225, 285)
+
+[node name="Janela28" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1703393560]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(6249, 166, 6261, 166, 6261, 193, 6249, 193)
+
+[node name="Edificio29" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=930375317]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(6460, 104, 6630, 104, 6630, 285, 6460, 285)
+
+[node name="Janela29" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=252598751]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(6484, 119, 6496, 119, 6496, 146, 6484, 146)
+
+[node name="Edificio30" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=776460854]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(6695, 57, 6865, 57, 6865, 285, 6695, 285)
+
+[node name="Janela30" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1639183618]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(6719, 72, 6731, 72, 6731, 99, 6719, 99)
+
+[node name="Edificio31" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1299015193]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(6930, 135, 7100, 135, 7100, 285, 6930, 285)
+
+[node name="Janela31" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1325971717]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(6954, 150, 6966, 150, 6966, 177, 6954, 177)
+
+[node name="Edificio32" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1511529652]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(7165, 88, 7335, 88, 7335, 285, 7165, 285)
+
+[node name="Janela32" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=740138192]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(7189, 103, 7201, 103, 7201, 130, 7189, 130)
+
+[node name="Edificio33" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=434635039]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(7400, 166, 7570, 166, 7570, 285, 7400, 285)
+
+[node name="Janela33" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=21363349]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(7424, 181, 7436, 181, 7436, 208, 7424, 208)
+
+[node name="Edificio34" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=316379869]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(7635, 119, 7805, 119, 7805, 285, 7635, 285)
+
+[node name="Janela34" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=266193594]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(7659, 134, 7671, 134, 7671, 161, 7659, 161)
+
+[node name="Edificio35" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=778595147]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(7870, 72, 8040, 72, 8040, 285, 7870, 285)
+
+[node name="Janela35" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=474659257]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(7894, 87, 7906, 87, 7906, 114, 7894, 114)
+
+[node name="Edificio36" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=682003573]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(8105, 150, 8275, 150, 8275, 285, 8105, 285)
+
+[node name="Janela36" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=658590312]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(8129, 165, 8141, 165, 8141, 192, 8129, 192)
+
+[node name="Edificio37" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1723254887]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(8340, 103, 8510, 103, 8510, 285, 8340, 285)
+
+[node name="Janela37" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=937611479]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(8364, 118, 8376, 118, 8376, 145, 8364, 145)
+
+[node name="Edificio38" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=376997717]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(8575, 56, 8745, 56, 8745, 285, 8575, 285)
+
+[node name="Janela38" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2069878622]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(8599, 71, 8611, 71, 8611, 98, 8599, 98)
+
+[node name="Edificio39" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1682596886]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(8810, 134, 8980, 134, 8980, 285, 8810, 285)
+
+[node name="Janela39" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1705588007]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(8834, 149, 8846, 149, 8846, 176, 8834, 176)
+
+[node name="Edificio40" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=753465843]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(9045, 87, 9215, 87, 9215, 285, 9045, 285)
+
+[node name="Janela40" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=741481983]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(9069, 102, 9081, 102, 9081, 129, 9069, 129)
+
+[node name="Edificio41" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1365813272]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(9280, 165, 9450, 165, 9450, 285, 9280, 285)
+
+[node name="Janela41" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=320383098]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(9304, 180, 9316, 180, 9316, 207, 9304, 207)
+
+[node name="Edificio42" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1151021571]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(9515, 118, 9685, 118, 9685, 285, 9515, 285)
+
+[node name="Janela42" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=340561653]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(9539, 133, 9551, 133, 9551, 160, 9539, 160)
+
+[node name="Edificio43" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=530968349]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(9750, 71, 9920, 71, 9920, 285, 9750, 285)
+
+[node name="Janela43" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=247458355]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(9774, 86, 9786, 86, 9786, 113, 9774, 113)
+
+[node name="Edificio44" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1123778304]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(9985, 149, 10155, 149, 10155, 285, 9985, 285)
+
+[node name="Janela44" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=763536973]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(10009, 164, 10021, 164, 10021, 191, 10009, 191)
+
+[node name="Edificio45" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=360598654]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(10220, 102, 10390, 102, 10390, 285, 10220, 285)
+
+[node name="Janela45" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1124876307]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(10244, 117, 10256, 117, 10256, 144, 10244, 144)
+
+[node name="Edificio46" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1308436530]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(10455, 55, 10625, 55, 10625, 285, 10455, 285)
+
+[node name="Janela46" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=843205774]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(10479, 70, 10491, 70, 10491, 97, 10479, 97)
+
+[node name="Edificio47" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1427287479]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(10690, 133, 10860, 133, 10860, 285, 10690, 285)
+
+[node name="Janela47" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2107273026]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(10714, 148, 10726, 148, 10726, 175, 10714, 175)
+
+[node name="Edificio48" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1268621800]
+color = Color(0.25098, 0.207843, 0.32549, 1)
+polygon = PackedVector2Array(10925, 86, 11095, 86, 11095, 285, 10925, 285)
+
+[node name="Janela48" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=299323587]
+color = Color(0.333333, 0.262745, 0.415686, 1)
+polygon = PackedVector2Array(10949, 101, 10961, 101, 10961, 128, 10949, 128)
+
+[node name="Estrela1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=860995854]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(40, 104, 43, 104, 43, 107, 40, 107)
+
+[node name="Estrela2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=357249059]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(292, 127, 295, 127, 295, 130, 292, 130)
+
+[node name="Estrela3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=178661000]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(544, 150, 547, 150, 547, 153, 544, 153)
+
+[node name="Estrela4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1850019512]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(796, 173, 799, 173, 799, 176, 796, 176)
+
+[node name="Estrela5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1753981650]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(1048, 196, 1051, 196, 1051, 199, 1048, 199)
+
+[node name="Estrela6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=760569193]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(1300, 109, 1303, 109, 1303, 112, 1300, 112)
+
+[node name="Estrela7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2044584652]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(1552, 132, 1555, 132, 1555, 135, 1552, 135)
+
+[node name="Estrela8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1431778811]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(1804, 155, 1807, 155, 1807, 158, 1804, 158)
+
+[node name="Estrela9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=940731927]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(2056, 178, 2059, 178, 2059, 181, 2056, 181)
+
+[node name="Estrela10" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=22757963]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(2308, 201, 2311, 201, 2311, 204, 2308, 204)
+
+[node name="Estrela11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1920356919]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(2560, 114, 2563, 114, 2563, 117, 2560, 117)
+
+[node name="Estrela12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=345741025]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(2812, 137, 2815, 137, 2815, 140, 2812, 140)
+
+[node name="Estrela13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=20597212]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(3064, 160, 3067, 160, 3067, 163, 3064, 163)
+
+[node name="Estrela14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1498992270]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(3316, 183, 3319, 183, 3319, 186, 3316, 186)
+
+[node name="Estrela15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=934651204]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(3568, 206, 3571, 206, 3571, 209, 3568, 209)
+
+[node name="Estrela16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1556514101]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(3820, 119, 3823, 119, 3823, 122, 3820, 122)
+
+[node name="Estrela17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1764633109]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(4072, 142, 4075, 142, 4075, 145, 4072, 145)
+
+[node name="Estrela18" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=305624228]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(4324, 165, 4327, 165, 4327, 168, 4324, 168)
+
+[node name="Estrela19" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1757057437]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(4576, 188, 4579, 188, 4579, 191, 4576, 191)
+
+[node name="Estrela20" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2127289141]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(4828, 211, 4831, 211, 4831, 214, 4828, 214)
+
+[node name="Estrela21" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1597094713]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(5080, 124, 5083, 124, 5083, 127, 5080, 127)
+
+[node name="Estrela22" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1530425630]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(5332, 147, 5335, 147, 5335, 150, 5332, 150)
+
+[node name="Estrela23" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=609672543]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(5584, 170, 5587, 170, 5587, 173, 5584, 173)
+
+[node name="Estrela24" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1004340312]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(5836, 193, 5839, 193, 5839, 196, 5836, 196)
+
+[node name="Estrela25" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2084437083]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(6088, 106, 6091, 106, 6091, 109, 6088, 109)
+
+[node name="Estrela26" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=16543898]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(6340, 129, 6343, 129, 6343, 132, 6340, 132)
+
+[node name="Estrela27" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=390319244]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(6592, 152, 6595, 152, 6595, 155, 6592, 155)
+
+[node name="Estrela28" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=11848478]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(6844, 175, 6847, 175, 6847, 178, 6844, 178)
+
+[node name="Estrela29" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1384334758]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(7096, 198, 7099, 198, 7099, 201, 7096, 201)
+
+[node name="Estrela30" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1699965298]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(7348, 111, 7351, 111, 7351, 114, 7348, 114)
+
+[node name="Estrela31" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=604335624]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(7600, 134, 7603, 134, 7603, 137, 7600, 137)
+
+[node name="Estrela32" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=372931280]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(7852, 157, 7855, 157, 7855, 160, 7852, 160)
+
+[node name="Estrela33" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1312976075]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(8104, 180, 8107, 180, 8107, 183, 8104, 183)
+
+[node name="Estrela34" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=921707856]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(8356, 203, 8359, 203, 8359, 206, 8356, 206)
+
+[node name="Estrela35" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=123618282]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(8608, 116, 8611, 116, 8611, 119, 8608, 119)
+
+[node name="Estrela36" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=534547967]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(8860, 139, 8863, 139, 8863, 142, 8860, 142)
+
+[node name="Estrela37" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1329412597]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(9112, 162, 9115, 162, 9115, 165, 9112, 165)
+
+[node name="Estrela38" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1994598109]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(9364, 185, 9367, 185, 9367, 188, 9364, 188)
+
+[node name="Estrela39" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=883164131]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(9616, 208, 9619, 208, 9619, 211, 9616, 211)
+
+[node name="Estrela40" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1660902994]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(9868, 121, 9871, 121, 9871, 124, 9868, 124)
+
+[node name="Estrela41" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=612438238]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(10120, 144, 10123, 144, 10123, 147, 10120, 147)
+
+[node name="Estrela42" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1212179873]
+color = Color(0.905882, 0.788235, 0.509804, 1)
+polygon = PackedVector2Array(10372, 167, 10375, 167, 10375, 170, 10372, 170)
+
+[node name="Tocha1" type="Node2D" parent="EditorPreview/Cenario" unique_id=1060837591]
+position = Vector2(80, 330)
+
+[node name="SuporteTocha1" type="Polygon2D" parent="EditorPreview/Cenario/Tocha1" unique_id=1674233150]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha1" type="Polygon2D" parent="EditorPreview/Cenario/Tocha1" unique_id=1933615455]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha2" type="Node2D" parent="EditorPreview/Cenario" unique_id=2125294523]
+position = Vector2(380, 330)
+
+[node name="SuporteTocha2" type="Polygon2D" parent="EditorPreview/Cenario/Tocha2" unique_id=831900113]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha2" type="Polygon2D" parent="EditorPreview/Cenario/Tocha2" unique_id=1444996397]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha3" type="Node2D" parent="EditorPreview/Cenario" unique_id=2008757075]
+position = Vector2(680, 330)
+
+[node name="SuporteTocha3" type="Polygon2D" parent="EditorPreview/Cenario/Tocha3" unique_id=1190597219]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha3" type="Polygon2D" parent="EditorPreview/Cenario/Tocha3" unique_id=114361808]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha4" type="Node2D" parent="EditorPreview/Cenario" unique_id=2047253920]
+position = Vector2(980, 330)
+
+[node name="SuporteTocha4" type="Polygon2D" parent="EditorPreview/Cenario/Tocha4" unique_id=809672528]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha4" type="Polygon2D" parent="EditorPreview/Cenario/Tocha4" unique_id=185816692]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha5" type="Node2D" parent="EditorPreview/Cenario" unique_id=501806579]
+position = Vector2(1280, 330)
+
+[node name="SuporteTocha5" type="Polygon2D" parent="EditorPreview/Cenario/Tocha5" unique_id=2023215340]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha5" type="Polygon2D" parent="EditorPreview/Cenario/Tocha5" unique_id=477609637]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha6" type="Node2D" parent="EditorPreview/Cenario" unique_id=2029720557]
+position = Vector2(1580, 330)
+
+[node name="SuporteTocha6" type="Polygon2D" parent="EditorPreview/Cenario/Tocha6" unique_id=1323312659]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha6" type="Polygon2D" parent="EditorPreview/Cenario/Tocha6" unique_id=1264503210]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha7" type="Node2D" parent="EditorPreview/Cenario" unique_id=928061969]
+position = Vector2(1880, 330)
+
+[node name="SuporteTocha7" type="Polygon2D" parent="EditorPreview/Cenario/Tocha7" unique_id=769453610]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha7" type="Polygon2D" parent="EditorPreview/Cenario/Tocha7" unique_id=1571375886]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha8" type="Node2D" parent="EditorPreview/Cenario" unique_id=1544632397]
+position = Vector2(2180, 330)
+
+[node name="SuporteTocha8" type="Polygon2D" parent="EditorPreview/Cenario/Tocha8" unique_id=865209446]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha8" type="Polygon2D" parent="EditorPreview/Cenario/Tocha8" unique_id=38132681]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha9" type="Node2D" parent="EditorPreview/Cenario" unique_id=1136446179]
+position = Vector2(2480, 330)
+
+[node name="SuporteTocha9" type="Polygon2D" parent="EditorPreview/Cenario/Tocha9" unique_id=1862091559]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha9" type="Polygon2D" parent="EditorPreview/Cenario/Tocha9" unique_id=68683281]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha10" type="Node2D" parent="EditorPreview/Cenario" unique_id=572660175]
+position = Vector2(2780, 330)
+
+[node name="SuporteTocha10" type="Polygon2D" parent="EditorPreview/Cenario/Tocha10" unique_id=218853618]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha10" type="Polygon2D" parent="EditorPreview/Cenario/Tocha10" unique_id=194229437]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha11" type="Node2D" parent="EditorPreview/Cenario" unique_id=1198553763]
+position = Vector2(3080, 330)
+
+[node name="SuporteTocha11" type="Polygon2D" parent="EditorPreview/Cenario/Tocha11" unique_id=1718930741]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha11" type="Polygon2D" parent="EditorPreview/Cenario/Tocha11" unique_id=2142614667]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha12" type="Node2D" parent="EditorPreview/Cenario" unique_id=125979644]
+position = Vector2(3380, 330)
+
+[node name="SuporteTocha12" type="Polygon2D" parent="EditorPreview/Cenario/Tocha12" unique_id=1595958506]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha12" type="Polygon2D" parent="EditorPreview/Cenario/Tocha12" unique_id=1507818908]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha13" type="Node2D" parent="EditorPreview/Cenario" unique_id=1608751018]
+position = Vector2(3680, 330)
+
+[node name="SuporteTocha13" type="Polygon2D" parent="EditorPreview/Cenario/Tocha13" unique_id=201670115]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha13" type="Polygon2D" parent="EditorPreview/Cenario/Tocha13" unique_id=244620161]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha14" type="Node2D" parent="EditorPreview/Cenario" unique_id=1745675401]
+position = Vector2(3980, 330)
+
+[node name="SuporteTocha14" type="Polygon2D" parent="EditorPreview/Cenario/Tocha14" unique_id=993842414]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha14" type="Polygon2D" parent="EditorPreview/Cenario/Tocha14" unique_id=1606356405]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha15" type="Node2D" parent="EditorPreview/Cenario" unique_id=1522200586]
+position = Vector2(4280, 330)
+
+[node name="SuporteTocha15" type="Polygon2D" parent="EditorPreview/Cenario/Tocha15" unique_id=2008076826]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha15" type="Polygon2D" parent="EditorPreview/Cenario/Tocha15" unique_id=842933972]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha16" type="Node2D" parent="EditorPreview/Cenario" unique_id=956213280]
+position = Vector2(4580, 330)
+
+[node name="SuporteTocha16" type="Polygon2D" parent="EditorPreview/Cenario/Tocha16" unique_id=2034539620]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha16" type="Polygon2D" parent="EditorPreview/Cenario/Tocha16" unique_id=586542553]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha17" type="Node2D" parent="EditorPreview/Cenario" unique_id=214548873]
+position = Vector2(4880, 330)
+
+[node name="SuporteTocha17" type="Polygon2D" parent="EditorPreview/Cenario/Tocha17" unique_id=680888853]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha17" type="Polygon2D" parent="EditorPreview/Cenario/Tocha17" unique_id=1022916273]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha18" type="Node2D" parent="EditorPreview/Cenario" unique_id=949167772]
+position = Vector2(5180, 330)
+
+[node name="SuporteTocha18" type="Polygon2D" parent="EditorPreview/Cenario/Tocha18" unique_id=750680436]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha18" type="Polygon2D" parent="EditorPreview/Cenario/Tocha18" unique_id=1489691289]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha19" type="Node2D" parent="EditorPreview/Cenario" unique_id=1876842993]
+position = Vector2(5480, 330)
+
+[node name="SuporteTocha19" type="Polygon2D" parent="EditorPreview/Cenario/Tocha19" unique_id=2105433071]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha19" type="Polygon2D" parent="EditorPreview/Cenario/Tocha19" unique_id=830474055]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha20" type="Node2D" parent="EditorPreview/Cenario" unique_id=1680166228]
+position = Vector2(5780, 330)
+
+[node name="SuporteTocha20" type="Polygon2D" parent="EditorPreview/Cenario/Tocha20" unique_id=1349624602]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha20" type="Polygon2D" parent="EditorPreview/Cenario/Tocha20" unique_id=595997590]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha21" type="Node2D" parent="EditorPreview/Cenario" unique_id=951395711]
+position = Vector2(6080, 330)
+
+[node name="SuporteTocha21" type="Polygon2D" parent="EditorPreview/Cenario/Tocha21" unique_id=2026497143]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha21" type="Polygon2D" parent="EditorPreview/Cenario/Tocha21" unique_id=1698730959]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha22" type="Node2D" parent="EditorPreview/Cenario" unique_id=1197135747]
+position = Vector2(6380, 330)
+
+[node name="SuporteTocha22" type="Polygon2D" parent="EditorPreview/Cenario/Tocha22" unique_id=1446080802]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha22" type="Polygon2D" parent="EditorPreview/Cenario/Tocha22" unique_id=2106640322]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha23" type="Node2D" parent="EditorPreview/Cenario" unique_id=1774864838]
+position = Vector2(6680, 330)
+
+[node name="SuporteTocha23" type="Polygon2D" parent="EditorPreview/Cenario/Tocha23" unique_id=871656404]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha23" type="Polygon2D" parent="EditorPreview/Cenario/Tocha23" unique_id=1233769270]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha24" type="Node2D" parent="EditorPreview/Cenario" unique_id=1610287534]
+position = Vector2(6980, 330)
+
+[node name="SuporteTocha24" type="Polygon2D" parent="EditorPreview/Cenario/Tocha24" unique_id=1426628690]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha24" type="Polygon2D" parent="EditorPreview/Cenario/Tocha24" unique_id=968220730]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha25" type="Node2D" parent="EditorPreview/Cenario" unique_id=713821008]
+position = Vector2(7280, 330)
+
+[node name="SuporteTocha25" type="Polygon2D" parent="EditorPreview/Cenario/Tocha25" unique_id=1795136923]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha25" type="Polygon2D" parent="EditorPreview/Cenario/Tocha25" unique_id=697261195]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha26" type="Node2D" parent="EditorPreview/Cenario" unique_id=486017154]
+position = Vector2(7580, 330)
+
+[node name="SuporteTocha26" type="Polygon2D" parent="EditorPreview/Cenario/Tocha26" unique_id=1040029914]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha26" type="Polygon2D" parent="EditorPreview/Cenario/Tocha26" unique_id=1273433418]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha27" type="Node2D" parent="EditorPreview/Cenario" unique_id=12850898]
+position = Vector2(7880, 330)
+
+[node name="SuporteTocha27" type="Polygon2D" parent="EditorPreview/Cenario/Tocha27" unique_id=1819581532]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha27" type="Polygon2D" parent="EditorPreview/Cenario/Tocha27" unique_id=744548370]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha28" type="Node2D" parent="EditorPreview/Cenario" unique_id=1329696480]
+position = Vector2(8180, 330)
+
+[node name="SuporteTocha28" type="Polygon2D" parent="EditorPreview/Cenario/Tocha28" unique_id=1678877021]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha28" type="Polygon2D" parent="EditorPreview/Cenario/Tocha28" unique_id=43192676]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha29" type="Node2D" parent="EditorPreview/Cenario" unique_id=1099618319]
+position = Vector2(8480, 330)
+
+[node name="SuporteTocha29" type="Polygon2D" parent="EditorPreview/Cenario/Tocha29" unique_id=362969973]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha29" type="Polygon2D" parent="EditorPreview/Cenario/Tocha29" unique_id=1037867498]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha30" type="Node2D" parent="EditorPreview/Cenario" unique_id=1797003594]
+position = Vector2(8780, 330)
+
+[node name="SuporteTocha30" type="Polygon2D" parent="EditorPreview/Cenario/Tocha30" unique_id=996488243]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha30" type="Polygon2D" parent="EditorPreview/Cenario/Tocha30" unique_id=1744375113]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha31" type="Node2D" parent="EditorPreview/Cenario" unique_id=900416863]
+position = Vector2(9080, 330)
+
+[node name="SuporteTocha31" type="Polygon2D" parent="EditorPreview/Cenario/Tocha31" unique_id=1119607501]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha31" type="Polygon2D" parent="EditorPreview/Cenario/Tocha31" unique_id=879593795]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha32" type="Node2D" parent="EditorPreview/Cenario" unique_id=209991179]
+position = Vector2(9380, 330)
+
+[node name="SuporteTocha32" type="Polygon2D" parent="EditorPreview/Cenario/Tocha32" unique_id=1573812644]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha32" type="Polygon2D" parent="EditorPreview/Cenario/Tocha32" unique_id=1487937784]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Tocha33" type="Node2D" parent="EditorPreview/Cenario" unique_id=1878906222]
+position = Vector2(9680, 330)
+
+[node name="SuporteTocha33" type="Polygon2D" parent="EditorPreview/Cenario/Tocha33" unique_id=1650243235]
+color = Color(0.662745, 0.470588, 0.317647, 1)
+polygon = PackedVector2Array(-5, 0, 5, 0, 4, 27, -4, 27)
+
+[node name="ChamaTocha33" type="Polygon2D" parent="EditorPreview/Cenario/Tocha33" unique_id=16787037]
+position = Vector2(0, -5)
+color = Color(1, 0.776471, 0.427451, 1)
+polygon = PackedVector2Array(0, -16, 8, -5, 5, 2, -5, 2, -8, -5)
+
+[node name="Trecho1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1100311687]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(0, 490, 520, 490, 520, 730, 0, 730)
 
-[node name="Chao2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=618987671]
+[node name="Grama1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=359161336]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(0, 490, 520, 490, 520, 500, 0, 500)
+
+[node name="Trecho2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1930851949]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(660, 450, 1090, 450, 1090, 690, 660, 690)
 
-[node name="Chao3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=125875950]
+[node name="Grama2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=62043821]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(660, 450, 1090, 450, 1090, 460, 660, 460)
+
+[node name="Trecho3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=524057518]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(1230, 410, 1610, 410, 1610, 650, 1230, 650)
 
-[node name="Chao4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2498897]
+[node name="Grama3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1099847643]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(1230, 410, 1610, 410, 1610, 420, 1230, 420)
+
+[node name="Trecho4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=408985184]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(1750, 490, 2200, 490, 2200, 730, 1750, 730)
 
-[node name="Chao5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2006415114]
+[node name="Grama4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1744454172]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(1750, 490, 2200, 490, 2200, 500, 1750, 500)
+
+[node name="Trecho5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1033656538]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(2340, 430, 2790, 430, 2790, 670, 2340, 670)
 
-[node name="Chao6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1349572369]
+[node name="Grama5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=941717736]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(2340, 430, 2790, 430, 2790, 440, 2340, 440)
+
+[node name="Trecho6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=789128624]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(2930, 380, 3330, 380, 3330, 620, 2930, 620)
 
-[node name="ChaoArenaFinal" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1700429169]
+[node name="Grama6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=181915594]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(2930, 380, 3330, 380, 3330, 390, 2930, 390)
+
+[node name="Trecho7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1079501712]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(3390, 490, 4000, 490, 4000, 730, 3390, 730)
+polygon = PackedVector2Array(3480, 500, 3940, 500, 3940, 740, 3480, 740)
 
-[node name="TopoGrama" type="Node2D" parent="EditorPreview/Cenario" unique_id=1098483239]
-
-[node name="GramaEsquerda" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=1221122907]
+[node name="Grama7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1091401970]
 color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 520, 0, 520, 10, 0, 10)
+polygon = PackedVector2Array(3480, 500, 3940, 500, 3940, 510, 3480, 510)
 
-[node name="GramaCentral" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=2049978574]
-position = Vector2(660, 450)
-color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 430, 0, 430, 10, 0, 10)
-
-[node name="GramaTrecho3" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=1925925144]
-position = Vector2(1230, 410)
-color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 380, 0, 380, 10, 0, 10)
-
-[node name="GramaTrecho4" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=2011318439]
-position = Vector2(1750, 490)
-color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 450, 0, 450, 10, 0, 10)
-
-[node name="GramaTrecho5" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=380331193]
-position = Vector2(2340, 430)
-color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 450, 0, 450, 10, 0, 10)
-
-[node name="GramaTrecho6" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=1399107789]
-position = Vector2(2930, 380)
-color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 400, 0, 400, 10, 0, 10)
-
-[node name="GramaArenaFinal" type="Polygon2D" parent="EditorPreview/Cenario/TopoGrama" unique_id=167666235]
-position = Vector2(3390, 490)
-color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(0, 0, 610, 0, 610, 10, 0, 10)
-
-[node name="Plataformas" type="Node2D" parent="EditorPreview/Cenario" unique_id=712108596]
-
-[node name="Plataforma1" type="Polygon2D" parent="EditorPreview/Cenario/Plataformas" unique_id=1498012968]
-position = Vector2(560, 430)
+[node name="Trecho8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1275118844]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(0, 0, 60, 0, 60, 24, 0, 24)
+polygon = PackedVector2Array(4050, 445, 4440, 445, 4440, 685, 4050, 685)
 
-[node name="Plataforma2" type="Polygon2D" parent="EditorPreview/Cenario/Plataformas" unique_id=756559910]
-position = Vector2(1130, 390)
+[node name="Grama8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1281963793]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(4050, 445, 4440, 445, 4440, 455, 4050, 455)
+
+[node name="Trecho9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1024138914]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(0, 0, 60, 0, 60, 24, 0, 24)
+polygon = PackedVector2Array(4560, 370, 5040, 370, 5040, 610, 4560, 610)
 
-[node name="Plataforma3" type="Polygon2D" parent="EditorPreview/Cenario/Plataformas" unique_id=1641226237]
-position = Vector2(1650, 370)
+[node name="Grama9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=670793794]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(4560, 370, 5040, 370, 5040, 380, 4560, 380)
+
+[node name="Trecho10" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=51617210]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(0, 0, 60, 0, 60, 24, 0, 24)
+polygon = PackedVector2Array(5170, 470, 5600, 470, 5600, 710, 5170, 710)
 
-[node name="Plataforma4" type="Polygon2D" parent="EditorPreview/Cenario/Plataformas" unique_id=272418027]
-position = Vector2(2240, 420)
+[node name="Grama10" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1923155001]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(5170, 470, 5600, 470, 5600, 480, 5170, 480)
+
+[node name="Trecho11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1834371693]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(0, 0, 60, 0, 60, 24, 0, 24)
+polygon = PackedVector2Array(5730, 420, 6130, 420, 6130, 660, 5730, 660)
 
-[node name="Plataforma5" type="Polygon2D" parent="EditorPreview/Cenario/Plataformas" unique_id=1304903138]
-position = Vector2(2830, 365)
+[node name="Grama11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1921349895]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(5730, 420, 6130, 420, 6130, 430, 5730, 430)
+
+[node name="Trecho12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=995941796]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(0, 0, 60, 0, 60, 24, 0, 24)
+polygon = PackedVector2Array(6260, 330, 6700, 330, 6700, 570, 6260, 570)
 
-[node name="Ninho" type="Node2D" parent="EditorPreview/Cenario"]
-position = Vector2(3695, 490)
+[node name="Grama12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=353636752]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(6260, 330, 6700, 330, 6700, 340, 6260, 340)
 
-[node name="Fibra1" type="Line2D" parent="EditorPreview/Cenario/Ninho"]
-width = 6.0
-default_color = Color(0.603922, 0.388235, 0.247059, 1)
-points = PackedVector2Array(-260, -8, -220, 10, -150, 23, 0, 33, 150, 23, 220, 10, 260, -8)
+[node name="Trecho13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=274632848]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(6840, 450, 7340, 450, 7340, 690, 6840, 690)
 
-[node name="Fibra2" type="Line2D" parent="EditorPreview/Cenario/Ninho"]
+[node name="Grama13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=192978990]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(6840, 450, 7340, 450, 7340, 460, 6840, 460)
+
+[node name="Trecho14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2124137153]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(7470, 390, 7900, 390, 7900, 630, 7470, 630)
+
+[node name="Grama14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=757852159]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(7470, 390, 7900, 390, 7900, 400, 7470, 400)
+
+[node name="Trecho15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=827138797]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(8030, 500, 8460, 500, 8460, 740, 8030, 740)
+
+[node name="Grama15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1508912523]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(8030, 500, 8460, 500, 8460, 510, 8030, 510)
+
+[node name="Trecho16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=139296269]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(8590, 430, 9020, 430, 9020, 670, 8590, 670)
+
+[node name="Grama16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1253284021]
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(8590, 430, 9020, 430, 9020, 440, 8590, 440)
+
+[node name="Trecho17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1145902109]
+position = Vector2(-19, -9.29155)
+scale = Vector2(1, 1.0291663)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(9140, 490, 9445, 492.91504, 9501, 505.54663, 9595, 518.1782, 9700, 519.1499, 9733, 517.20654, 9814, 511.3766, 9866, 504.57495, 9920, 490.00006, 9939, 480.28345, 10000, 490, 10000, 730, 9140, 730)
+
+[node name="Grama17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1520934960]
+position = Vector2(-19, -4)
+color = Color(0.572549, 0.643137, 0.360784, 1)
+polygon = PackedVector2Array(9140, 490, 9434, 500, 9680, 509, 10000, 490, 10000, 500, 9984.905, 499.99994, 9675, 525, 9595, 524, 9140, 500)
+
+[node name="RotaAlta1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=210560154]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(560, 430, 640, 430, 640, 454, 560, 454)
+
+[node name="RotaAlta2" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=234548157]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(1110, 390, 1200, 390, 1200, 414, 1110, 414)
+
+[node name="RotaAlta3" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=757913572]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(1640, 370, 1730, 370, 1730, 394, 1640, 394)
+
+[node name="RotaAlta4" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=330774314]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(2220, 430, 2330, 430, 2330, 454, 2220, 454)
+
+[node name="RotaAlta5" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=178415637]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(2800, 385, 2900, 385, 2900, 409, 2800, 409)
+
+[node name="RotaAlta6" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2102249811]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(3620, 445, 3740, 445, 3740, 469, 3620, 469)
+
+[node name="RotaAlta7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1337101694]
+position = Vector2(-19, 52)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(3930, 375, 3979.6477, 375, 4030, 375, 4030, 399, 3930, 399)
+
+[node name="RotaAlta8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1260127198]
+position = Vector2(2404, 80)
+scale = Vector2(0.46666667, 1)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(4470, 320, 4590, 320, 4590, 344, 4469.9995, 336, 4337.142, 330)
+
+[node name="RotaAlta9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=758573470]
+position = Vector2(2703, 82)
+scale = Vector2(0.475, 1)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(5000, 400, 5120, 400, 5120, 424, 5000, 424)
+
+[node name="RotaAlta10" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2066157198]
+position = Vector2(4031, 64)
+scale = Vector2(0.29, 1)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(5570, 350, 5670, 350, 5670, 374, 5570, 374)
+
+[node name="RotaAlta11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=96716806]
+position = Vector2(3, 64)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(6110, 280, 6220, 280, 6220, 304, 6110, 304)
+
+[node name="RotaAlta12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2120445871]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(6710, 380, 6820, 380, 6820, 404, 6710, 404)
+
+[node name="RotaAlta13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1461182575]
+position = Vector2(1, 41)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(7352, 337, 7380, 337, 7430, 330, 7430, 354, 7376, 363, 7328, 372)
+
+[node name="RotaAlta14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1303410915]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(7900, 430, 8020, 430, 8020, 454, 7900, 454)
+
+[node name="RotaAlta15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=348585692]
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(8460, 360, 8560, 360, 8560, 384, 8460, 384)
+
+[node name="RotaAlta16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=167738328]
+position = Vector2(78, 25)
+color = Color(0.341176, 0.262745, 0.305882, 1)
+polygon = PackedVector2Array(9000, 380, 9100, 380, 9100, 404, 9000, 404)
+
+[node name="Ninho" type="Node2D" parent="EditorPreview/Cenario" unique_id=1751622149]
+position = Vector2(9660, 490)
+
+[node name="Fibras" type="Line2D" parent="EditorPreview/Cenario/Ninho" unique_id=1391704151]
+points = PackedVector2Array(-266, 3, -220, 10, -150, 23, -54, 31, 0, 33, 150, 23, 220, 10, 277, -5)
 width = 6.0
 default_color = Color(0.741176, 0.537255, 0.337255, 1)
-points = PackedVector2Array(-260, 0, -220, 18, -150, 31, 0, 41, 150, 31, 220, 18, 260, 0)
 
-[node name="Fibra3" type="Line2D" parent="EditorPreview/Cenario/Ninho"]
-width = 6.0
-default_color = Color(0.603922, 0.388235, 0.247059, 1)
-points = PackedVector2Array(-260, 8, -220, 26, -150, 39, 0, 49, 150, 39, 220, 26, 260, 8)
+[node name="Marco1" type="Label" parent="EditorPreview/Cenario" unique_id=1456823570]
+offset_left = 900.0
+offset_top = 300.0
+offset_right = 900.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 0.894118, 0.611765, 1)
+text = "RUINAS DO GALINHEIRO"
 
-[node name="Fibra4" type="Line2D" parent="EditorPreview/Cenario/Ninho"]
-width = 6.0
-default_color = Color(0.741176, 0.537255, 0.337255, 1)
-points = PackedVector2Array(-260, 16, -220, 34, -150, 47, 0, 57, 150, 47, 220, 34, 260, 16)
+[node name="Marco2" type="Label" parent="EditorPreview/Cenario" unique_id=1991461800]
+offset_left = 2900.0
+offset_top = 300.0
+offset_right = 2900.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 0.894118, 0.611765, 1)
+text = "PENHASCO DOS OVOS"
 
-[node name="Fibra5" type="Line2D" parent="EditorPreview/Cenario/Ninho"]
-width = 6.0
-default_color = Color(0.603922, 0.388235, 0.247059, 1)
-points = PackedVector2Array(-260, 24, -220, 42, -150, 55, 0, 65, 150, 55, 220, 42, 260, 24)
+[node name="Marco3" type="Label" parent="EditorPreview/Cenario" unique_id=940312104]
+offset_left = 5100.0
+offset_top = 300.0
+offset_right = 5100.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 0.894118, 0.611765, 1)
+text = "CAVERNA DAS PENAS"
+
+[node name="Marco4" type="Label" parent="EditorPreview/Cenario" unique_id=1140122773]
+offset_left = 7300.0
+offset_top = 300.0
+offset_right = 7300.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 0.894118, 0.611765, 1)
+text = "TRILHA DAS ALTURAS"
+
+[node name="Marco5" type="Label" parent="EditorPreview/Cenario" unique_id=348592598]
+offset_left = 9250.0
+offset_top = 340.0
+offset_right = 9250.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(1, 0.894118, 0.611765, 1)
+text = "NINHO DA GALINHA REAL — FIM DA JORNADA"
 
 [node name="Personagens" type="Node2D" parent="EditorPreview" unique_id=2070939315]
 
@@ -157,83 +1248,184 @@ polygon = PackedVector2Array(-9, -5, -2, -5, -2, 2, -9, 2, 2, -5, 9, -5, 9, 2, 2
 [node name="Bots" type="Node2D" parent="EditorPreview/Personagens" unique_id=1031865445]
 
 [node name="Bot1" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=155786698]
-position = Vector2(360, 486)
+position = Vector2(700, 446)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot2" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1613593062]
-position = Vector2(760, 446)
+position = Vector2(1270, 406)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot3" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1412195096]
-position = Vector2(1020, 446)
+position = Vector2(1840, 486)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot4" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1469347494]
-position = Vector2(1420, 406)
+position = Vector2(2410, 426)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot5" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1571057086]
-position = Vector2(1780, 486)
+position = Vector2(2980, 376)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot6" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=2026197919]
-position = Vector2(2140, 486)
+position = Vector2(3550, 496)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot7" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1761309393]
-position = Vector2(2480, 426)
+position = Vector2(4120, 441)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot8" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1458803904]
-position = Vector2(2860, 376)
+position = Vector2(4690, 366)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="Bot9" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=40566724]
-position = Vector2(3160, 376)
+position = Vector2(5260, 466)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot10" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1319746405]
+position = Vector2(5830, 416)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot11" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1849186784]
+position = Vector2(6400, 326)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot12" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=682089316]
+position = Vector2(6970, 446)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot13" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=973720200]
+position = Vector2(7540, 386)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot14" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1073196311]
+position = Vector2(8110, 496)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot15" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=490174894]
+position = Vector2(8680, 426)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot16" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1327343584]
+position = Vector2(9250, 486)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 
 [node name="GalinhaReal" type="Polygon2D" parent="EditorPreview/Personagens" unique_id=2121029183]
-position = Vector2(3700, 455)
+position = Vector2(9650, 455)
 color = Color(0.968627, 0.921569, 0.807843, 1)
 polygon = PackedVector2Array(-33, -56, 33, -56, 33, -8, -33, -8, -42, -38, -27, -68, -14, -60, -14, -36, 14, -36, 14, -60, 27, -68, 42, -38, 33, -8, -23, -8, -9, -8, -9, 4, -23, 4, 9, -8, 23, -8, 23, 4, 9, 4)
 
 [node name="Ovos" type="Node2D" parent="EditorPreview/Personagens" unique_id=2136680228]
 
-[node name="Ovo1" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1311020876]
-position = Vector2(580, 420)
-color = Color(1, 0.894118, 0.478431, 1)
-polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
-
-[node name="Ovo2" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1028480294]
-position = Vector2(1150, 380)
+[node name="Ovo1" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=657138844]
+position = Vector2(600, 390)
 color = Color(0.686275, 0.882353, 0.478431, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
 
-[node name="Ovo3" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=147715129]
-position = Vector2(1660, 360)
+[node name="Ovo2" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=987449993]
+position = Vector2(1155, 350)
 color = Color(0.737255, 0.607843, 0.917647, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
 
-[node name="Ovo4" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=2002566251]
-position = Vector2(2255, 410)
-color = Color(1, 0.894118, 0.478431, 1)
-polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
-
-[node name="Ovo5" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=96755032]
-position = Vector2(2850, 355)
+[node name="Ovo3" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1807939157]
+position = Vector2(1685, 330)
 color = Color(0.686275, 0.882353, 0.478431, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
 
-[node name="Ovo6" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1532489637]
-position = Vector2(3650, 465)
+[node name="Ovo4" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=527696726]
+position = Vector2(2275, 350)
 color = Color(0.737255, 0.607843, 0.917647, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
+
+[node name="Ovo5" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=286883887]
+position = Vector2(2850, 300)
+color = Color(0.686275, 0.882353, 0.478431, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
+
+[node name="Ovo6" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1489498758]
+position = Vector2(3680, 370)
+color = Color(0.737255, 0.607843, 0.917647, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
+
+[node name="Ovo7" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=650577095]
+position = Vector2(3980, 315)
+color = Color(0.686275, 0.882353, 0.478431, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
+
+[node name="Ovo8" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1884325788]
+position = Vector2(4530, 280)
+color = Color(0.737255, 0.607843, 0.917647, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
+
+[node name="Ovo9" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1922430250]
+position = Vector2(5060, 360)
+color = Color(0.686275, 0.882353, 0.478431, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
+
+[node name="Ovo10" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1903345133]
+position = Vector2(5620, 310)
+color = Color(0.737255, 0.607843, 0.917647, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
+
+[node name="Ovo11" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1332958580]
+position = Vector2(6165, 240)
+color = Color(0.686275, 0.882353, 0.478431, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
+
+[node name="Ovo12" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1699186163]
+position = Vector2(6765, 340)
+color = Color(0.737255, 0.607843, 0.917647, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
+
+[node name="Ovo13" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1210648948]
+position = Vector2(7380, 290)
+color = Color(0.686275, 0.882353, 0.478431, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
+
+[node name="Ovo14" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=216574902]
+position = Vector2(7960, 390)
+color = Color(0.737255, 0.607843, 0.917647, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
+
+[node name="Ovo15" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=406835020]
+position = Vector2(8510, 320)
+color = Color(0.686275, 0.882353, 0.478431, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 1
+
+[node name="Ovo16" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=361963883]
+position = Vector2(9050, 340)
+color = Color(0.737255, 0.607843, 0.917647, 1)
+polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
+metadata/egg_kind = 2
