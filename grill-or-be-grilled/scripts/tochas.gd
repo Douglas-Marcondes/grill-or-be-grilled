@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 
 ## Troca as tochas chapadas da cena por tocha com chama animada e halo de luz.
@@ -6,6 +7,10 @@ extends RefCounted
 ## tempo de execucao: a cena salva continua mostrando o marcador no editor do
 ## Godot (onde Douglas e Jorge posicionam as tochas), enquanto o jogo desenha a
 ## arte de verdade por cima. Mover a Tocha no editor continua funcionando.
+##
+## E @tool porque scripts/previa_do_editor.gd monta as tochas dentro do editor
+## tambem, e callback de script sem @tool nao roda la -- sem isto o marcador
+## sumiria e nada apareceria no lugar.
 ##
 ## Exemplo:
 ##     Tochas.montar($EditorPreview/Cenario)
@@ -66,6 +71,11 @@ class Tocha extends Node2D:
 		return sprite
 
 	func _process(delta: float) -> void:
+		# No editor a chama fica num quadro fixo: 33 tochas animando manteriam o
+		# viewport redesenhando sem parar enquanto a fase e editada.
+		if Engine.is_editor_hint():
+			set_process(false)
+			return
 		tempo += delta
 		if chama:
 			chama.frame = int(tempo * 11.0) % QUADROS_DE_CHAMA

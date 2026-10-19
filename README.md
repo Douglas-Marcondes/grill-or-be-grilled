@@ -47,26 +47,71 @@ deriva dele a colisão e a textura, escolhendo o material por região de X —
 fazenda (terra e palha) até 3500, entrada de madeira até 6500, porão de pedra
 depois disso. Mover uma plataforma no editor não exige tocar em código.
 
-`scripts/tochas.gd` faz o mesmo com as tochas: esconde o marcador chapado em
-tempo de execução e desenha a tocha animada por cima, mantendo o marcador
-visível no editor.
+`scripts/tochas.gd` faz o mesmo com as tochas: esconde o marcador chapado e
+desenha a tocha animada por cima, mantendo o marcador no .tscn.
+
+### O editor mostra a fase vestida
+
+`scripts/previa_do_editor.gd` está anexado ao nó `EditorPreview` e roda **a mesma
+vestimenta do jogo** (`Terreno`, `Tochas`, `Sprites`) dentro do editor do Godot.
+Sem ele o editor mostrava polígonos chapados e marcadores desenhados à mão, que
+são maiores que os sprites reais (o marcador do jogador tem 40px contra os 26px
+do herói) — então posicionar inimigo ou plataforma era adivinhação.
+
+A cena salva **nunca** guarda a vestimenta: a prévia se desfaz em
+`NOTIFICATION_EDITOR_PRE_SAVE` e se refaz em `..._POST_SAVE`, devolvendo cada
+propriedade ao valor original. Isso é essencial porque `Terreno._assar_escala`
+transfere o `scale` do nó para os vértices — gravar esse estado destruiria o
+layout editável. `ferramentas/teste_da_previa.tscn` é o teste que garante o
+retorno exato.
+
+Dois detalhes de uso:
+
+- O editor pode marcar a cena como **modificada** só por ter vestido a prévia.
+  Salvar é seguro: ela se desveste antes.
+- A chama fica num quadro fixo no editor (33 tochas animando redesenhariam o
+  viewport sem parar). No jogo ela anima normalmente.
+- Criou uma plataforma nova, ou arrastou algo entre regiões da fase? Marque
+  **`revestir`** no inspetor do `EditorPreview` para vestir de novo.
 
 ### Ferramentas de desenvolvimento
 
 - `ferramentas/capturar_cenas.tscn`: abre o jogo e grava um PNG de cada região da
   fase em `ferramentas/capturas/` (útil para comparar o visual antes/depois).
-- `ferramentas/teste_de_fumaca.tscn`: roda a fase por alguns segundos com o
-  jogador vivo e imprime `SMOKE_OK`; falha visível se algum script quebrar.
+- `ferramentas/teste_da_previa.tscn`: veste e desveste uma cena de layout e
+  confere que cada propriedade voltou idêntica. Imprime `PREVIA_OK`.
+- `ferramentas/teste_do_salto.tscn`: mede o arco do pulo e as folgas (coyote
+  time, buffer, altura variável) num piso isolado. Imprime `SALTO_OK`.
+- `ferramentas/teste_de_fumaca.tscn`: roda a fase com o herói dirigido pelas
+  **ações do input map** (não por `velocity` direta, senão não cobre aceleração
+  nem as folgas do pulo) e falha se o herói morrer ou se algum script quebrar.
+  Imprime `SMOKE_OK`.
 
 ```
-./Godot_v4.7.2-stable_linux.x86_64 --path grill-or-be-grilled res://ferramentas/teste_de_fumaca.tscn
+G=./Godot_v4.7.2-stable_linux.x86_64
+$G --headless --path grill-or-be-grilled res://ferramentas/teste_da_previa.tscn
+$G --headless --path grill-or-be-grilled res://ferramentas/teste_do_salto.tscn
+$G --headless --path grill-or-be-grilled res://ferramentas/teste_de_fumaca.tscn
 ```
+
+### O arco do pulo é restrito pela fase
+
+Alcance horizontal de um pulo = tempo de ar × velocidade de corrida. Os gaps
+largos da fase 1 estão calibrados no limite do arco original — `Trecho11` →
+`Trecho12` exige 90px de subida em 130px de vão, que da borda era impossível
+(-3px de margem) e só passava pela pedra `RotaAlta11`. Por isso `salto.gd`
+mantém altura (105px) e tempo de ar (0.78s) e tira o "peso" só da assimetria
+subida/queda. **Encurtar o tempo de ar de verdade exige reposicionar as pedras
+`RotaAlta*` ou subir a velocidade de corrida** — ver PENDENCIAS.md.
 
 ## Estrutura de código
 
 O projeto Godot fica em `grill-or-be-grilled/`.
 
-- `perso1.gd`: política de entrada e controle do jogador.
+- `player.gd`: política de entrada e controle do herói jogável.
+- `scripts/salto.gd`: pulo de plataforma com coyote time, buffer, altura variável e gravidade assimétrica.
+- `scripts/previa_do_editor.gd`: `@tool` que veste a fase dentro do editor com o mesmo código do jogo.
+- `perso1.gd`: política de entrada e controle do jogador (protótipo paralelo).
 - `galinha.gd`: comportamento de patrulha e animação da galinha inimiga.
 - `scripts/character_movement.gd`: primitivas compartilhadas de movimento para `CharacterBody2D`.
 - `scripts/sprites.gd`: monta os `Sprite2D` dos personagens ancorados pelo pé.
@@ -77,7 +122,7 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 
 ### Primitivas compartilhadas
 
-`CharacterMovement` concentra gravidade, velocidade horizontal, desaceleração e orientação do sprite. Controladores decidem *quando* chamar cada operação (entrada do jogador ou IA do inimigo); regras físicas comuns são alteradas uma vez no módulo compartilhado. Para novas entidades, reutilize essas funções e mantenha no controlador apenas as decisões específicas da entidade.
+`CharacterMovement` concentra gravidade, aceleração/atrito horizontal, desaceleração e orientação do sprite. Controladores decidem *quando* chamar cada operação (entrada do jogador ou IA do inimigo); regras físicas comuns são alteradas uma vez no módulo compartilhado. Para novas entidades, reutilize essas funções e mantenha no controlador apenas as decisões específicas da entidade.
 
 1.
    Primeira fase: Criação de ideia:
@@ -111,5 +156,11 @@ na vitória. O boss tem investida, bicada e disparo de penas; sua armadura cômi
 armas e melhorias permanentes, salvas localmente. Morrer reinicia o nível e perde
 os ovos da tentativa.
 
-Controles: A/D ou setas para andar, Espaço ou seta para cima para pular, J ou clique
-esquerdo para atacar.
+Controles (definidos no input map, em `project.godot` → `[input]`, lidos por
+posição física de tecla, então ABNT2 não precisa de remapeamento):
+
+| Ação | Teclado | Controle |
+| --- | --- | --- |
+| `andar_esquerda` / `andar_direita` | A/D ou ←/→ | analógico esquerdo, direcional |
+| `pular` | Espaço, W ou ↑ | A |
+| `atacar` | J, K ou clique esquerdo | X |

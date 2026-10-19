@@ -132,7 +132,7 @@ func start_level() -> void:
 	_spawn_boss()
 	show_hud()
 	update_hud()
-	show_message("WASD ou setas: mover  |  Espaço/↑: pular  |  J ou clique: atacar", 5.0)
+	show_message("WASD ou setas: mover  |  Espaço/W/↑: pular  |  J ou clique: atacar", 5.0)
 
 func _place_egg(at: Vector2, kind: int) -> void:
 	var egg := Area2D.new()
@@ -290,7 +290,7 @@ func show_class_select() -> void:
 		var chosen: String = class_choice
 		_button(panel, "%s  ·  %s" % [class_choice, weapon], func(): choose_class(chosen))
 	var controls := Label.new()
-	controls.text = "Derrote as galinhas, recolha ovos e vença o boss.\nMovimento: A/D ou setas   Pulo: Espaço   Ataque: J / clique"
+	controls.text = "Derrote as galinhas, recolha ovos e vença o boss.\nMovimento: A/D ou setas   Pulo: Espaço/W   Ataque: J / clique\nControle: analógico/direcional, A para pular, X para atacar"
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls.add_theme_color_override("font_color", Color("9badb7"))
 	panel.add_child(controls)

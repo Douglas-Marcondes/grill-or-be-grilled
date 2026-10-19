@@ -28,3 +28,9 @@ static func face_direction(actor: Node, direction: float) -> void:
 	var animated_sprite := actor.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 	if animated_sprite:
 		animated_sprite.flip_h = direction < 0.0
+
+
+static func accelerate_horizontal(body: CharacterBody2D, direction: float, speed: float, rate: float, delta: float) -> void:
+	## One primitive covers both acceleration and friction: direction 0.0 makes
+	## the target 0.0, so the caller only has to pick the rate.
+	body.velocity.x = move_toward(body.velocity.x, direction * speed, rate * delta)

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c0kwdhp6wqn8y" path="res://fase1.gd" id="1_game"]
 [ext_resource type="Theme" path="res://tema_pixel.tres" id="2_tema"]
+[ext_resource type="Script" path="res://scripts/previa_do_editor.gd" id="3_previa"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_ceu.png" id="10_ceu"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_lua.png" id="11_lua"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_silhueta.png" id="12_silhueta"]
@@ -59,6 +60,7 @@ texture = ExtResource("13_cerca")
 
 [node name="EditorPreview" type="Node2D" parent="." unique_id=579791678]
 z_index = -5
+script = ExtResource("3_previa")
 
 [node name="Cenario" type="Node2D" parent="EditorPreview" unique_id=371272298]
 

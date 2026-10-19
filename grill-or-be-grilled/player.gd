@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 const Sprites = preload("res://scripts/sprites.gd")
+const Movimento = preload("res://scripts/character_movement.gd")
+const Salto = preload("res://scripts/salto.gd")
 
 var sprite: Sprite2D
 var arma: Sprite2D
@@ -12,18 +14,23 @@ var sprite_armadura: Sprite2D
 const ALTURA_DA_MAO := -12.0
 const ALCANCE_DA_MAO := 5.0
 
+## Chegar aos 270px/s em 0.1s le como resposta imediata sem ser liga/desliga.
+## No ar o controle e mais fraco e o atrito quase nulo: o pulo conserva o
+## impulso em vez de o heroi parar no lugar quando a direcao e solta.
+const ACELERACAO_NO_CHAO := 2700.0
+const ATRITO_NO_CHAO := 2300.0
+const ACELERACAO_NO_AR := 1500.0
+const ATRITO_NO_AR := 500.0
+
 var speed := 270.0
-var jump_velocity := -520.0
-var gravity := 1300.0
 var max_health := 50
 var health := 50
 var facing := 1.0
 var attack_timer := 0.0
 var invulnerability := 0.0
 var class_name_game := "Guerreiro"
-var jump_was_down := false
-var attack_was_down := false
 var animation_time := 0.0
+var salto := Salto.new()
 
 func _ready() -> void:
 	add_to_group("player")
@@ -68,25 +75,14 @@ func _montar_visual() -> void:
 			sprite_armadura.position = Vector2(0, -24)
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if Input.is_key_pressed(KEY_A):
-		direction = -1.0
-	if Input.is_key_pressed(KEY_D):
-		direction = 1.0
+	var direction := Input.get_axis("andar_esquerda", "andar_direita")
 	if not is_zero_approx(direction):
-		facing = direction
-	velocity.x = direction * speed
-	var jump_down := Input.is_key_pressed(KEY_SPACE) or Input.is_action_pressed("ui_up")
-	if jump_down and not jump_was_down and is_on_floor():
-		velocity.y = jump_velocity
-	jump_was_down = jump_down
-	var attack_down := Input.is_key_pressed(KEY_J) or Input.is_key_pressed(KEY_K) or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+		facing = signf(direction)
+	_mover_horizontal(direction, delta)
+	salto.atualizar(self, delta, Input.is_action_just_pressed("pular"), Input.is_action_pressed("pular"))
 	attack_timer = maxf(0.0, attack_timer - delta)
-	if attack_down and not attack_was_down and attack_timer <= 0.0:
+	if Input.is_action_just_pressed("atacar") and attack_timer <= 0.0:
 		attack()
-	attack_was_down = attack_down
 	invulnerability = maxf(0.0, invulnerability - delta)
 	move_and_slide()
 	if global_position.y > 850.0:
@@ -96,6 +92,16 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and absf(velocity.x) > 1.0:
 		animation_time += delta * 11.0
 	_animar()
+
+
+func _mover_horizontal(direction: float, delta: float) -> void:
+	"""Escolhe a taxa pelo par chao/ar e acelerando/freando; quem move e a
+	primitiva compartilhada."""
+	var acelerando := not is_zero_approx(direction)
+	var taxa := ACELERACAO_NO_CHAO if acelerando else ATRITO_NO_CHAO
+	if not is_on_floor():
+		taxa = ACELERACAO_NO_AR if acelerando else ATRITO_NO_AR
+	Movimento.accelerate_horizontal(self, direction, speed, taxa, delta)
 
 
 func _animar() -> void:
