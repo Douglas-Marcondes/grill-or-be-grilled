@@ -1,8 +1,10 @@
 extends Area2D
 
+const Sprites = preload("res://scripts/sprites.gd")
+
+var sprite: Sprite2D
 var egg_kind := 0
 var values := [1, 2, 4, 7, 12]
-var colors := [Color("fff1b5"), Color("9fe6d2"), Color("a9c7ff"), Color("f2a6d4"), Color("ffd05a")]
 var bob_time := 0.0
 
 func _ready() -> void:
@@ -14,16 +16,15 @@ func _ready() -> void:
 	shape.shape = circle
 	add_child(shape)
 	body_entered.connect(_on_body_entered)
+	# Ovo flutua, entao e ancorado pelo centro e nao pelo pe como os personagens.
+	sprite = Sprites.montar_centrado(self, Sprites.OVOS, 5)
+	if sprite:
+		sprite.frame = egg_kind
 
 func _process(delta: float) -> void:
 	bob_time += delta
-	queue_redraw()
-
-func _draw() -> void:
-	var lift := sin(bob_time * 4.0) * 2.0
-	draw_rect(Rect2(-7, -8 + lift, 14, 16), colors[egg_kind], true)
-	draw_rect(Rect2(-4, -11 + lift, 8, 3), colors[egg_kind].lightened(0.3), true)
-	draw_rect(Rect2(-3, -4 + lift, 3, 5), Color(1, 1, 1, 0.75), true)
+	if sprite:
+		sprite.position.y = roundf(sin(bob_time * 4.0) * 2.0)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

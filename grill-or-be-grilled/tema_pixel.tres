@@ -1,0 +1,74 @@
+[gd_resource type="Theme" load_steps=7 format=3]
+; Tema unico da interface. Centraliza fonte, cores e bordas para que a UI nao
+; precise de add_theme_*_override espalhado pelo codigo. Todas as cores saem da
+; paleta DawnBringer 32 usada pela arte (tools/arte/paleta.py).
+
+[ext_resource type="FontFile" path="res://Artes/gerado/fonte_pixel.fnt" id="1_fonte"]
+
+[sub_resource type="StyleBoxFlat" id="botao_normal"]
+bg_color = Color(0.133333, 0.125490, 0.203922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.270588, 0.156863, 0.235294, 1)
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="botao_realce"]
+bg_color = Color(0.270588, 0.156863, 0.235294, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.874510, 0.443137, 0.149020, 1)
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 5.0
+content_margin_bottom = 3.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="botao_apertado"]
+bg_color = Color(0.400000, 0.223529, 0.192157, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.984314, 0.949020, 0.211765, 1)
+content_margin_left = 5.0
+content_margin_top = 4.0
+content_margin_right = 5.0
+content_margin_bottom = 2.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="barra_fundo"]
+bg_color = Color(0.133333, 0.125490, 0.203922, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.270588, 0.156863, 0.235294, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="barra_preenchida"]
+bg_color = Color(0.674510, 0.196078, 0.196078, 1)
+anti_aliasing = false
+
+[resource]
+default_font = ExtResource("1_fonte")
+default_font_size = 12
+Button/colors/font_color = Color(0.933333, 0.764706, 0.603922, 1)
+Button/colors/font_hover_color = Color(0.984314, 0.949020, 0.211765, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(0.517647, 0.494118, 0.529412, 1)
+Button/styles/normal = SubResource("botao_normal")
+Button/styles/hover = SubResource("botao_realce")
+Button/styles/pressed = SubResource("botao_apertado")
+Button/styles/focus = SubResource("botao_realce")
+Button/styles/disabled = SubResource("botao_normal")
+Label/colors/font_color = Color(0.796078, 0.858824, 0.988235, 1)
+ProgressBar/styles/background = SubResource("barra_fundo")
+ProgressBar/styles/fill = SubResource("barra_preenchida")

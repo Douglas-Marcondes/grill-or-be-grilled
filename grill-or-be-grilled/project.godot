@@ -21,8 +21,18 @@ GameData="*res://game_data.gd"
 
 [display]
 
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+; Pixel art de verdade: o jogo renderiza em 480x270 e a janela amplia em escala
+; inteira, entao 1 pixel de arte vira um bloco quadrado na tela em vez de ser
+; reamostrado. 480x270 cabe exato em 1920x1080 (4x) e 1280x720 (2.66x -> 2x com
+; borda). A camera mostra menos mundo que antes, por isso o offset dela em
+; player.gd foi reduzido junto.
+window/size/viewport_width=480
+window/size/viewport_height=270
+window/size/window_width_override=1440
+window/size/window_height_override=810
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
 
 [physics]
 
@@ -30,6 +40,13 @@ window/stretch/aspect="expand"
 
 [rendering]
 
+; Sem filtro bilinear: textura de pixel art precisa de vizinho mais proximo,
+; senao o upscale borra a arte toda.
+; Qualquer area nao coberta por arte le como noite, nao como cinza de viewport.
+environment/defaults/default_clear_color=Color(0.062745, 0.054901, 0.113725, 1)
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

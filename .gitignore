@@ -4,3 +4,12 @@
 # Local Godot executable
 /Godot_v4.7.2-stable_linux.x86_64
 grill-or-be-grilled/.godot/
+# Capturas da ferramenta de screenshot (saida descartavel, nao arte do jogo)
+grill-or-be-grilled/ferramentas/capturas/
+
+# Temporarios do Aseprite e do editor
+*.aseprite[0-9]*.tmp
+*.tscn[0-9]*.tmp
+
+# Caches do Python do pipeline de arte
+tools/**/__pycache__/

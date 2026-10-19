@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+const Sprites = preload("res://scripts/sprites.gd")
+
+var sprite: Sprite2D
+var aviso: Node2D
 var health := 24
 var max_health := 24
 var gravity := 1300.0
@@ -9,6 +13,7 @@ var attack_kind := 0
 var attack_windup := 0.0
 var facing := -1.0
 var flash := 0.0
+var balanco := 0.0
 var defeated := false
 
 func _ready() -> void:
@@ -17,11 +22,17 @@ func _ready() -> void:
 	collision_mask = 1
 	var shape := CollisionShape2D.new()
 	var capsule := CapsuleShape2D.new()
-	capsule.radius = 27
-	capsule.height = 68
+	capsule.radius = 14
+	capsule.height = 46
 	shape.shape = capsule
-	shape.position.y = -34
+	shape.position.y = -23
 	add_child(shape)
+	sprite = Sprites.montar(self, Sprites.GALINHA_REAL, 2)
+	# O boss espera o jogador chegar e so entao entra em _animar; sem virar aqui
+	# ele aguarda de costas para quem se aproxima.
+	Sprites.virar(sprite, facing)
+	aviso = AvisoDeInvestida.new()
+	add_child(aviso)
 
 func _physics_process(delta: float) -> void:
 	if defeated:
@@ -57,7 +68,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0.0
 	move_and_slide()
 	flash = maxf(0.0, flash - delta)
-	queue_redraw()
+	_animar(delta)
 	var game := get_tree().get_first_node_in_group("game")
 	if game:
 		game.update_boss_health(health, max_health)
@@ -99,20 +110,30 @@ func take_damage(amount: int) -> void:
 			game.boss_defeated(global_position)
 		queue_free()
 
-func _draw() -> void:
-	var feathers := Color("fff0ce") if flash <= 0.0 else Color.WHITE
-	draw_rect(Rect2(-33, -56, 66, 48), feathers, true)
-	draw_rect(Rect2(-42, -38, 15, 19), Color("d6ad7b"), true)
-	draw_rect(Rect2(27, -38, 15, 19), Color("d6ad7b"), true)
-	draw_rect(Rect2(-27, -68, 54, 30), Color("fff5dc"), true)
-	draw_rect(Rect2(-18, -64, 6, 7), Color("302738"), true)
-	draw_rect(Rect2(12, -64, 6, 7), Color("302738"), true)
-	var beak_x := 21.0 if facing > 0.0 else -41.0
-	draw_rect(Rect2(beak_x, -57, 20, 10), Color("ed7652"), true)
-	draw_rect(Rect2(-14, -77, 15, 12), Color("e24e4e"), true)
-	draw_rect(Rect2(-7, -88, 13, 12), Color("ef6653"), true)
-	draw_rect(Rect2(-23, -8, 14, 12), Color("e2aa58"), true)
-	draw_rect(Rect2(9, -8, 14, 12), Color("e2aa58"), true)
-	if attack_windup > 0.0:
-		var warn_color := Color("ffed78", 0.75 + 0.25 * sin(Time.get_ticks_msec() / 60.0))
-		draw_rect(Rect2(-36, -99, 72, 4), warn_color, true)
+func _animar(delta: float) -> void:
+	if not sprite:
+		return
+	# Respiracao lenta parada, batida rapida durante o preparo do golpe: e o que
+	# avisa o jogador que vem investida antes de ela sair.
+	balanco += delta * (14.0 if attack_windup > 0.0 else 3.0)
+	sprite.frame = int(balanco) % 2
+	Sprites.virar(sprite, facing)
+	Sprites.piscar(sprite, flash)
+	if aviso:
+		aviso.ativo = attack_windup > 0.0
+		aviso.queue_redraw()
+
+
+## Faixa piscante acima da Galinha Real durante o preparo do ataque. Fica em no
+## proprio para nao reintroduzir um _draw no corpo do boss, que agora e sprite.
+class AvisoDeInvestida extends Node2D:
+	## Logo acima da cabeca: o sprite da Galinha Real tem 46px de altura.
+	const ALTURA_DO_AVISO := -52
+
+	var ativo := false
+
+	func _draw() -> void:
+		if not ativo:
+			return
+		var pulso := 0.75 + 0.25 * sin(Time.get_ticks_msec() / 60.0)
+		draw_rect(Rect2(-24, ALTURA_DO_AVISO, 48, 3), Color("fbf236", pulso), true)

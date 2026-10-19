@@ -1,0 +1,73 @@
+extends RefCounted
+
+## Troca as tochas chapadas da cena por tocha com chama animada e halo de luz.
+##
+## Os Polygon2D originais de cada Tocha* nao sao apagados, so escondidos em
+## tempo de execucao: a cena salva continua mostrando o marcador no editor do
+## Godot (onde Douglas e Jorge posicionam as tochas), enquanto o jogo desenha a
+## arte de verdade por cima. Mover a Tocha no editor continua funcionando.
+##
+## Exemplo:
+##     Tochas.montar($EditorPreview/Cenario)
+
+const Sprites = preload("res://scripts/sprites.gd")
+
+const PREFIXO := "Tocha"
+const QUADROS_DE_CHAMA := 4
+
+
+static func montar(cenario: Node2D) -> int:
+	"""Instala a tocha animada em cada marcador. Devolve quantas foram criadas."""
+	if not cenario:
+		push_error("Tochas.montar recebeu cenario nulo; esperado EditorPreview/Cenario")
+		return 0
+	var total := 0
+	for no in cenario.get_children():
+		if not str(no.name).begins_with(PREFIXO) or not no is Node2D:
+			continue
+		for marcador in no.get_children():
+			marcador.hide()
+		no.add_child(Tocha.new())
+		total += 1
+	return total
+
+
+## Uma tocha acesa: castical, chama de 4 quadros e halo aditivo.
+class Tocha extends Node2D:
+	const ALFA_BASE := 0.40
+	const ALFA_PULSO := 0.09
+
+	var chama: Sprite2D
+	var halo: Sprite2D
+	var tempo := 0.0
+
+	func _ready() -> void:
+		# Fase inicial sorteada: sem isso as 33 tochas da fase piscam no mesmo
+		# compasso e o cenario inteiro pulsa junto, o que entrega o truque.
+		tempo = randf() * 10.0
+		var suporte := Sprites.celula("tocha_suporte", 1)
+		Sprites.anexar(self, "tocha_suporte", 1, Vector2(-suporte.x / 2.0, 0))
+		var tamanho_da_chama := Sprites.celula("tocha_chama", QUADROS_DE_CHAMA)
+		chama = Sprites.anexar(self, "tocha_chama", QUADROS_DE_CHAMA,
+				Vector2(-tamanho_da_chama.x / 2.0, -tamanho_da_chama.y))
+		halo = _montar_halo()
+
+	func _montar_halo() -> Sprite2D:
+		var tamanho := Sprites.celula("brilho", 1)
+		var sprite := Sprites.anexar(self, "brilho", 1,
+				Vector2(-tamanho.x / 2.0, -tamanho.y / 2.0 - 6.0))
+		if not sprite:
+			return null
+		var aditivo := CanvasItemMaterial.new()
+		aditivo.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+		sprite.material = aditivo
+		sprite.z_index = -1
+		sprite.modulate.a = ALFA_BASE
+		return sprite
+
+	func _process(delta: float) -> void:
+		tempo += delta
+		if chama:
+			chama.frame = int(tempo * 11.0) % QUADROS_DE_CHAMA
+		if halo:
+			halo.modulate.a = ALFA_BASE + ALFA_PULSO * sin(tempo * 7.0)

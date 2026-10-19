@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+const Sprites = preload("res://scripts/sprites.gd")
+
+var sprite: Sprite2D
 var health := 3
 var speed := 92.0
 var gravity := 1000.0
@@ -26,13 +29,14 @@ func _ready() -> void:
 	collision_mask = 1
 	var shape := CollisionShape2D.new()
 	var capsule := CapsuleShape2D.new()
-	capsule.radius = 16
-	capsule.height = 36
+	capsule.radius = 9
+	capsule.height = 23
 	shape.shape = capsule
-	shape.position.y = -17
+	shape.position.y = -11
 	add_child(shape)
 	last_safe_position = global_position
 	home_position = global_position
+	sprite = Sprites.montar(self, Sprites.GALINHA, 4)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -55,6 +59,11 @@ func _physics_process(delta: float) -> void:
 					# Para no cair quando não há uma superfície alcançável à frente.
 					velocity.x = 0.0
 					move_and_slide()
+					# Mesmo parada a galinha precisa atualizar o visual: sem isto,
+					# uma galinha atingida na beirada fica branca de clarao para
+					# sempre e nao vira de lado.
+					flash = maxf(0.0, flash - delta)
+					_animar()
 					return
 			else:
 				velocity.x = facing * (GAP_JUMP_SPEED if jumping_gap else speed)
@@ -73,7 +82,7 @@ func _physics_process(delta: float) -> void:
 		if absf(velocity.x) > 1.0:
 			animation_time += delta * 13.0
 	flash = maxf(0.0, flash - delta)
-	queue_redraw()
+	_animar()
 	if global_position.y > 850.0:
 		# Se um impulso externo ainda a derrubar, deixa o drop na última plataforma segura.
 		var game := get_tree().get_first_node_in_group("game")
@@ -124,18 +133,9 @@ func take_damage(amount: int) -> void:
 			game.enemy_defeated()
 		queue_free()
 
-func _draw() -> void:
-	var bob := -absf(sin(animation_time)) * 2.0 if absf(velocity.x) > 1.0 and is_on_floor() else 0.0
-	var step := sin(animation_time) * 3.0 if absf(velocity.x) > 1.0 and is_on_floor() else 0.0
-	var white := Color("fff0cf") if flash <= 0.0 else Color.WHITE
-	draw_rect(Rect2(-18, -30 + bob, 36, 25), white, true)
-	draw_rect(Rect2(-22, -20 + bob, 8, 12), Color("dfb884"), true)
-	draw_rect(Rect2(10, -20 + bob, 8, 12), Color("dfb884"), true)
-	draw_rect(Rect2(-14, -36 + bob, 28, 19), Color("fff4db"), true)
-	draw_rect(Rect2(-9, -33 + bob, 4, 5), Color("382a38"), true)
-	draw_rect(Rect2(5, -33 + bob, 4, 5), Color("382a38"), true)
-	var beak_x := 11.0 if facing > 0.0 else -21.0
-	draw_rect(Rect2(beak_x, -30 + bob, 10, 6), Color("ed7956"), true)
-	draw_rect(Rect2(-5, -41 + bob, 7, 7), Color("e65550"), true)
-	draw_rect(Rect2(-14 - step, -3, 9, 8), Color("e5a454"), true)
-	draw_rect(Rect2(5 + step, -3, 9, 8), Color("e5a454"), true)
+func _animar() -> void:
+	if not sprite:
+		return
+	Sprites.virar(sprite, facing)
+	Sprites.piscar(sprite, flash)
+	sprite.frame = Sprites.quadro_do_passo(animation_time, 4)

@@ -1,5 +1,17 @@
 extends CharacterBody2D
 
+const Sprites = preload("res://scripts/sprites.gd")
+
+var sprite: Sprite2D
+var arma: Sprite2D
+var largura_da_arma := 0.0
+var sprite_armadura: Sprite2D
+
+## Onde a arma e segurada, em relacao ao pe do heroi. A mao do sprite fica nas
+## linhas 12 a 15 das 26 do corpo, ou seja por volta de -12.
+const ALTURA_DA_MAO := -12.0
+const ALCANCE_DA_MAO := 5.0
+
 var speed := 270.0
 var jump_velocity := -520.0
 var gravity := 1300.0
@@ -8,7 +20,6 @@ var health := 50
 var facing := 1.0
 var attack_timer := 0.0
 var invulnerability := 0.0
-var attack_color := Color("f7da7a")
 var class_name_game := "Guerreiro"
 var jump_was_down := false
 var attack_was_down := false
@@ -20,24 +31,41 @@ func _ready() -> void:
 	collision_mask = 1
 	var shape := CollisionShape2D.new()
 	var capsule := CapsuleShape2D.new()
-	capsule.radius = 11
-	capsule.height = 34
+	capsule.radius = 7
+	capsule.height = 26
 	shape.shape = capsule
-	shape.position.y = -17
+	shape.position.y = -13
 	add_child(shape)
 	var camera := Camera2D.new()
-	camera.position = Vector2(0, -120)
+	# Viewport de 270px de altura: olhar 120px acima jogaria o personagem para
+	# fora do quadro, entao a folga de cima caiu junto com a resolucao.
+	camera.position = Vector2(0, -40)
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
 	add_child(camera)
 	max_health += GameData.health_bonus
 	health = max_health
-	attack_color = Color("f7da7a")
 
 func configure(class_name_value: String) -> void:
 	class_name_game = class_name_value
 	if GameData.equipped_weapon.is_empty():
 		GameData.equipped_weapon = {"Guerreiro": "Espada", "Arqueiro": "Arco", "Mago": "Varinha"}.get(class_name_game, "Espada")
+	_montar_visual()
+
+
+func _montar_visual() -> void:
+	"""Monta corpo, arma e armadura. Chamado depois de configure porque a folha
+	do corpo depende da classe e a da arma, do que esta equipado."""
+	sprite = Sprites.montar(self, "heroi_%s" % class_name_game.to_lower(), 4)
+	var folha_da_arma := "arma_%s" % GameData.equipped_weapon.to_lower()
+	largura_da_arma = Sprites.celula(folha_da_arma, 1).x
+	arma = Sprites.montar_centrado(self, folha_da_arma, 1)
+	if arma:
+		arma.position.y = ALTURA_DA_MAO
+	if GameData.owns_chicken_armor:
+		sprite_armadura = Sprites.montar(self, "armadura_galinha", 1)
+		if sprite_armadura:
+			sprite_armadura.position = Vector2(0, -24)
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -66,8 +94,29 @@ func _physics_process(delta: float) -> void:
 		set_physics_process(false)
 		return
 	if is_on_floor() and absf(velocity.x) > 1.0:
-		animation_time += delta * 13.0
-	queue_redraw()
+		animation_time += delta * 11.0
+	_animar()
+
+
+func _animar() -> void:
+	if not sprite:
+		return
+	# Pisca durante a invulnerabilidade em vez de sumir com o personagem: some
+	# o jogador por 0.9s e ele perde a nocao de onde esta.
+	var visivel := invulnerability <= 0.0 or int(Time.get_ticks_msec() / 90) % 2 == 0
+	for parte in [sprite, arma, sprite_armadura]:
+		if not parte:
+			continue
+		Sprites.virar(parte, facing)
+		parte.visible = visivel
+	sprite.frame = 0 if is_on_floor() and absf(velocity.x) <= 1.0 else Sprites.quadro_do_passo(animation_time, 4)
+	if arma:
+		# A arma e ancorada pelo CABO na mao, nao pelo centro: centrada, a lamina
+		# de 20px da espada atravessava o corpo inteiro do heroi.
+		arma.offset.x = 0.0 if facing > 0.0 else -largura_da_arma
+		# Avanca no instante do golpe; fora dele volta para o lado do corpo.
+		var avanco := 5.0 if attack_timer > 0.24 else 0.0
+		arma.position.x = facing * (ALCANCE_DA_MAO + avanco)
 
 func attack() -> void:
 	attack_timer = 0.38
@@ -76,17 +125,17 @@ func attack() -> void:
 		for enemy in get_tree().get_nodes_in_group("enemies"):
 			if is_instance_valid(enemy) and absf(enemy.global_position.x - global_position.x - facing * 26.0) < 67.0 and absf(enemy.global_position.y - global_position.y) < 54.0:
 				enemy.take_damage(damage + 1)
-		$"..".slash_effect(global_position + Vector2(facing * 31.0, -23.0), facing, false)
+		$"..".slash_effect(global_position + Vector2(facing * 26.0, ALTURA_DA_MAO), facing, false)
 	else:
 		var shot := Area2D.new()
 		shot.set_script(preload("res://projectile.gd"))
-		shot.global_position = global_position + Vector2(facing * 23.0, -23.0)
+		shot.global_position = global_position + Vector2(facing * 23.0, ALTURA_DA_MAO)
 		shot.direction = Vector2(facing, 0)
 		shot.damage = damage
 		shot.speed = 570.0 if GameData.equipped_weapon == "Arco" else 430.0
 		shot.color = Color("b4e17b") if GameData.equipped_weapon == "Arco" else Color("bd9aff")
 		get_tree().current_scene.add_child(shot)
-		$"..".slash_effect(global_position + Vector2(facing * 23.0, -23.0), facing, true)
+		$"..".slash_effect(global_position + Vector2(facing * 23.0, ALTURA_DA_MAO), facing, true)
 
 func take_damage(amount: int) -> void:
 	if invulnerability > 0.0:
@@ -97,32 +146,3 @@ func take_damage(amount: int) -> void:
 	if health <= 0:
 		$"..".player_died()
 		set_physics_process(false)
-
-func _draw() -> void:
-	var bob := -absf(sin(animation_time)) * 2.0 if absf(velocity.x) > 1.0 and is_on_floor() else 0.0
-	var step := sin(animation_time) * 3.0 if absf(velocity.x) > 1.0 and is_on_floor() else 0.0
-	var body_color := Color("486ba8")
-	if class_name_game == "Arqueiro":
-		body_color = Color("70964f")
-	elif class_name_game == "Mago":
-		body_color = Color("7654a0")
-	if invulnerability > 0.0 and int(Time.get_ticks_msec() / 100) % 2 == 0:
-		return
-	draw_rect(Rect2(-9, -37 + bob, 18, 14), Color("f2c7a3"), true)
-	draw_rect(Rect2(-10, -40 + bob, 20, 6), body_color.darkened(0.25), true)
-	draw_rect(Rect2(-10, -23 + bob, 20, 20), body_color, true)
-	draw_rect(Rect2(-9 - step, -4, 7, 9), Color("563f50"), true)
-	draw_rect(Rect2(2 + step, -4, 7, 9), Color("563f50"), true)
-	draw_rect(Rect2(4 if facing > 0.0 else -7, -33 + bob, 3, 3), Color("30273a"), true)
-	if GameData.owns_chicken_armor:
-		draw_rect(Rect2(-7, -43 + bob, 14, 5), Color("e0524b"), true)
-		draw_rect(Rect2(9, -37 + bob, 7, 4), Color("efa34f"), true)
-	if GameData.equipped_weapon == "Espada":
-		draw_rect(Rect2(11 if facing > 0 else -31, -21 + bob, 20, 4), Color("d9e3ed"), true)
-		draw_rect(Rect2(facing * 10.0, -24, 4, 11), Color("8d6345"), true)
-	elif GameData.equipped_weapon == "Arco":
-		draw_rect(Rect2(facing * 13.0, -30, 3, 19), Color("c39158"), true)
-		draw_line(Vector2(facing * 12.0, -30), Vector2(facing * 12.0, -11), Color("e4d2ad"), 1.0)
-	else:
-		draw_rect(Rect2(-12, -44, 24, 5), Color("b88aeb"), true)
-		draw_rect(Rect2(facing * 14.0, -29, 5, 5), Color("aee8fd"), true)

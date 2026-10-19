@@ -5,8 +5,13 @@ const ChickenScript = preload("res://chicken_enemy.gd")
 const BossScript = preload("res://chicken_boss.gd")
 const EggScript = preload("res://egg_pickup.gd")
 const EffectScript = preload("res://pixel_effect.gd")
+const TEMA = preload("res://tema_pixel.tres")
+const Terreno = preload("res://scripts/terreno.gd")
+const Tochas = preload("res://scripts/tochas.gd")
 
 const LEVEL_END := 10000.0
+const LARGURA_PAINEL := 300.0
+const ALTURA_PAINEL := 220.0
 var ui: CanvasLayer
 var player: CharacterBody2D
 var boss: CharacterBody2D
@@ -41,48 +46,33 @@ func _process(delta: float) -> void:
 func _build_playable_geometry() -> void:
 	var level_art := get_node_or_null("EditorPreview/Cenario")
 	if not level_art:
-		push_error("Falta EditorPreview/Cenario na cena; não foi possível carregar o terreno.")
+		push_error("Falta EditorPreview/Cenario na cena; nao foi possivel carregar o terreno.")
 		return
-	for art in level_art.get_children():
-		if not art is Polygon2D:
-			continue
-		var platform_name := str(art.name)
-		if not platform_name.begins_with("Trecho") and not platform_name.begins_with("RotaAlta"):
-			continue
-		if art.polygon.size() < 3:
-			continue
-		var body := StaticBody2D.new()
-		body.name = "ColisaoDaPlataforma"
-		body.collision_layer = 1
-		body.collision_mask = 1
-		var collider := CollisionPolygon2D.new()
-		collider.polygon = art.polygon
-		body.add_child(collider)
-		art.add_child(body)
+	Terreno.montar(level_art)
+	Tochas.montar(level_art)
+
 
 func _build_ui() -> void:
 	ui = CanvasLayer.new()
 	add_child(ui)
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.theme = TEMA
 	ui.add_child(root)
 	hud_label = Label.new()
-	hud_label.position = Vector2(22, 14)
-	hud_label.add_theme_font_size_override("font_size", 18)
-	hud_label.add_theme_color_override("font_color", Color("fff0c8"))
+	hud_label.position = Vector2(5, 3)
 	root.add_child(hud_label)
 	boss_bar = ProgressBar.new()
-	boss_bar.position = Vector2(270, 18)
-	boss_bar.size = Vector2(420, 20)
+	boss_bar.position = Vector2(150, 16)
+	boss_bar.size = Vector2(180, 7)
 	boss_bar.visible = false
 	boss_bar.show_percentage = false
 	root.add_child(boss_bar)
 	notice_label = Label.new()
-	notice_label.position = Vector2(300, 66)
-	notice_label.size = Vector2(360, 36)
+	notice_label.position = Vector2(20, 28)
+	notice_label.size = Vector2(440, 14)
 	notice_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	notice_label.add_theme_font_size_override("font_size", 20)
-	notice_label.add_theme_color_override("font_color", Color("ffe99c"))
+	notice_label.add_theme_color_override("font_color", Color("fbf236"))
 	root.add_child(notice_label)
 	update_hud()
 
@@ -257,35 +247,35 @@ func _panel(title: String, subtitle: String) -> VBoxContainer:
 		if child != hud_label and child != boss_bar and child != notice_label:
 			child.queue_free()
 	var shade := ColorRect.new()
-	shade.color = Color(0.08, 0.07, 0.13, 0.9)
+	shade.color = Color(0.054901, 0.047058, 0.098039, 0.88)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(shade)
 	var panel := VBoxContainer.new()
 	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.position = Vector2(-290, -265)
-	panel.size = Vector2(580, 530)
-	panel.add_theme_constant_override("separation", 10)
+	panel.position = Vector2(-LARGURA_PAINEL / 2.0, -ALTURA_PAINEL / 2.0)
+	panel.size = Vector2(LARGURA_PAINEL, ALTURA_PAINEL)
+	panel.add_theme_constant_override("separation", 3)
 	root.add_child(panel)
 	var heading := Label.new()
 	heading.text = title
 	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	heading.add_theme_font_size_override("font_size", 30)
-	heading.add_theme_color_override("font_color", Color("ffe59b"))
+	# Titulo em 2x: ampliar fonte bitmap por inteiro mantem o pixel quadrado.
+	heading.add_theme_font_size_override("font_size", 24)
+	heading.add_theme_color_override("font_color", Color("fbf236"))
 	panel.add_child(heading)
 	var note := Label.new()
 	note.text = subtitle
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	note.add_theme_color_override("font_color", Color("f1e6d7"))
+	note.add_theme_color_override("font_color", Color("eec39a"))
 	panel.add_child(note)
 	return panel
 
 func _button(parent: Container, text: String, callback: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(280, 40)
+	button.custom_minimum_size = Vector2(190, 0)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	button.add_theme_font_size_override("font_size", 17)
 	button.pressed.connect(callback)
 	parent.add_child(button)
 	return button
@@ -302,7 +292,7 @@ func show_class_select() -> void:
 	var controls := Label.new()
 	controls.text = "Derrote as galinhas, recolha ovos e vença o boss.\nMovimento: A/D ou setas   Pulo: Espaço   Ataque: J / clique"
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	controls.add_theme_color_override("font_color", Color("cfc6d9"))
+	controls.add_theme_color_override("font_color", Color("9badb7"))
 	panel.add_child(controls)
 	hud_label.visible = false
 	notice_label.text = ""
