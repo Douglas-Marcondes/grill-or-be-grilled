@@ -153,8 +153,14 @@ saída do trecho. Mudou o pulo ou o layout? Rode `teste_das_passagens`.
 Os controles de toque (`scripts/controles_de_toque.gd`) só aparecem em aparelho
 com tela de toque: setas à esquerda, pular/atacar/esquivar à direita. Eles
 disparam as mesmas ações do input map, então teclado e controle seguem iguais.
-No celular a tela se alarga para os lados (`aspect="expand"`) e usa escala
-fracionária para ocupar a tela toda; no PC continua em escala inteira.
+No celular usa escala fracionária para ocupar a tela toda; no PC continua em
+escala inteira. Funciona nas duas orientações (`scripts/formato_da_tela.gd`):
+
+- **Deitado:** a tela se alarga para os lados (`aspect="expand"`) e os botões
+  ficam nos cantos de baixo, por cima do jogo.
+- **Em pé:** layout de "Game Boy": a faixa do jogo (a mesma de deitado) fica em
+  cima e a sobra de baixo vira um painel (`scripts/moldura_de_retrato.gd`) com
+  os botões em tamanho dobrado, sem o dedo tapar a ação.
 
 **Pelo navegador (pronto):**
 
@@ -169,10 +175,14 @@ certificado autoassinado (`tools/servir_https.py`, guardado em
 `exportar/certificados/`). No celular, o aviso de conexão não particular é
 esperado: **Avançado → Continuar**.
 
-**Publicar no itch.io:** `.github/workflows/publicar-itch.yml` exporta a versão
-Web e envia para o itch.io (com o butler) a cada push na `main`. O itch.io e não
-o GitHub Pages porque o repositório é privado (Pages privado exige plano pago).
-Configuração, uma vez:
+**Link público (GitHub Pages):** `.github/workflows/publicar-web.yml` exporta e
+publica a versão Web a cada push na `main`, em
+https://douglas-marcondes.github.io/grill-or-be-grilled/. Requer, uma vez, em
+Settings → Pages → Source: **GitHub Actions** (não "Deploy from a branch").
+
+**Publicar no itch.io (opcional, para lançar):** `.github/workflows/publicar-itch.yml`
+envia a mesma versão Web para o itch.io com o butler. Roda só à mão (Actions →
+Publicar no itch.io → Run workflow). Configuração, uma vez:
 
 1. Crie a página do jogo em https://itch.io/game/new:
    - *Kind of project*: **HTML**.
@@ -185,7 +195,7 @@ Configuração, uma vez:
 3. No GitHub, em Settings → Secrets and variables → Actions:
    - aba **Secrets**: `BUTLER_API_KEY` = a chave;
    - aba **Variables**: `ITCH_JOGO` = `<usuario>/<pagina>` (ex.: `doujor/grill-or-be-grilled`).
-4. Rode o workflow (Actions → Publicar no itch.io → Run workflow) ou faça um push.
+4. Rode o workflow (Actions → Publicar no itch.io → Run workflow).
 5. Na página do itch, no upload que apareceu, marque **This file will be played
    in the browser** e salve. Só na primeira vez.
 

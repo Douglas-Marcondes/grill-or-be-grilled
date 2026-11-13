@@ -1,9 +1,11 @@
-# Exporta a versão Web (a mesma de tools/exportar.sh web) e publica no itch.io
-# a cada push na main, para jogar no celular pelo navegador. Usa o butler, a
-# ferramenta oficial de upload do itch.io.
+# Exporta a versão Web (a mesma de tools/exportar.sh web) e publica no itch.io,
+# para jogar no celular pelo navegador. Usa o butler, a ferramenta oficial de
+# upload do itch.io.
 #
-# itch.io em vez de GitHub Pages porque o repositório é privado: Pages em
-# repositório privado exige plano pago, e o itch.io aceita página com senha.
+# O caminho principal é o GitHub Pages (publicar-web.yml), automático a cada
+# push. Este fica pronto para quando quiserem lançar no itch.io: roda só à mão
+# (Actions -> Publicar no itch.io -> Run workflow), para não exportar o jogo
+# duas vezes a cada push.
 #
 # Configuração, uma vez (README, "Publicar no itch.io"):
 #   - secret   BUTLER_API_KEY : chave em https://itch.io/user/settings/api-keys
@@ -12,8 +14,6 @@
 name: Publicar no itch.io
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

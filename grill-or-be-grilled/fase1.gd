@@ -16,6 +16,8 @@ const Menus = preload("res://scripts/menus.gd")
 const Iluminacao = preload("res://scripts/iluminacao.gd")
 const Hud = preload("res://scripts/hud.gd")
 const ControlesDeToque = preload("res://scripts/controles_de_toque.gd")
+const MolduraDeRetrato = preload("res://scripts/moldura_de_retrato.gd")
+const FormatoDaTela = preload("res://scripts/formato_da_tela.gd")
 
 const LEVEL_END := 10000.0
 var ui: CanvasLayer
@@ -101,7 +103,10 @@ func _build_world_walls() -> void:
 
 
 func _build_ui() -> void:
+	# Camadas: moldura do celular em pe (1), interface (2), botoes de toque (3).
+	add_child(MolduraDeRetrato.new())
 	ui = CanvasLayer.new()
+	ui.layer = 2
 	add_child(ui)
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -113,12 +118,14 @@ func _build_ui() -> void:
 	# chefe: no topo ela disputava espaco com o HUD e com as falas da historia.
 	boss_bar = ProgressBar.new()
 	# Ancorados ao centro: no celular largo (aspect "expand") a tela passa de
-	# 480px, e posicao fixa deixava barra e aviso tortos para a esquerda.
-	boss_bar.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	# 480px, e posicao fixa deixava barra e aviso tortos para a esquerda. A
+	# barra fica no pe da faixa do jogo (270px), nao no pe da tela: em pe, o pe
+	# da tela e o painel dos controles.
+	boss_bar.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	boss_bar.offset_left = -100
 	boss_bar.offset_right = 100
-	boss_bar.offset_top = -18
-	boss_bar.offset_bottom = -12
+	boss_bar.offset_top = FormatoDaTela.ALTURA_DO_JOGO - 18
+	boss_bar.offset_bottom = FormatoDaTela.ALTURA_DO_JOGO - 12
 	boss_bar.visible = false
 	boss_bar.show_percentage = false
 	var boss_name := Menus.texto("Galinha Real", Color("df7126"))
@@ -205,7 +212,7 @@ func start_level() -> void:
 		camera.limit_left = 0
 		camera.limit_right = int(LEVEL_END)
 		camera.limit_top = 0
-		camera.limit_bottom = int(Limites.FUNDO_DA_CAMERA)
+		camera.limite_de_baixo = int(Limites.FUNDO_DA_CAMERA)
 		camera.make_current()
 	_spawn_boss()
 	show_hud()

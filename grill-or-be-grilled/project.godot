@@ -22,28 +22,17 @@ Som="*res://scripts/som.gd"
 
 [display]
 
-; Pixel art de verdade: o jogo renderiza em 480x270 e a janela amplia em escala
-; inteira, entao 1 pixel de arte vira um bloco quadrado na tela em vez de ser
-; reamostrado. 480x270 cabe exato em 1920x1080 (4x) e 1280x720 (2.66x -> 2x com
-; borda). A camera mostra menos mundo que antes, por isso o offset dela em
-; player.gd foi reduzido junto.
 window/size/viewport_width=480
 window/size/viewport_height=270
 window/size/window_width_override=1440
 window/size/window_height_override=810
 window/stretch/mode="viewport"
-; "expand": tela mais larga que 16:9 (celular deitado, ~20:9) mostra mais mundo
-; dos lados em vez de faixas pretas. Interface ancorada as bordas acompanha.
 window/stretch/aspect="expand"
 window/stretch/scale_mode="integer"
-; No celular a escala inteira deixava o jogo minusculo: tela de 412px de altura
-; so comporta 1x os 270px e sobra borda enorme. Em tela de alta densidade a
-; escala fracionaria quase nao se nota, e preenche a tela inteira.
+window/handheld/orientation=4
 window/stretch/scale_mode.mobile="fractional"
 window/stretch/scale_mode.web_android="fractional"
 window/stretch/scale_mode.web_ios="fractional"
-; Jogo de plataforma: so deitado, em qualquer dos dois lados.
-window/handheld/orientation=4
 
 [input]
 
@@ -55,7 +44,6 @@ andar_esquerda={
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":-1.0,"script":null)
 ]
 }
-
 andar_direita={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -64,7 +52,6 @@ andar_direita={
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":1.0,"script":null)
 ]
 }
-
 pular={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -73,7 +60,6 @@ pular={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
-
 atacar={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":74,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -82,7 +68,6 @@ atacar={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
-
 esquivar={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -97,13 +82,10 @@ esquivar={
 
 [rendering]
 
-; Sem filtro bilinear: textura de pixel art precisa de vizinho mais proximo,
-; senao o upscale borra a arte toda.
-; Qualquer area nao coberta por arte le como noite, nao como cinza de viewport.
-environment/defaults/default_clear_color=Color(0.062745, 0.054901, 0.113725, 1)
 textures/canvas_textures/default_texture_filter=0
-2d/snap/snap_2d_transforms_to_pixel=true
-2d/snap/snap_2d_vertices_to_pixel=true
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.062745, 0.054901, 0.113725, 1)
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

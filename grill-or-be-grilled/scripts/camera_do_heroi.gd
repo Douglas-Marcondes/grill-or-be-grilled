@@ -16,6 +16,8 @@ extends Camera2D
 
 ## Viewport de 270px de altura: olhar 120px acima jogaria o personagem para fora
 ## do quadro, entao a folga de cima caiu junto com a resolucao.
+const FormatoDaTela = preload("res://scripts/formato_da_tela.gd")
+
 const ALTURA_DO_OLHAR := -40.0
 const OLHAR_A_FRENTE := 34.0
 const VELOCIDADE_DO_OLHAR := 180.0
@@ -23,6 +25,9 @@ const TREMOR_MAXIMO := 6.0
 const ALIVIO_DO_TRAUMA := 2.2
 
 var direcao := 1.0
+## Limite de baixo do quadro do jogo. Em pe a tela e mais alta que a faixa de
+## 270px, e o limit_bottom real cresce junto com a sobra (ver _process).
+var limite_de_baixo := 10000000
 var _olhar := OLHAR_A_FRENTE
 var _trauma := 0.0
 
@@ -37,7 +42,11 @@ func _process(delta: float) -> void:
 	_olhar = move_toward(_olhar, direcao * OLHAR_A_FRENTE, VELOCIDADE_DO_OLHAR * delta)
 	_trauma = maxf(0.0, _trauma - ALIVIO_DO_TRAUMA * delta)
 	var sacudida := TREMOR_MAXIMO * _trauma * _trauma
-	offset = Vector2(_olhar, 0.0) + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * sacudida
+	# Em pe, desce o centro da camera metade da sobra: o heroi aparece na faixa
+	# de cima, no mesmo lugar que deitado, e a sobra de baixo e do painel.
+	var sobra := FormatoDaTela.sobra(get_viewport())
+	limit_bottom = limite_de_baixo + int(sobra)
+	offset = Vector2(_olhar, sobra / 2.0) + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * sacudida
 
 
 func tremer(forca: float) -> void:

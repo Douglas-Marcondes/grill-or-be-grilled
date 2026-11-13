@@ -9,6 +9,7 @@ extends Node2D
 
 const ControlesDeToque = preload("res://scripts/controles_de_toque.gd")
 const Historia = preload("res://scripts/historia.gd")
+const FormatoDaTela = preload("res://scripts/formato_da_tela.gd")
 
 var _falhas: PackedStringArray = []
 
@@ -22,13 +23,14 @@ func _ready() -> void:
 	game.choose_class("Mago")
 	await get_tree().process_frame
 	_exigir("visivel jogando", game.toque.visible, "visivel=%s" % game.toque.visible)
+	await _testar_celular_em_pe(game)
 	_exigir("dica de toque no celular",
 		Historia.dica_de_controles(true) == Historia.DICA_DE_TOQUE and Historia.dica_de_controles(false) == Historia.DICA_DE_TECLADO,
 		Historia.dica_de_controles(true))
 	for falha in _falhas:
 		printerr("FALHOU: %s" % falha)
 	if _falhas.is_empty():
-		print("TOQUE_OK 5 verificacoes")
+		print("TOQUE_OK 8 verificacoes")
 	get_tree().quit(0 if _falhas.is_empty() else 1)
 
 
@@ -54,6 +56,35 @@ func _testar_dentro_da_tela(toque: ControlesDeToque) -> void:
 	var pular := toque.botao("pular").position.x
 	_exigir("botoes dentro da tela larga e acoes na borda direita", fora.is_empty() and pular > 540.0,
 		"fora=%s pular_x=%s" % [fora, pular])
+
+
+func _testar_celular_em_pe(game: Node) -> void:
+	"""Em pe (480x1000): faixa do jogo em cima, painel com botoes grandes embaixo."""
+	get_viewport().size = Vector2i(480, 1000)
+	await get_tree().process_frame
+	var sobra := 1000.0 - FormatoDaTela.ALTURA_DO_JOGO
+	var camera: Camera2D = game.player.camera
+	_exigir("camera desce o mundo para a faixa de cima",
+		is_equal_approx(camera.offset.y, sobra / 2.0) and camera.limit_bottom == camera.limite_de_baixo + int(sobra),
+		"offset=%s limite=%d base=%d" % [camera.offset, camera.limit_bottom, camera.limite_de_baixo])
+	var fora_do_painel: Array[String] = []
+	for nome in ControlesDeToque.BOTOES:
+		var botao: TouchScreenButton = game.toque.botao(nome)
+		var lado: float = ControlesDeToque.LADO * botao.scale.x
+		var caixa := Rect2(botao.position, Vector2.ONE * lado)
+		if caixa.position.y < FormatoDaTela.ALTURA_DO_JOGO or not Rect2(0, 0, 480, 1000).encloses(caixa) or botao.scale.x != 2.0:
+			fora_do_painel.append("%s em %s" % [nome, caixa])
+	var moldura_visivel := false
+	for filho in game.get_children():
+		if filho is CanvasLayer and filho.has_method("ajustar"):
+			moldura_visivel = filho.visible
+	_exigir("botoes grandes no painel e moldura visivel", fora_do_painel.is_empty() and moldura_visivel,
+		"fora=%s moldura=%s" % [fora_do_painel, moldura_visivel])
+	get_viewport().size = Vector2i(480, 270)
+	await get_tree().process_frame
+	_exigir("deitado de novo: sem sobra e botoes normais",
+		is_zero_approx(camera.offset.y) and game.toque.botao("pular").scale == Vector2.ONE,
+		"offset=%s escala=%s" % [camera.offset, game.toque.botao("pular").scale])
 
 
 func _exigir(nome: String, condicao: bool, detalhe: String) -> void:
