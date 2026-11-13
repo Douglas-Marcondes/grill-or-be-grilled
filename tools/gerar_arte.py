@@ -40,7 +40,10 @@ def _gerar_personagens() -> int:
     from tela import folha, salvar
 
     folhas = {
-        "galinha": [personagens.galinha(quadro) for quadro in range(4)],
+        **{
+            plumagem: [personagens.galinha(quadro, plumagem) for quadro in range(4)]
+            for plumagem in personagens.PLUMAGENS
+        },
         "galinha_real": [personagens.galinha_real(quadro) for quadro in range(2)],
         "ovos": [personagens.ovo(raridade) for raridade in range(5)],
     }

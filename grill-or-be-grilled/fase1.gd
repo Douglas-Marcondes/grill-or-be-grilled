@@ -1,7 +1,7 @@
 extends Node2D
 
 const PlayerScript = preload("res://player.gd")
-const ChickenScript = preload("res://chicken_enemy.gd")
+const Bestiario = preload("res://scripts/bestiario.gd")
 const BossScript = preload("res://chicken_boss.gd")
 const EggScript = preload("res://egg_pickup.gd")
 const EffectScript = preload("res://pixel_effect.gd")
@@ -116,13 +116,8 @@ func start_level() -> void:
 	boss_bar.visible = false
 	var bot_markers := get_node("EditorPreview/Personagens/Bots").get_children()
 	total_chickens = bot_markers.size()
-	for index in bot_markers.size():
-		var marker := bot_markers[index] as Node2D
-		var chicken := CharacterBody2D.new()
-		chicken.set_script(ChickenScript)
-		chicken.configure_progression(index, bot_markers.size())
-		chicken.position = marker.global_position
-		_register_level_object(chicken)
+	for marker in bot_markers:
+		_spawn_enemy(marker)
 	var egg_markers := get_node("EditorPreview/Personagens/Ovos").get_children()
 	for marker in egg_markers:
 		var egg_kind := int(marker.get_meta("egg_kind", 1))
@@ -143,6 +138,15 @@ func start_level() -> void:
 	show_hud()
 	update_hud()
 	show_message("A fazenda caiu. Atravesse as ruínas, reúna os ovos e descubra por que a Galinha Real guarda o ninho.", 5.0)
+
+func _spawn_enemy(marker: Node2D) -> void:
+	var tipo := Bestiario.tipo_do_marcador(marker)
+	var enemy := CharacterBody2D.new()
+	enemy.set_script(Bestiario.script_de(tipo))
+	enemy.folha_do_sprite = Bestiario.folha_de(tipo)
+	enemy.configure_progression(clampf(marker.global_position.x / LEVEL_END, 0.0, 1.0))
+	enemy.position = marker.global_position
+	_register_level_object(enemy)
 
 func _place_egg(at: Vector2, kind: int) -> void:
 	var egg := Area2D.new()

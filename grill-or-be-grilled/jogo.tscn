@@ -765,6 +765,7 @@ polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, 
 position = Vector2(2410, 426)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "atiradeira"
 
 [node name="Bot5" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1571057086]
 position = Vector2(2980, 376)
@@ -775,6 +776,7 @@ polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, 
 position = Vector2(3550, 496)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "galo"
 
 [node name="Bot7" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1761309393]
 position = Vector2(4120, 441)
@@ -785,11 +787,13 @@ polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, 
 position = Vector2(4690, 366)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "atiradeira"
 
 [node name="Bot9" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=40566724]
 position = Vector2(5260, 466)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "galo"
 
 [node name="Bot10" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1319746405]
 position = Vector2(5830, 416)
@@ -800,16 +804,19 @@ polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, 
 position = Vector2(6400, 326)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "atiradeira"
 
 [node name="Bot12" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=682089316]
 position = Vector2(6970, 446)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "galo"
 
 [node name="Bot13" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=973720200]
 position = Vector2(7540, 386)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "atiradeira"
 
 [node name="Bot14" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1073196311]
 position = Vector2(8110, 496)
@@ -820,9 +827,44 @@ polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, 
 position = Vector2(8680, 426)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "galo"
 
 [node name="Bot16" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1327343584]
 position = Vector2(9250, 486)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "atiradeira"
+
+[node name="Bot17" type="Polygon2D" parent="EditorPreview/Personagens/Bots"]
+position = Vector2(4900, 366)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot18" type="Polygon2D" parent="EditorPreview/Personagens/Bots"]
+position = Vector2(5480, 466)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "galo"
+
+[node name="Bot19" type="Polygon2D" parent="EditorPreview/Personagens/Bots"]
+position = Vector2(6600, 326)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "atiradeira"
+
+[node name="Bot20" type="Polygon2D" parent="EditorPreview/Personagens/Bots"]
+position = Vector2(7200, 446)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Bot21" type="Polygon2D" parent="EditorPreview/Personagens/Bots"]
+position = Vector2(7800, 386)
+color = Color(1, 0.941176, 0.811765, 1)
+polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+metadata/tipo = "galo"
+
+[node name="Bot22" type="Polygon2D" parent="EditorPreview/Personagens/Bots"]
+position = Vector2(8900, 426)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 

@@ -25,6 +25,7 @@ const Terreno = preload("res://scripts/terreno.gd")
 const Tochas = preload("res://scripts/tochas.gd")
 const Sprites = preload("res://scripts/sprites.gd")
 const Jogador = preload("res://player.gd")
+const Bestiario = preload("res://scripts/bestiario.gd")
 
 ## Tudo que Terreno e Tochas alteram nos nos de layout. E desta lista que sai o
 ## retrato guardado antes de vestir.
@@ -140,7 +141,7 @@ func _vestir_personagens() -> void:
 		return
 	_vestir_heroi(personagens.get_node_or_null("Jogador"))
 	for marcador in _marcadores(personagens, "Bots"):
-		_trocar_por_sprite(marcador, Sprites.GALINHA, QUADROS_DA_GALINHA)
+		_trocar_por_sprite(marcador, Bestiario.folha_de(Bestiario.tipo_do_marcador(marcador)), QUADROS_DA_GALINHA)
 	for marcador in _marcadores(personagens, "Ovos"):
 		_trocar_por_ovo(marcador)
 	_trocar_por_sprite(personagens.get_node_or_null("GalinhaReal"),

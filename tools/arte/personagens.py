@@ -46,6 +46,17 @@ CORPO_GALINHA = [
     ".......ooooooooooo........",
 ]
 
+## Variantes de inimigo sao a mesma galinha com outra plumagem: a silhueta ja
+## le como "galinha" e a cor diz qual comportamento esperar, como os Koopas de
+## casco vermelho e verde. So as penas mudam; contorno, bico e crista ficam.
+PLUMAGENS = {
+    "galinha": {},
+    # Galo de Briga: penas de fogo, o tanque que investe.
+    "galo": {"W": "laranja", "w": "marrom", "s": "marrom_escuro"},
+    # Galinha Atiradeira: caipira cor de palha, a que joga ovo de longe.
+    "galinha_atiradeira": {"W": "creme", "w": "areia", "s": "mostarda"},
+}
+
 # Pernas desenhadas a parte; o ciclo so desloca cada pata na horizontal.
 PERNA = ["b", "b", "b", "b"]
 PE = ["bbb"]
@@ -59,14 +70,21 @@ def _pata(tela: Tela, x: int, y: int) -> None:
     pintar(tela, x - 1, y + len(PERNA), PE, {"b": "bico_sombra"})
 
 
-def galinha(quadro: int = 0) -> Tela:
-    """Galinha inimiga num quadro do ciclo de caminhada (0 a 3)."""
+def galinha(quadro: int = 0, plumagem: str = "galinha") -> Tela:
+    """Galinha inimiga num quadro do ciclo de caminhada (0 a 3).
+
+    Exemplo: galinha(2, "galo") e o terceiro passo do Galo de Briga.
+    """
+    if plumagem not in PLUMAGENS:
+        raise ValueError(
+            "plumagem desconhecida %r; esperado uma de %s" % (plumagem, ", ".join(PLUMAGENS))
+        )
     if not 0 <= quadro < len(PASSOS_GALINHA):
         raise ValueError(
             "quadro de galinha fora da faixa: %d (esperado 0 a %d)"
             % (quadro, len(PASSOS_GALINHA) - 1)
         )
-    corpo = de_ascii(CORPO_GALINHA, PENAS)
+    corpo = de_ascii(CORPO_GALINHA, {**PENAS, **PLUMAGENS[plumagem]})
     tela = Tela(corpo.largura, corpo.altura + 6)
     # Quadros impares levantam o corpo em 1px: o leve sobe-desce e o que faz a
     # caminhada parecer peso, nao deslizamento.

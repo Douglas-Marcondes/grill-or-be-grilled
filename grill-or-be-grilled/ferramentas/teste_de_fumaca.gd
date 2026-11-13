@@ -30,6 +30,7 @@ const AVANCO_MINIMO := 1500.0
 ## senao o corte de altura variavel encurta o salto e o teste cai nas lacunas
 ## culpando a fase pelo que e so o driver soltando o botao cedo.
 const FRAMES_SEGURANDO_O_PULO := 28
+const FRAMES_NA_ARENA := 480
 
 var _segurando_o_pulo := 0
 
@@ -67,8 +68,43 @@ func _ready() -> void:
 		printerr("FALHOU: %s" % falha)
 		get_tree().quit(1)
 		return
-	print("SMOKE_OK avancou=%.0fpx galinhas_restantes=%d" % [avancou, get_tree().get_nodes_in_group("enemies").size()])
+	var dano_no_chefe := await _lutar_na_arena(game)
+	if dano_no_chefe <= 0:
+		printerr("FALHOU: a luta na arena nao feriu a Galinha Real")
+		get_tree().quit(1)
+		return
+	print("SMOKE_OK avancou=%.0fpx galinhas_restantes=%d dano_no_chefe=%d" % [avancou, get_tree().get_nodes_in_group("enemies").size(), dano_no_chefe])
 	get_tree().quit()
+
+
+func _lutar_na_arena(game: Node) -> int:
+	"""Leva o heroi ate a Galinha Real e luta 8s com ataque, pulo e esquiva, para
+	que os tres golpes do chefe e as duas fases rodem com a fase de verdade.
+	Devolve quanto de vida o chefe perdeu."""
+	var jogador: CharacterBody2D = game.player
+	var chefe: CharacterBody2D = game.boss
+	jogador.global_position = chefe.global_position + Vector2(-160, -20)
+	jogador.health = 999
+	for passo in FRAMES_NA_ARENA:
+		if not is_instance_valid(chefe) or game.screen != "playing":
+			break
+		var lado := "andar_direita" if chefe.global_position.x > jogador.global_position.x + 20.0 else "andar_esquerda"
+		Input.action_press(lado)
+		_alternar("atacar", passo, 12)
+		_alternar("pular", passo, 70)
+		_alternar("esquivar", passo, 95)
+		await get_tree().physics_frame
+		Input.action_release(lado)
+	for acao in ACOES + ["esquivar"]:
+		Input.action_release(acao)
+	return 24 if not is_instance_valid(chefe) else chefe.max_health - chefe.health
+
+
+func _alternar(acao: String, passo: int, periodo: int) -> void:
+	if passo % periodo == 0:
+		Input.action_press(acao)
+	elif passo % periodo == 3:
+		Input.action_release(acao)
 
 func _dirigir(jogador: CharacterBody2D, passo: int) -> void:
 	"""Anda sempre para a direita, pula ao ver a borda e ataca a cada 0.67s."""
