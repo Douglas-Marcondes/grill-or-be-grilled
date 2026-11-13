@@ -31,7 +31,8 @@ terreno, camadas de fundo, folhas de personagem e adereços. Os módulos ficam e
 - `glifos.py` / `fonte.py`: fonte 5x7 proporcional com acentuação portuguesa,
   exportada em BMFont (lido nativamente pelo Godot, sem TTF nem plugin).
 - `cenario.py`: tiles de terreno 16x16, desenhados para repetir sem costura.
-- `fundo.py`: céu com degradê ditherizado, silhuetas da fazenda, lua.
+- `fundo.py`: céu com degradê ditherizado, silhuetas da fazenda (faixa de 640px,
+  espaçamento irregular), colinas escuras até o rodapé, lua.
 - `personagens.py`: galinha, Galinha Real, herói (3 classes), ovos, armas.
 - `props.py`: tocha com chama de 4 quadros e halo de luz.
 
@@ -89,7 +90,8 @@ Dois detalhes de uso:
 - `ferramentas/teste_das_passagens.tscn`: pula cada vão da fase na borda e
   confere que todos passam; cobre também a quina do `Trecho3`.
 - `teste_do_combate`, `teste_do_chefe`, `teste_dos_inimigos`,
-  `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`: um por camada.
+  `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`,
+  `teste_da_iluminacao`: um por camada.
 
 Todos de uma vez (sai com erro se algum falhar ou se o Godot registrar `ERROR`):
 
@@ -138,7 +140,9 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 - `scripts/character_movement.gd`: primitivas compartilhadas de movimento para `CharacterBody2D`.
 - `scripts/sprites.gd`: monta os `Sprite2D` dos personagens ancorados pelo pé.
 - `scripts/terreno.gd`: layout editável → colisão + textura, por região da fase.
-- `scripts/tochas.gd`: tochas animadas com halo de luz.
+- `scripts/tochas.gd`: tochas animadas com halo e luz de verdade (`PointLight2D`).
+- `scripts/iluminacao.gd`: escuridão ambiente (`CanvasModulate`) que fecha a cada região; tochas, braseiros acesos e o herói abrem poças de luz.
+- `scripts/acabamento_do_terreno.gd`: sombra de profundidade (`vertex_colors`) e contorno escuro em cada bloco de terreno.
 - `tema_pixel.tres`: fonte, cores e bordas da interface, num lugar só.
 - Arquivos `.tscn`: composição dos personagens e das fases; mantenha caminhos de recursos alinhados com os scripts anexados.
 

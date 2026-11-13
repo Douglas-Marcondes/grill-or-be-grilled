@@ -16,6 +16,7 @@ extends RefCounted
 ##     Tochas.montar($EditorPreview/Cenario)
 
 const Sprites = preload("res://scripts/sprites.gd")
+const Iluminacao = preload("res://scripts/iluminacao.gd")
 
 const PREFIXO := "Tocha"
 const QUADROS_DE_CHAMA := 4
@@ -42,8 +43,14 @@ class Tocha extends Node2D:
 	const ALFA_BASE := 0.40
 	const ALFA_PULSO := 0.09
 
+	const ENERGIA_DA_LUZ := 1.4
+	const ESCALA_DA_LUZ := 2.4
+
 	var chama: Sprite2D
 	var halo: Sprite2D
+	## Luz que ilumina o cenario em volta (so em jogo; no editor nao ha
+	## escuridao ambiente e a luz so lavaria a fase).
+	var luz: PointLight2D
 	var tempo := 0.0
 
 	func _ready() -> void:
@@ -56,6 +63,10 @@ class Tocha extends Node2D:
 		chama = Sprites.anexar(self, "tocha_chama", QUADROS_DE_CHAMA,
 				Vector2(-tamanho_da_chama.x / 2.0, -tamanho_da_chama.y))
 		halo = _montar_halo()
+		if not Engine.is_editor_hint():
+			luz = Iluminacao.luz(Iluminacao.COR_DO_FOGO, ENERGIA_DA_LUZ, ESCALA_DA_LUZ)
+			luz.position.y = -6.0
+			add_child(luz)
 
 	func _montar_halo() -> Sprite2D:
 		var tamanho := Sprites.celula("brilho", 1)
@@ -81,3 +92,5 @@ class Tocha extends Node2D:
 			chama.frame = int(tempo * 11.0) % QUADROS_DE_CHAMA
 		if halo:
 			halo.modulate.a = ALFA_BASE + ALFA_PULSO * sin(tempo * 7.0)
+		if luz:
+			luz.energy = ENERGIA_DA_LUZ + 0.12 * sin(tempo * 7.0)

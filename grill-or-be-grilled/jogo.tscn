@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_lua.png" id="11_lua"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_silhueta.png" id="12_silhueta"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_cerca.png" id="13_cerca"]
+[ext_resource type="Texture2D" path="res://Artes/gerado/fundo_colinas.png" id="14_colinas"]
 
 [node name="GrillOrBeGrilled" type="Node2D" unique_id=1082397383]
 script = ExtResource("1_game")
@@ -38,14 +39,25 @@ texture = ExtResource("11_lua")
 
 [node name="CamadaSilhueta" type="Parallax2D" parent="FundoParallax" unique_id=771200306]
 scroll_scale = Vector2(0.28, 0)
-repeat_size = Vector2(320, 0)
-repeat_times = 60
+repeat_size = Vector2(640, 0)
+repeat_times = 30
 
 [node name="Silhueta" type="Sprite2D" parent="FundoParallax/CamadaSilhueta" unique_id=771200307]
 texture_filter = 1
 position = Vector2(0, 106)
 centered = false
 texture = ExtResource("12_silhueta")
+
+[node name="CamadaColinas" type="Parallax2D" parent="FundoParallax" unique_id=771200312]
+scroll_scale = Vector2(0.4, 0)
+repeat_size = Vector2(640, 0)
+repeat_times = 30
+
+[node name="Colinas" type="Sprite2D" parent="FundoParallax/CamadaColinas" unique_id=771200313]
+texture_filter = 1
+position = Vector2(0, 168)
+centered = false
+texture = ExtResource("14_colinas")
 
 [node name="CamadaCerca" type="Parallax2D" parent="FundoParallax" unique_id=771200308]
 scroll_scale = Vector2(0.52, 0)

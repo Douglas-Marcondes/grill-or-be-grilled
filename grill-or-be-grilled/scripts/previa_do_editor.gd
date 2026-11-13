@@ -30,7 +30,7 @@ const Bestiario = preload("res://scripts/bestiario.gd")
 ## Tudo que Terreno e Tochas alteram nos nos de layout. E desta lista que sai o
 ## retrato guardado antes de vestir.
 const PROPRIEDADES_DA_VESTIMENTA := ["polygon", "offset", "scale", "texture",
-		"texture_repeat", "color", "visible"]
+		"texture_repeat", "color", "vertex_colors", "visible"]
 
 ## Classe e arma mostradas no editor. Fixas porque o autoload GameData nao roda
 ## no editor, logo nao ha "arma equipada" para consultar aqui.

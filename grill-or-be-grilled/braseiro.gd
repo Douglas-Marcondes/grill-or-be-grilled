@@ -36,7 +36,7 @@ func _ready() -> void:
 
 
 func _mostrar_chama(visivel: bool) -> void:
-	for parte in [tocha.chama, tocha.halo]:
+	for parte in [tocha.chama, tocha.halo, tocha.luz]:
 		if parte:
 			parte.visible = visivel
 

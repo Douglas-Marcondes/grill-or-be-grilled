@@ -12,6 +12,7 @@ const Tochas = preload("res://scripts/tochas.gd")
 const Limites = preload("res://scripts/limites.gd")
 const Historia = preload("res://scripts/historia.gd")
 const Menus = preload("res://scripts/menus.gd")
+const Iluminacao = preload("res://scripts/iluminacao.gd")
 
 const LEVEL_END := 10000.0
 var ui: CanvasLayer
@@ -74,6 +75,7 @@ func _build_playable_geometry() -> void:
 		return
 	Terreno.montar(level_art)
 	Tochas.montar(level_art)
+	add_child(Iluminacao.new())
 	_build_world_walls()
 
 
@@ -174,6 +176,10 @@ func start_level() -> void:
 	player.position = checkpoint
 	player.configure(GameData.selected_class)
 	_register_level_object(player)
+	# Luz fraca no heroi: no porao escuro ele nunca some entre duas tochas.
+	var luz_do_heroi := Iluminacao.luz(Iluminacao.COR_DO_HEROI, 0.6, 1.3)
+	luz_do_heroi.position.y = -14.0
+	player.add_child(luz_do_heroi)
 	var camera: Camera2D = player.camera
 	if camera:
 		camera.limit_left = 0

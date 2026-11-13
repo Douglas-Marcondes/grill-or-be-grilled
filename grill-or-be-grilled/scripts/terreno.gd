@@ -10,6 +10,8 @@ extends RefCounted
 ## Exemplo:
 ##     Terreno.montar($EditorPreview/Cenario)
 
+const AcabamentoDoTerreno = preload("res://scripts/acabamento_do_terreno.gd")
+
 const PASTA_TILES := "res://Artes/gerado/tile_%s.png"
 
 ## Fronteiras em X das tres regioes da fase, alinhadas com os Marco* do mapa:
@@ -52,6 +54,7 @@ static func montar(cenario: Node2D) -> int:
 		if _tem_prefixo(arte.name, PREFIXOS_DE_CORPO):
 			var papel := "faixa" if caixa.size.y <= ALTURA_DE_SALIENCIA else "corpo"
 			_vestir(arte, MATERIAIS[regiao][papel])
+			AcabamentoDoTerreno.aplicar(arte)
 			if _criar_colisao(arte):
 				corpos += 1
 		elif str(arte.name).begins_with(PREFIXO_DE_FAIXA):

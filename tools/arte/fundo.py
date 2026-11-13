@@ -9,12 +9,16 @@ Toda faixa e desenhada para repetir na horizontal (motion_mirroring no Godot),
 entao nada encosta nas bordas laterais.
 """
 
+import math
 import random
 
 from paleta import cor
 from tela import Tela, colar, retangulo
 
 LARGURA_FAIXA = 320
+# O horizonte repete a cada 640px: com 320 o mesmo celeiro-silo-moinho voltava
+# varias vezes por tela e o fundo lia como carimbo.
+LARGURA_HORIZONTE = 640
 
 
 def _semeado(nome: str) -> random.Random:
@@ -127,19 +131,28 @@ def cerca(largura: int = LARGURA_FAIXA, tom: str = "silhueta_perto") -> Tela:
     return tela
 
 
-def faixa_silhueta(largura: int = LARGURA_FAIXA) -> Tela:
-    """Horizonte distante da fazenda, alinhado pelo pe da faixa."""
+def faixa_silhueta(largura: int = LARGURA_HORIZONTE) -> Tela:
+    """Horizonte distante da fazenda, alinhado pelo pe da faixa.
+
+    Espacamento irregular de proposito: pecas a intervalos parecidos formam um
+    ritmo que o olho percebe como padrao repetido."""
     altura = 72
     tela = Tela(largura, altura)
     pecas = [
         (arvore_seca(), 4),
         (celeiro(), 42),
         (silo(), 94),
-        (arvore_seca(), 120),
-        (moinho(), 158),
-        (arbusto(), 202),
-        (celeiro(), 226),
-        (arvore_seca(), 288),
+        (arvore_seca(), 112),
+        (moinho(), 168),
+        (arbusto(), 214),
+        (arvore_seca(), 300),
+        (arvore_seca(), 318),
+        (celeiro(), 382),
+        (arbusto(), 440),
+        (moinho(), 470),
+        (silo(), 548),
+        (silo(), 566),
+        (arvore_seca(), 604),
     ]
     for peca, x in pecas:
         colar(tela, peca, x, altura - peca.altura)
@@ -155,6 +168,29 @@ def faixa_cerca(largura: int = LARGURA_FAIXA) -> Tela:
     for _ in range(7):
         colar(tela, arbusto("silhueta_perto"), sorteio.randrange(largura - 18),
               altura - 10)
+    return tela
+
+
+def _altura_da_colina(x: int, largura: int) -> int:
+    """Perfil ondulado que fecha o ciclo: so senos com periodo inteiro na
+    largura da faixa, entao a borda direita encontra a esquerda."""
+    angulo = 2.0 * math.pi * x / largura
+    return int(10 + 5 * math.sin(angulo * 2) + 3 * math.sin(angulo * 5 + 1.3))
+
+
+def faixa_colinas(largura: int = LARGURA_HORIZONTE, altura: int = 110) -> Tela:
+    """Colinas escuras entre o horizonte e a cerca, descendo ate o rodape.
+
+    Fecham o vazio cor de bruma que aparecia em todo buraco da fase: sem elas o
+    olho via o fim do ceu chapado logo abaixo das plataformas. A crista ganha
+    1px de luar para a colina ler como volume e nao como mancha."""
+    tela = Tela(largura, altura)
+    for x in range(largura):
+        topo = _altura_da_colina(x, largura)
+        tela.definir(x, topo, cor("luar_fraco"))
+        for y in range(topo + 1, altura):
+            escuro = BAYER_4[y % 4][x % 4] < min(16, (y - topo) // 2)
+            tela.definir(x, y, cor("silhueta_perto" if escuro else "silhueta"))
     return tela
 
 
@@ -225,6 +261,7 @@ def lua(raio: int = 11) -> Tela:
 CAMADAS = {
     "ceu": ceu,
     "silhueta": faixa_silhueta,
+    "colinas": faixa_colinas,
     "cerca": faixa_cerca,
     "lua": lua,
 }

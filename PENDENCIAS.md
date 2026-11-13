@@ -38,6 +38,21 @@ Atualizada em 13/11/2026, depois da rodada de jogabilidade, desafio, história e
 
 ## Arte
 
+Primeira camada visual feita em 13/11/2026: luz e escuridão por região, sombra
+de profundidade e contorno no terreno, colinas no fundo e horizonte menos
+repetido. Próximas camadas, da que mais muda a cara do jogo para a que menos:
+
+- **Tochas da fazenda flutuam no céu.** Ao ar livre não há parede para prender a
+  tocha; precisam de poste, ou virar lampião pendurado na cerca.
+- **Sem decoração de primeiro plano**: tufos de capim, fardos de feno, barris,
+  correntes e ossos quebrariam os blocos lisos. Pede um `scripts/adornos.gd` que
+  espalhe adereços nos topos das plataformas por região.
+- **Bordas das plataformas são retas.** Uma borda irregular (franja de palha
+  caindo, pedra lascada) no topo e nas quinas tira o ar de retângulo.
+- **HUD é texto puro.** Corações e ícone de ovo em vez de "♥ 50/50  Ovos: 0".
+- **Musgo verde no topo do porão** lê como grama ao ar livre; um piso de laje
+  combinaria mais com masmorra.
+
 - **A prévia do editor não cobre o parallax do fundo** (depende de simular a
   câmera).
 - **Projéteis e efeitos ainda são `draw_rect`** (`projectile.gd`,
