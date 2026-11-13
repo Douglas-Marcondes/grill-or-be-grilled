@@ -140,9 +140,14 @@ tools/exportar.sh web      # gera exportar/web/
 tools/exportar.sh testar   # serve na rede local; abra o endereço no celular
 ```
 
-Para jogar fora de casa, publique a pasta `exportar/web/` numa hospedagem
-estática (GitHub Pages, itch.io). É um PWA: no celular, "Adicionar à tela
-inicial" instala como app, em tela cheia e deitado.
+**Link público (GitHub Pages):** `.github/workflows/publicar-web.yml` exporta e
+publica a versão Web a cada push na `main`. Falta ativar uma vez, pelo dono do
+repositório: Settings → Pages → Source: **GitHub Actions**. Como o repositório é
+privado, o Pages exige plano pago (Pro/Team) ou tornar o repositório público. O
+jogo fica em `https://douglas-marcondes.github.io/grill-or-be-grilled/`.
+
+É um PWA: no celular, "Adicionar à tela inicial" instala como app, em tela cheia
+e deitado.
 
 **APK de Android:** o preset já existe (`export_presets.cfg`), mas a máquina
 precisa de:
