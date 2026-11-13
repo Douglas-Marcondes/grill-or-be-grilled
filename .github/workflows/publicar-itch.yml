@@ -1,10 +1,15 @@
-# Exporta a versão Web (a mesma de tools/exportar.sh web) e publica no GitHub
-# Pages a cada push na main. Assim o link do jogo para o celular está sempre na
-# última versão, sem ninguém precisar exportar e subir arquivos à mão.
+# Exporta a versão Web (a mesma de tools/exportar.sh web) e publica no itch.io
+# a cada push na main, para jogar no celular pelo navegador. Usa o butler, a
+# ferramenta oficial de upload do itch.io.
 #
-# Requer, uma vez, nas configurações do repositório: Settings -> Pages ->
-# Source: "GitHub Actions". Repositório privado só tem Pages em plano pago.
-name: Publicar versão Web
+# itch.io em vez de GitHub Pages porque o repositório é privado: Pages em
+# repositório privado exige plano pago, e o itch.io aceita página com senha.
+#
+# Configuração, uma vez (README, "Publicar no itch.io"):
+#   - secret   BUTLER_API_KEY : chave em https://itch.io/user/settings/api-keys
+#   - variável ITCH_JOGO      : "usuario/pagina-do-jogo", como na URL do itch
+# Sem eles o workflow exporta e avisa, mas não falha.
+name: Publicar no itch.io
 
 on:
   push:
@@ -13,11 +18,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: itch
   cancel-in-progress: true
 
 env:
@@ -25,7 +28,7 @@ env:
   GODOT_TEMPLATES: ~/.local/share/godot/export_templates/4.7.2.stable
 
 jobs:
-  exportar:
+  publicar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -59,16 +62,18 @@ jobs:
           ./godot --headless --path grill-or-be-grilled --export-release "Web" ../exportar/web/index.html
           test -s exportar/web/index.wasm
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: exportar/web
-
-  publicar:
-    needs: exportar
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
-    steps:
-      - id: deploy
-        uses: actions/deploy-pages@v4
+      - name: Publicar com butler
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          ITCH_JOGO: ${{ vars.ITCH_JOGO }}
+        run: |
+          if [ -z "$BUTLER_API_KEY" ] || [ -z "$ITCH_JOGO" ]; then
+            echo "::warning::itch.io não configurado (secret BUTLER_API_KEY e variável ITCH_JOGO). Build exportado, mas não publicado."
+            exit 0
+          fi
+          curl -sSL -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip -q butler.zip -d butler
+          chmod +x butler/butler
+          # Canal "html5": o itch reconhece a pasta com index.html como jogo
+          # de navegador. A versão é o commit, para saber o que está no ar.
+          ./butler/butler push exportar/web "$ITCH_JOGO:html5" --userversion "${GITHUB_SHA::7}"

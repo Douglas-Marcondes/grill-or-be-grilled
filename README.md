@@ -163,11 +163,27 @@ tools/exportar.sh web      # gera exportar/web/
 tools/exportar.sh testar   # serve na rede local; abra o endereço no celular
 ```
 
-**Link público (GitHub Pages):** `.github/workflows/publicar-web.yml` exporta e
-publica a versão Web a cada push na `main`. Falta ativar uma vez, pelo dono do
-repositório: Settings → Pages → Source: **GitHub Actions**. Como o repositório é
-privado, o Pages exige plano pago (Pro/Team) ou tornar o repositório público. O
-jogo fica em `https://douglas-marcondes.github.io/grill-or-be-grilled/`.
+**Publicar no itch.io:** `.github/workflows/publicar-itch.yml` exporta a versão
+Web e envia para o itch.io (com o butler) a cada push na `main`. O itch.io e não
+o GitHub Pages porque o repositório é privado (Pages privado exige plano pago).
+Configuração, uma vez:
+
+1. Crie a página do jogo em https://itch.io/game/new:
+   - *Kind of project*: **HTML**.
+   - *Embed options*: tamanho **960 x 540**, marque **Mobile friendly**
+     (orientação **Landscape**) e **Fullscreen button**.
+   - *Visibility*: **Restricted** com senha, se quiser só para vocês; **Public**
+     quando for lançar.
+   - Salve como rascunho. A URL fica `https://<usuario>.itch.io/<pagina>`.
+2. Gere uma chave em https://itch.io/user/settings/api-keys.
+3. No GitHub, em Settings → Secrets and variables → Actions:
+   - aba **Secrets**: `BUTLER_API_KEY` = a chave;
+   - aba **Variables**: `ITCH_JOGO` = `<usuario>/<pagina>` (ex.: `doujor/grill-or-be-grilled`).
+4. Rode o workflow (Actions → Publicar no itch.io → Run workflow) ou faça um push.
+5. Na página do itch, no upload que apareceu, marque **This file will be played
+   in the browser** e salve. Só na primeira vez.
+
+Sem a chave e a variável, o workflow só exporta e deixa um aviso, sem falhar.
 
 É um PWA: no celular, "Adicionar à tela inicial" instala como app, em tela cheia
 e deitado.
