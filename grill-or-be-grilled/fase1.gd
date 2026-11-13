@@ -279,7 +279,7 @@ func boss_defeated(at: Vector2) -> void:
 		return
 	GameData.finish_run()
 	GameData.save_progress()
-	show_shop(true)
+	show_victory()
 
 func slash_effect(at: Vector2, facing: float, projectile: bool, tint: Color = Color("ffe18b")) -> void:
 	var effect := Node2D.new()
@@ -385,10 +385,19 @@ func show_prologue() -> void:
 		GameData.save_progress()
 		show_class_select())
 
-func show_shop(_victory: bool) -> void:
+func show_victory() -> void:
+	"""Epilogo em tela propria antes da loja: junto dela, o texto longo empurrava
+	os botoes para fora da tela de 270px e o "Voltar" sumia -- o jogador ficava
+	preso na loja."""
+	screen = "victory"
+	boss_bar.visible = false
+	var panel := _panel("VITÓRIA!", end_message)
+	Menus.botao(panel, "Ir para a loja", func(): show_shop())
+
+func show_shop() -> void:
 	screen = "shop"
 	boss_bar.visible = false
-	var result_text := "%s\nOvos vendidos: %d moedas   Saldo: %d moedas" % [end_message if not end_message.is_empty() else "A primeira fase foi vencida!", GameData.last_sale, GameData.gold]
+	var result_text := "Ovos vendidos: %d moedas   Saldo: %d moedas" % [GameData.last_sale, GameData.gold]
 	var panel := _panel("LOJA DO ACAMPAMENTO", result_text)
 	Menus.botao(panel, "Poção de força permanente (+5) — 20 moedas", func(): _buy("forca"))
 	Menus.botao(panel, "Poção de vida permanente (+5) — 20 moedas", func(): _buy("vida"))
@@ -402,13 +411,13 @@ func _buy(kind: String) -> void:
 	if not GameData.comprar_melhoria(kind):
 		show_message("Ainda faltam moedas! Venda ovos vencendo uma fase.")
 		return
-	show_shop(true)
+	show_shop()
 
 func _buy_weapon(weapon: String) -> void:
 	if not GameData.comprar_arma(weapon):
 		show_message("Ainda faltam moedas para essa arma!")
 		return
-	show_shop(true)
+	show_shop()
 
 func show_end_panel(text: String, button_text: String, callback: Callable) -> void:
 	var panel := _panel("FIM DE JOGO", text)
