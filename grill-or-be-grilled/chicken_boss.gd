@@ -22,7 +22,9 @@ const COR_DO_GOLPE := {
 	Golpe.SALTO: Color("df7126"),
 	Golpe.PENAS: Color("d95763"),
 }
-const DISTANCIA_DE_DESPERTAR := 620.0
+## Ela acorda quando entra no quadro; com 620px acordava antes de aparecer e o
+## braseiro da porta da arena caia dentro da luta.
+const DISTANCIA_DE_DESPERTAR := 420.0
 const VELOCIDADE_DA_INVESTIDA := 470.0
 const DURACAO_DA_INVESTIDA := 0.5
 const IMPULSO_DO_SALTO := -560.0

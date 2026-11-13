@@ -68,9 +68,16 @@ func _ready() -> void:
 		printerr("FALHOU: %s" % falha)
 		get_tree().quit(1)
 		return
+	var vidas_antes: int = game.vidas
 	var dano_no_chefe := await _lutar_na_arena(game)
-	if dano_no_chefe <= 0:
-		printerr("FALHOU: a luta na arena nao feriu a Galinha Real")
+	if game.vidas < vidas_antes:
+		# Com 999 de vida so a queda mata: a arena tinha uma fresta no fim do
+		# mundo e a Galinha Real caia por ela, travando a luta.
+		falha = "o heroi caiu para fora da arena"
+	elif dano_no_chefe <= 0:
+		falha = "a luta na arena nao feriu a Galinha Real"
+	if not falha.is_empty():
+		printerr("FALHOU: %s" % falha)
 		get_tree().quit(1)
 		return
 	print("SMOKE_OK avancou=%.0fpx galinhas_restantes=%d dano_no_chefe=%d" % [avancou, get_tree().get_nodes_in_group("enemies").size(), dano_no_chefe])
@@ -94,9 +101,13 @@ func _lutar_na_arena(game: Node) -> int:
 		_alternar("pular", passo, 70)
 		_alternar("esquivar", passo, 95)
 		await get_tree().physics_frame
+		if OS.has_environment("RASTRO") and passo % 15 == 0:
+			print("arena passo=%d heroi=(%.0f,%.0f) chefe=(%.0f,%.0f) vidas=%d" % [passo, jogador.global_position.x, jogador.global_position.y, chefe.global_position.x, chefe.global_position.y, game.vidas])
 		Input.action_release(lado)
 	for acao in ACOES + ["esquivar"]:
 		Input.action_release(acao)
+	if OS.has_environment("RASTRO"):
+		print("arena: chefe_valido=%s vidas=%d tela=%s" % [is_instance_valid(chefe), game.vidas, game.screen])
 	return 24 if not is_instance_valid(chefe) else chefe.max_health - chefe.health
 
 

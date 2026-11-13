@@ -598,7 +598,7 @@ polygon = PackedVector2Array(8590, 430, 9020, 430, 9020, 440, 8590, 440)
 position = Vector2(-19, -9.29155)
 scale = Vector2(1, 1.0291663)
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(9140, 490, 9445, 492.91504, 9501, 505.54663, 9595, 518.1782, 9700, 519.1499, 9733, 517.20654, 9814, 511.3766, 9866, 504.57495, 9920, 490.00006, 9939, 480.28345, 10000, 490, 10000, 730, 9140, 730)
+polygon = PackedVector2Array(9140, 490, 9445, 492.91504, 9501, 505.54663, 9595, 518.1782, 9700, 519.1499, 9733, 517.20654, 9814, 511.3766, 9866, 504.57495, 9920, 490.00006, 9939, 480.28345, 10020, 490, 10020, 730, 9140, 730)
 
 [node name="Grama17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1520934960]
 position = Vector2(-19, -4)
@@ -830,7 +830,7 @@ polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, 
 metadata/tipo = "galo"
 
 [node name="Bot16" type="Polygon2D" parent="EditorPreview/Personagens/Bots" unique_id=1327343584]
-position = Vector2(9250, 486)
+position = Vector2(8300, 496)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
 metadata/tipo = "atiradeira"
@@ -867,6 +867,28 @@ metadata/tipo = "galo"
 position = Vector2(8900, 426)
 color = Color(1, 0.941176, 0.811765, 1)
 polygon = PackedVector2Array(-18, -30, 18, -30, 18, -4, -18, -4, -22, -20, -14, -36, -9, -32, -9, -20, 9, -20, 9, -32, 14, -36, 22, -20, 18, -4)
+
+[node name="Braseiros" type="Node2D" parent="EditorPreview/Personagens"]
+
+[node name="Braseiro1" type="Polygon2D" parent="EditorPreview/Personagens/Braseiros"]
+position = Vector2(2400, 430)
+color = Color(0.87451, 0.443137, 0.14902, 1)
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, -12, 7, -20, 0, -26, -7, -20, -4, -12)
+
+[node name="Braseiro2" type="Polygon2D" parent="EditorPreview/Personagens/Braseiros"]
+position = Vector2(4620, 370)
+color = Color(0.87451, 0.443137, 0.14902, 1)
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, -12, 7, -20, 0, -26, -7, -20, -4, -12)
+
+[node name="Braseiro3" type="Polygon2D" parent="EditorPreview/Personagens/Braseiros"]
+position = Vector2(6900, 450)
+color = Color(0.87451, 0.443137, 0.14902, 1)
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, -12, 7, -20, 0, -26, -7, -20, -4, -12)
+
+[node name="Braseiro4" type="Polygon2D" parent="EditorPreview/Personagens/Braseiros"]
+position = Vector2(9160, 494)
+color = Color(0.87451, 0.443137, 0.14902, 1)
+polygon = PackedVector2Array(-4, 0, 4, 0, 4, -12, 7, -20, 0, -26, -7, -20, -4, -12)
 
 [node name="GalinhaReal" type="Polygon2D" parent="EditorPreview/Personagens" unique_id=2121029183]
 position = Vector2(9650, 455)

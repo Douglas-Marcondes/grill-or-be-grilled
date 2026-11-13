@@ -43,6 +43,7 @@ var camera: Camera2D
 ## virado de costas para a galinha, ele era jogado para dentro dela.
 const EMPURRAO := Vector2(190.0, -150.0)
 const INVULNERAVEL_APOS_DANO := 0.9
+const INVULNERAVEL_AO_RENASCER := 1.5
 ## Ressalto que o heroi sobe sem pular. 8px cobre a quina da capsula (3px) e as
 ## emendas do layout sem virar escada: degrau de verdade (20px+) ainda exige pulo.
 const ALTURA_DO_DEGRAU := 8.0
@@ -185,6 +186,16 @@ func attack() -> void:
 		shot.color = Color("b4e17b") if GameData.equipped_weapon == "Arco" else Color("bd9aff")
 		get_tree().current_scene.add_child(shot)
 		$"..".slash_effect(global_position + Vector2(facing * 23.0, ALTURA_DA_MAO), facing, true)
+
+func renascer(onde: Vector2) -> void:
+	"""Volta a `onde` com vida cheia e um respiro de invulnerabilidade."""
+	global_position = onde
+	velocity = Vector2.ZERO
+	knockback = 0.0
+	health = max_health
+	invulnerability = INVULNERAVEL_AO_RENASCER
+	set_physics_process(true)
+
 
 func take_damage(amount: int, origem: Vector2 = Vector2.INF) -> void:
 	"""Dano vindo de `origem` (posicao de quem bateu). Ignorado durante a

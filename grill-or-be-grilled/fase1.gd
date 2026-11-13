@@ -5,6 +5,7 @@ const Bestiario = preload("res://scripts/bestiario.gd")
 const BossScript = preload("res://chicken_boss.gd")
 const EggScript = preload("res://egg_pickup.gd")
 const EffectScript = preload("res://pixel_effect.gd")
+const BraseiroScript = preload("res://braseiro.gd")
 const TEMA = preload("res://tema_pixel.tres")
 const Terreno = preload("res://scripts/terreno.gd")
 const Tochas = preload("res://scripts/tochas.gd")
@@ -27,6 +28,10 @@ var message_timer := 0.0
 var end_message := ""
 var proximo_marco := 4
 var boss_intro_shown := false
+## Vidas por tentativa: acabar com elas e o "fim de jogo" que perde os ovos.
+const VIDAS_POR_TENTATIVA := 3
+var vidas := VIDAS_POR_TENTATIVA
+var checkpoint := Vector2.ZERO
 
 func _ready() -> void:
 	var preview_characters := get_node_or_null("EditorPreview/Personagens")
@@ -56,6 +61,23 @@ func _build_playable_geometry() -> void:
 		return
 	Terreno.montar(level_art)
 	Tochas.montar(level_art)
+	_build_world_walls()
+
+
+func _build_world_walls() -> void:
+	"""Paredes invisiveis em x=0 e x=LEVEL_END. Sem elas o salto da Galinha
+	Real a levava para fora do fim da arena e ela caia para sempre: a luta
+	ficava impossivel de vencer (achado pelo teste de fumaca na arena)."""
+	for x in [0.0, LEVEL_END]:
+		var wall := StaticBody2D.new()
+		wall.collision_layer = 1
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(40, 2000)
+		shape.shape = rect
+		shape.position = Vector2(x + (20.0 if x > 0.0 else -20.0), 0)
+		wall.add_child(shape)
+		add_child(wall)
 
 
 func _build_ui() -> void:
@@ -110,6 +132,7 @@ func start_level() -> void:
 	_clear_level()
 	GameData.begin_run()
 	chickens_defeated = 0
+	vidas = VIDAS_POR_TENTATIVA
 	proximo_marco = 4
 	boss_intro_shown = false
 	screen = "playing"
@@ -122,9 +145,15 @@ func start_level() -> void:
 	for marker in egg_markers:
 		var egg_kind := int(marker.get_meta("egg_kind", 1))
 		_place_egg(marker.global_position, egg_kind)
+	for marker in get_node("EditorPreview/Personagens/Braseiros").get_children():
+		var braseiro := Area2D.new()
+		braseiro.set_script(BraseiroScript)
+		braseiro.position = marker.global_position
+		_register_level_object(braseiro)
+	checkpoint = get_node("EditorPreview/Personagens/Jogador").global_position
 	player = CharacterBody2D.new()
 	player.set_script(PlayerScript)
-	player.position = get_node("EditorPreview/Personagens/Jogador").global_position
+	player.position = checkpoint
 	player.configure(GameData.selected_class)
 	_register_level_object(player)
 	var camera := player.get_node_or_null("Camera2D") as Camera2D
@@ -257,19 +286,44 @@ func shockwave_effect(at: Vector2, alcance: float) -> void:
 func boss_enraged() -> void:
 	show_message("A Galinha Real se enfurece! Os golpes ficam mais rápidos.", 3.0)
 
+func checkpoint_reached(at: Vector2) -> void:
+	checkpoint = at + Vector2(0, -2)
+	if is_instance_valid(player):
+		player.health = player.max_health
+	update_hud()
+	show_message("Braseiro aceso! Vida cheia. Se cair, você volta aqui.", 3.0)
+
 func player_died() -> void:
 	if screen != "playing":
+		return
+	vidas -= 1
+	if vidas > 0:
+		_respawn_player.call_deferred()
 		return
 	screen = "dead"
 	GameData.fail_run()
 	GameData.save_progress()
 	show_end_panel("Você virou omelete! Os ovos desta tentativa foram perdidos.", "Tentar de novo", func(): start_level())
 
+func _respawn_player() -> void:
+	"""Volta ao ultimo braseiro com vida cheia. A Galinha Real tambem se
+	recompoe: morrer na luta recomeca a luta, nao so a vida do heroi."""
+	if not is_instance_valid(player):
+		return
+	player.renascer(checkpoint)
+	if is_instance_valid(boss) and boss.despertou:
+		boss.queue_free()
+		boss = null
+		boss_intro_shown = false
+		_spawn_boss()
+	update_hud()
+	show_message("Você caiu! Restam %d vidas. De volta ao braseiro." % vidas if vidas > 1 else "Última vida! Cuidado.", 3.0)
+
 func update_hud() -> void:
 	if not hud_label:
 		return
 	if screen == "playing" and is_instance_valid(player):
-		hud_label.text = "%s  ♥ %d/%d   Valor dos ovos: %d   Galinhas: %d/%d" % [GameData.selected_class, player.health, player.max_health, GameData.run_eggs, chickens_defeated, total_chickens]
+		hud_label.text = "%s  ♥ %d/%d  Vidas: %d  Ovos: %d  Galinhas: %d/%d" % [GameData.selected_class, player.health, player.max_health, vidas, GameData.run_eggs, chickens_defeated, total_chickens]
 	else:
 		hud_label.text = "Ovos: %d   Moedas: %d" % [GameData.run_eggs, GameData.gold]
 
