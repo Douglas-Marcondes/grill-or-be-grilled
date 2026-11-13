@@ -39,6 +39,18 @@ O jogo roda num viewport de **480x270** ampliado em escala inteira
 arte vira um bloco quadrado na tela em vez de ser reamostrado. 480x270 cabe exato
 em 1920x1080 (4x).
 
+O editor do Godot apaga comentários do `project.godot` ao salvar, então o porquê
+das configurações de tela fica aqui:
+
+- `aspect="expand"`: tela mais larga que 16:9 (celular deitado) mostra mais
+  mundo dos lados; em pé, a tela cresce para baixo e a sobra vira o painel dos
+  controles (`scripts/formato_da_tela.gd`).
+- `scale_mode.mobile` / `.web_android` / `.web_ios` = `"fractional"`: no celular
+  a escala inteira deixava o jogo minúsculo (412px de altura só comportam 1x os
+  270px). Em tela de alta densidade a escala fracionária quase não se nota.
+- `handheld/orientation=6` (sensor) e PWA com orientação livre: o jogo funciona
+  em pé e deitado.
+
 ### Gerando a arte
 
 ```
