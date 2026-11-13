@@ -1,5 +1,8 @@
 extends Area2D
 
+const Impacto = preload("res://scripts/impacto.gd")
+const CAMADA_DOS_INIMIGOS := 2
+
 var direction := Vector2.RIGHT
 var speed := 480.0
 var damage := 1
@@ -29,5 +32,7 @@ func _draw() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
-		body.take_damage(damage)
+		body.take_damage(damage, global_position)
+		if target_mask == CAMADA_DOS_INIMIGOS:
+			Impacto.golpe(get_tree(), Impacto.ACERTO)
 		queue_free()

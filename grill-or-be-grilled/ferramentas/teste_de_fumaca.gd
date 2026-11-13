@@ -12,9 +12,8 @@ extends Node2D
 
 const ACOES := ["andar_esquerda", "andar_direita", "pular", "atacar"]
 const PASSOS := 600
-## Sonda o chao a 30, 60 e 90px: so a borda nao basta porque as pedras
-## RotaAlta7/8/11/13 pendem sobre a saida do trecho anterior, e la o pulo tem de
-## sair ANTES da pedra, senao o heroi bate a cabeca nela.
+## Sonda o chao a 30, 60 e 90px: degrau alto tem de ser visto de longe, senao o
+## pulo sai tarde e o heroi bate de frente nele.
 const DISTANCIAS_DE_SONDAGEM := [30.0, 60.0, 90.0]
 const ALTURA_DA_SONDA := 110.0
 const ALCANCE_DA_SONDA := 190.0
@@ -22,12 +21,10 @@ const ALCANCE_DA_SONDA := 190.0
 ## de buraco (buraco longe ainda nao e problema; degrau longe ja e).
 const DESNIVEL_QUE_EXIGE_PULO := 4.0
 const DISTANCIA_DE_BURACO := 60.0
-## Quanto o autopilot leva a fase em 10s. Nao e a fase inteira de proposito: o
-## piloto automatico pula sempre com forca total e passa por cima das pedras
-## RotaAlta, e varias passagens da fase exigem precisao que ele nao tem (ver
-## PENDENCIAS.md, "Passagens travadas"). O que este teste garante e o contrato
-## da camada de controle: as acoes existem, movem o heroi de verdade e ele
-## atravessa a fazenda vivo.
+## Quanto o autopilot leva a fase em 10s. Nao e a fase inteira: cada vao e
+## coberto por teste_das_passagens. O que este teste garante e o contrato da
+## camada de controle com a fase de verdade: as acoes existem, movem o heroi no
+## meio das galinhas e ele atravessa a fazenda vivo.
 const AVANCO_MINIMO := 1500.0
 ## Frames segurando o pulo. Precisa passar dos 0.43s de subida do arco cheio,
 ## senao o corte de altura variavel encurta o salto e o teste cai nas lacunas
@@ -38,7 +35,10 @@ var _segurando_o_pulo := 0
 
 func _ready() -> void:
 	for acao in ACOES:
-		assert(InputMap.has_action(acao), "Falta a acao '%s' no input map (project.godot [input])" % acao)
+		if not InputMap.has_action(acao):
+			printerr("FALHOU: falta a acao '%s' no input map (project.godot [input])" % acao)
+			get_tree().quit(1)
+			return
 	var game := preload("res://jogo.tscn").instantiate()
 	add_child(game)
 	await get_tree().process_frame
@@ -49,13 +49,24 @@ func _ready() -> void:
 	for passo in PASSOS:
 		_dirigir(jogador, passo)
 		await get_tree().physics_frame
+		if OS.has_environment("RASTRO") and passo % 20 == 0:
+			print("passo=%d x=%.0f y=%.0f vida=%d vx=%.0f chao=%s esq=%s kb=%.2f ts=%.2f" % [passo, jogador.global_position.x, jogador.global_position.y, jogador.health, jogador.velocity.x, jogador.is_on_floor(), jogador.esquiva.ativa(), jogador.knockback, Engine.time_scale])
 		if game.screen != "playing":
 			break
 	for acao in ACOES:
 		Input.action_release(acao)
 	var avancou := jogador.global_position.x - partiu_de
-	assert(game.screen == "playing", "O heroi nao sobreviveu a travessia: tela=%s em x=%.0f" % [game.screen, jogador.global_position.x])
-	assert(avancou >= AVANCO_MINIMO, "O heroi avancou so %.0fpx; esperado ao menos %.0fpx" % [avancou, AVANCO_MINIMO])
+	# Falha com quit(1) e nao com assert: assert em --headless pausa o Godot no
+	# depurador e o teste fica pendurado ate o timeout em vez de falhar.
+	var falha := ""
+	if game.screen != "playing":
+		falha = "O heroi nao sobreviveu a travessia: tela=%s em x=%.0f" % [game.screen, jogador.global_position.x]
+	elif avancou < AVANCO_MINIMO:
+		falha = "O heroi avancou so %.0fpx; esperado ao menos %.0fpx" % [avancou, AVANCO_MINIMO]
+	if not falha.is_empty():
+		printerr("FALHOU: %s" % falha)
+		get_tree().quit(1)
+		return
 	print("SMOKE_OK avancou=%.0fpx galinhas_restantes=%d" % [avancou, get_tree().get_nodes_in_group("enemies").size()])
 	get_tree().quit()
 

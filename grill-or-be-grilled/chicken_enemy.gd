@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 	if attack_windup > 0.0:
 		attack_windup -= delta
 		if attack_windup <= 0.0 and _player_in_peck_range():
-			target.take_damage(1)
+			target.take_damage(1, global_position)
 			attack_cooldown = 1.35
 	elif target and is_instance_valid(target) and attack_cooldown <= 0.0 and _player_in_peck_range():
 		attack_windup = 0.48
@@ -141,11 +141,11 @@ func _has_landing_ahead(direction: float) -> bool:
 	query.exclude = [get_rid()]
 	return not get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, origem: Vector2 = Vector2.INF) -> void:
 	health -= amount
 	flash = 0.14
 	hit_stun = 0.16
-	velocity.x = signf(global_position.x - target.global_position.x) * 115.0 if is_instance_valid(target) else 0.0
+	velocity.x = signf(global_position.x - origem.x) * 115.0 if origem.is_finite() else 0.0
 	if health <= 0:
 		var game := get_tree().get_first_node_in_group("game")
 		if game:

@@ -31,6 +31,7 @@ func _ready() -> void:
 	var trechos := _trechos_ordenados(game.get_node("EditorPreview/Cenario"))
 	for indice in trechos.size() - 1:
 		await _atravessar(game.player, trechos[indice], trechos[indice + 1])
+	await _testar_quina(game.player, trechos[2])
 	for falha in _falhas:
 		printerr("FALHOU: %s" % falha)
 	if _falhas.is_empty():
@@ -73,6 +74,26 @@ func _atravessar(jogador: CharacterBody2D, de: Rect2, para: Rect2) -> void:
 	var chegou := jogador.is_on_floor() and jogador.global_position.x > para.position.x + 30.0
 	if not chegou:
 		_falhas.append("vao x=%.0f -> x=%.0f: heroi parou em (%.0f, %.0f), esperado em pe depois de x=%.0f" % [de.end.x, para.position.x, jogador.global_position.x, jogador.global_position.y, para.position.x + 30.0])
+
+
+func _testar_quina(jogador: CharacterBody2D, trecho: Rect2) -> void:
+	"""Cair na quina de um trecho nao pode prender o heroi: o colisor em capsula
+	pousava no canto 3px abaixo do topo e ficava parado contra ele com a direcao
+	apertada (PENDENCIAS.md, "Sem assistencia de degrau", Trecho3 x=1225)."""
+	# Salto de 66px antes da quina e o que o teste de fumaca pegou: o heroi
+	# pousava a 3px do topo e ficava parado. Os vizinhos cobrem a mesma quina
+	# por cima e por baixo.
+	for recuo in range(56, 70, 2):
+		jogador.set_physics_process(true)
+		jogador.global_position = Vector2(trecho.position.x - recuo, trecho.position.y - 75.0)
+		jogador.velocity = Vector2(270.0, 150.0)
+		Input.action_press("andar_direita")
+		for frame in 60:
+			await get_tree().physics_frame
+		Input.action_release("andar_direita")
+		var caiu_no_vao := jogador.global_position.y > Y_DE_QUEDA
+		if not caiu_no_vao and jogador.global_position.x < trecho.position.x + 40.0:
+			_falhas.append("quina x=%.0f, salto %.0fpx antes: heroi preso em (%.0f, %.0f)" % [trecho.position.x, recuo, jogador.global_position.x, jogador.global_position.y])
 
 
 func _pular_na_borda(jogador: CharacterBody2D) -> void:

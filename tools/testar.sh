@@ -9,7 +9,7 @@ G="$RAIZ/Godot_v4.7.2-stable_linux.x86_64"
 falhou=0
 for cena in "$RAIZ"/grill-or-be-grilled/ferramentas/teste_*.tscn; do
   nome=$(basename "$cena" .tscn)
-  saida=$(timeout 300 "$G" --headless --path "$RAIZ/grill-or-be-grilled" "res://ferramentas/$nome.tscn" 2>&1)
+  saida=$(timeout 120 "$G" --headless --path "$RAIZ/grill-or-be-grilled" "res://ferramentas/$nome.tscn" 2>&1)
   codigo=$?
   erros=$(echo "$saida" | grep -cE "ERROR|FALHOU|Assertion failed")
   echo "== $nome (saida=$codigo erros=$erros)"

@@ -4,6 +4,9 @@ const Sprites = preload("res://scripts/sprites.gd")
 const Limites = preload("res://scripts/limites.gd")
 const Movimento = preload("res://scripts/character_movement.gd")
 const Salto = preload("res://scripts/salto.gd")
+const Esquiva = preload("res://scripts/esquiva.gd")
+const CameraDoHeroi = preload("res://scripts/camera_do_heroi.gd")
+const Impacto = preload("res://scripts/impacto.gd")
 
 var sprite: Sprite2D
 var arma: Sprite2D
@@ -33,6 +36,16 @@ var class_name_game := "Guerreiro"
 var animation_time := 0.0
 var salto := Salto.new()
 var knockback := 0.0
+var esquiva := Esquiva.new()
+var camera: Camera2D
+
+## Empurrao ao tomar dano: para longe de QUEM bateu, nao para tras do heroi --
+## virado de costas para a galinha, ele era jogado para dentro dela.
+const EMPURRAO := Vector2(190.0, -150.0)
+const INVULNERAVEL_APOS_DANO := 0.9
+## Ressalto que o heroi sobe sem pular. 8px cobre a quina da capsula (3px) e as
+## emendas do layout sem virar escada: degrau de verdade (20px+) ainda exige pulo.
+const ALTURA_DO_DEGRAU := 8.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -45,13 +58,7 @@ func _ready() -> void:
 	shape.shape = capsule
 	shape.position.y = -13
 	add_child(shape)
-	var camera := Camera2D.new()
-	# Viewport de 270px de altura: olhar 120px acima jogaria o personagem para
-	# fora do quadro, entao a folga de cima caiu junto com a resolucao.
-	camera.position = Vector2(0, -40)
-	camera.position_smoothing_enabled = true
-	camera.position_smoothing_speed = 6.0
-	camera.offset.x = 28.0
+	camera = CameraDoHeroi.new()
 	add_child(camera)
 	max_health += GameData.health_bonus
 	health = max_health
@@ -79,22 +86,17 @@ func _montar_visual() -> void:
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("andar_esquerda", "andar_direita")
-	if not is_zero_approx(direction):
+	if not is_zero_approx(direction) and not esquiva.ativa():
 		facing = signf(direction)
-	var camera := get_node_or_null("Camera2D") as Camera2D
-	if camera:
-		camera.offset.x = move_toward(camera.offset.x, facing * 34.0, 180.0 * delta)
-	if knockback > 0.0:
-		velocity.x = move_toward(velocity.x, 0.0, 380.0 * delta)
-		knockback = maxf(0.0, knockback - delta)
-	else:
-		_mover_horizontal(direction, delta)
+	camera.direcao = facing
+	_resolver_horizontal(direction, delta)
 	salto.atualizar(self, delta, Input.is_action_just_pressed("pular"), Input.is_action_pressed("pular"))
 	attack_timer = maxf(0.0, attack_timer - delta)
 	if Input.is_action_just_pressed("atacar") and attack_timer <= 0.0:
 		attack()
 	invulnerability = maxf(0.0, invulnerability - delta)
 	move_and_slide()
+	Movimento.climb_step(self, direction, ALTURA_DO_DEGRAU)
 	if global_position.y > Limites.QUEDA_FATAL:
 		$"..".player_died()
 		set_physics_process(false)
@@ -102,6 +104,34 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and absf(velocity.x) > 1.0:
 		animation_time += delta * 11.0
 	_animar()
+
+
+func _resolver_horizontal(direction: float, delta: float) -> void:
+	"""Esquiva, empurrao de dano ou corrida normal, nessa prioridade."""
+	esquiva.atualizar(delta)
+	if Input.is_action_just_pressed("esquivar") and knockback <= 0.0:
+		esquiva.iniciar()
+	if esquiva.ativa():
+		velocity.x = facing * Esquiva.VELOCIDADE
+		return
+	if knockback > 0.0:
+		velocity.x = move_toward(velocity.x, 0.0, 380.0 * delta)
+		knockback = maxf(0.0, knockback - delta)
+		return
+	_mover_horizontal(direction, delta)
+
+
+func _deixar_rastro() -> void:
+	"""Copia translucida do corpo que some: e o que mostra que a esquiva saiu."""
+	if not sprite:
+		return
+	var rastro := sprite.duplicate() as Sprite2D
+	rastro.global_position = sprite.global_position
+	rastro.modulate = Color(0.6, 0.85, 1.0, 0.6)
+	get_parent().add_child(rastro)
+	var sumir := rastro.create_tween()
+	sumir.tween_property(rastro, "modulate:a", 0.0, 0.25)
+	sumir.tween_callback(rastro.queue_free)
 
 
 func _mover_horizontal(direction: float, delta: float) -> void:
@@ -120,6 +150,8 @@ func _animar() -> void:
 	# Pisca durante a invulnerabilidade em vez de sumir com o personagem: some
 	# o jogador por 0.9s e ele perde a nocao de onde esta.
 	var visivel := invulnerability <= 0.0 or int(Time.get_ticks_msec() / 90) % 2 == 0
+	if esquiva.ativa() and sprite:
+		_deixar_rastro()
 	for parte in [sprite, arma, sprite_armadura]:
 		if not parte:
 			continue
@@ -140,7 +172,8 @@ func attack() -> void:
 	if GameData.equipped_weapon == "Espada":
 		for enemy in get_tree().get_nodes_in_group("enemies"):
 			if is_instance_valid(enemy) and absf(enemy.global_position.x - global_position.x - facing * 24.0) < 27.0 and absf(enemy.global_position.y - global_position.y) < 27.0:
-				enemy.take_damage(damage + 1)
+				enemy.take_damage(damage + 1, global_position)
+				Impacto.golpe(get_tree(), Impacto.ACERTO)
 		$"..".slash_effect(global_position + Vector2(facing * 26.0, ALTURA_DA_MAO), facing, false)
 	else:
 		var shot := Area2D.new()
@@ -153,14 +186,17 @@ func attack() -> void:
 		get_tree().current_scene.add_child(shot)
 		$"..".slash_effect(global_position + Vector2(facing * 23.0, ALTURA_DA_MAO), facing, true)
 
-func take_damage(amount: int) -> void:
-	if invulnerability > 0.0:
+func take_damage(amount: int, origem: Vector2 = Vector2.INF) -> void:
+	"""Dano vindo de `origem` (posicao de quem bateu). Ignorado durante a
+	invulnerabilidade pos-dano e durante a esquiva."""
+	if invulnerability > 0.0 or esquiva.protege():
 		return
 	health -= maxi(1, amount - GameData.armor_bonus)
-	invulnerability = 0.9
+	invulnerability = INVULNERAVEL_APOS_DANO
+	var lado := -facing if not origem.is_finite() else signf(global_position.x - origem.x)
 	knockback = 0.22
-	velocity.x = -facing * 190.0
-	velocity.y = -150.0
+	velocity = Vector2((lado if not is_zero_approx(lado) else -facing) * EMPURRAO.x, EMPURRAO.y)
+	Impacto.golpe(get_tree(), Impacto.DANO_NO_HEROI)
 	$"..".update_hud()
 	if health <= 0:
 		$"..".player_died()

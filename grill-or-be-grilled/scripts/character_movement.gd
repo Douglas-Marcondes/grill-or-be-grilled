@@ -34,3 +34,22 @@ static func accelerate_horizontal(body: CharacterBody2D, direction: float, speed
 	## One primitive covers both acceleration and friction: direction 0.0 makes
 	## the target 0.0, so the caller only has to pick the rate.
 	body.velocity.x = move_toward(body.velocity.x, direction * speed, rate * delta)
+
+
+static func climb_step(body: CharacterBody2D, direction: float, max_height: float) -> bool:
+	## Lifts the body over a ledge up to max_height when it is pushing into it.
+	## CharacterBody2D has no step offset: a capsule landing on a platform corner
+	## 3px below the top got stuck against it (PENDENCIAS.md, Trecho3 x=1225).
+	## Example: Movimento.climb_step(self, direction, 8.0) after move_and_slide().
+	if is_zero_approx(direction) or not body.is_on_floor():
+		return false
+	var nudge := Vector2(signf(direction) * 2.0, 0.0)
+	if not body.test_move(body.global_transform, nudge):
+		return false
+	var lift := Vector2(0.0, -max_height)
+	if body.test_move(body.global_transform, lift):
+		return false
+	if body.test_move(body.global_transform.translated(lift), nudge):
+		return false
+	body.global_position += lift + nudge
+	return true

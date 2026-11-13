@@ -77,10 +77,10 @@ func perform_attack() -> void:
 	if attack_kind == 0:
 		velocity.x = facing * 560.0
 		if is_instance_valid(target) and absf(target.global_position.x - global_position.x) < 105.0 and absf(target.global_position.y - global_position.y) < 80.0:
-			target.take_damage(2)
+			target.take_damage(2, global_position)
 	elif attack_kind == 1:
 		if is_instance_valid(target) and absf(target.global_position.x - global_position.x) < 135.0:
-			target.take_damage(2)
+			target.take_damage(2, global_position)
 		var game := get_tree().get_first_node_in_group("game")
 		if game:
 			game.slash_effect(global_position + Vector2(0, -9), 1.0, true, Color("ffb94f"))
@@ -96,7 +96,7 @@ func perform_attack() -> void:
 			shot.target_mask = 1
 			get_tree().current_scene.add_child(shot)
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, _origem: Vector2 = Vector2.INF) -> void:
 	if defeated:
 		return
 	health -= amount
