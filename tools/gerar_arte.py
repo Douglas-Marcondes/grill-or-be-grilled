@@ -102,6 +102,16 @@ def _gerar_projeteis() -> int:
     return len(quadros)
 
 
+def _gerar_toque() -> int:
+    import toque
+    from tela import folha, salvar
+
+    for sufixo, apertado in (("", False), ("_apertado", True)):
+        quadros = toque.botoes(apertado)
+        salvar(folha(quadros, len(quadros)), str(DESTINO / ("toque%s.png" % sufixo)))
+    return len(toque.ORDEM)
+
+
 def main() -> int:
     import fonte
     import paleta
@@ -114,6 +124,7 @@ def main() -> int:
     print("folhas de adornos: %d" % _gerar_adornos())
     print("icones do HUD: %d" % _gerar_icones())
     print("projeteis: %d" % _gerar_projeteis())
+    print("botoes de toque: %d" % _gerar_toque())
     glifos = fonte.gerar(
         str(DESTINO / "fonte_pixel.fnt"),
         str(DESTINO / "fonte_pixel.png"),

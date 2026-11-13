@@ -26,6 +26,17 @@ const CLASSES := {
 	"Mago": "Varinha · luz",
 }
 
+const DICA_DE_TECLADO := "Mover: A/D ou setas   Pular: Espaço/W   Atacar: J/clique   Esquivar: Shift/L\nControle: analógico, A pula, X ataca, B esquiva"
+const DICA_DE_TOQUE := "Setas à esquerda para andar. À direita: pular, atacar e esquivar."
+
+
+static func dica_de_controles(tem_toque: bool) -> String:
+	"""Dica do menu conforme o aparelho: no celular nao ha teclado para citar.
+
+	Exemplo: Historia.dica_de_controles(DisplayServer.is_touchscreen_available())"""
+	return DICA_DE_TOQUE if tem_toque else DICA_DE_TECLADO
+
+
 const INICIO_DA_FASE := "Siga as penas até o celeiro. Os braseiros do caminho guardam um pouco da Chama."
 
 ## Texto de cada placa (Marco* no jogo.tscn), mostrado quando o heroi passa por ela.

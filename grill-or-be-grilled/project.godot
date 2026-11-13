@@ -32,8 +32,18 @@ window/size/viewport_height=270
 window/size/window_width_override=1440
 window/size/window_height_override=810
 window/stretch/mode="viewport"
-window/stretch/aspect="keep"
+; "expand": tela mais larga que 16:9 (celular deitado, ~20:9) mostra mais mundo
+; dos lados em vez de faixas pretas. Interface ancorada as bordas acompanha.
+window/stretch/aspect="expand"
 window/stretch/scale_mode="integer"
+; No celular a escala inteira deixava o jogo minusculo: tela de 412px de altura
+; so comporta 1x os 270px e sobra borda enorme. Em tela de alta densidade a
+; escala fracionaria quase nao se nota, e preenche a tela inteira.
+window/stretch/scale_mode.mobile="fractional"
+window/stretch/scale_mode.web_android="fractional"
+window/stretch/scale_mode.web_ios="fractional"
+; Jogo de plataforma: so deitado, em qualquer dos dois lados.
+window/handheld/orientation=4
 
 [input]
 

@@ -15,6 +15,7 @@ const Historia = preload("res://scripts/historia.gd")
 const Menus = preload("res://scripts/menus.gd")
 const Iluminacao = preload("res://scripts/iluminacao.gd")
 const Hud = preload("res://scripts/hud.gd")
+const ControlesDeToque = preload("res://scripts/controles_de_toque.gd")
 
 const LEVEL_END := 10000.0
 var ui: CanvasLayer
@@ -24,6 +25,7 @@ var unread_signs := {}
 var player: CharacterBody2D
 var boss: CharacterBody2D
 var hud: Hud
+var toque: ControlesDeToque
 var boss_bar: ProgressBar
 var notice_label: Label
 var screen := "select"
@@ -110,8 +112,13 @@ func _build_ui() -> void:
 	# Barra do chefe embaixo, centrada e com nome, como em plataformistas de
 	# chefe: no topo ela disputava espaco com o HUD e com as falas da historia.
 	boss_bar = ProgressBar.new()
-	boss_bar.position = Vector2(140, 252)
-	boss_bar.size = Vector2(200, 6)
+	# Ancorados ao centro: no celular largo (aspect "expand") a tela passa de
+	# 480px, e posicao fixa deixava barra e aviso tortos para a esquerda.
+	boss_bar.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	boss_bar.offset_left = -100
+	boss_bar.offset_right = 100
+	boss_bar.offset_top = -18
+	boss_bar.offset_bottom = -12
 	boss_bar.visible = false
 	boss_bar.show_percentage = false
 	var boss_name := Menus.texto("Galinha Real", Color("df7126"))
@@ -122,8 +129,10 @@ func _build_ui() -> void:
 	# Aviso com quebra de linha e fundo escuro: as falas da historia passam de
 	# uma linha e, sem fundo, sumiam contra o ceu claro e as tochas.
 	notice_label = Menus.texto("", Color("fbf236"))
-	notice_label.position = Vector2(40, 26)
-	notice_label.size = Vector2(400, 0)
+	notice_label.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	notice_label.offset_left = -200
+	notice_label.offset_right = 200
+	notice_label.offset_top = 26
 	var notice_box := StyleBoxFlat.new()
 	notice_box.bg_color = Color(0.054901, 0.047058, 0.098039, 0.78)
 	notice_box.set_content_margin_all(3)
@@ -131,6 +140,9 @@ func _build_ui() -> void:
 	notice_label.visible = false
 	root.add_child(notice_label)
 	_arm_menus()
+	toque = ControlesDeToque.new()
+	toque.visible = false
+	add_child(toque)
 	update_hud()
 
 func _clear_level() -> void:
@@ -361,6 +373,7 @@ func update_hud() -> void:
 func show_hud() -> void:
 	menus.esconder_paineis()
 	hud.visible = true
+	toque.visible = true
 	update_hud()
 
 func show_message(text: String, duration: float = 2.0) -> void:
@@ -374,9 +387,16 @@ func _arm_menus() -> void:
 	menus = Menus.new(ui.get_child(0) as Control, [hud, boss_bar, notice_label])
 
 func _panel(title: String, subtitle: String) -> VBoxContainer:
-	hud.visible = false
-	show_message("", 0.0)
+	_hide_play_ui()
 	return menus.painel(title, subtitle)
+
+func _hide_play_ui() -> void:
+	"""Tira da tela o que so faz sentido jogando: HUD, botoes de toque e aviso.
+	O prologo tambem passa por aqui -- antes ele mostrava o contador de moedas
+	por cima do texto da historia."""
+	hud.visible = false
+	toque.visible = false
+	show_message("", 0.0)
 
 func show_class_select() -> void:
 	screen = "select"
@@ -388,9 +408,10 @@ func show_class_select() -> void:
 	var panel := _panel("GRILL OR BE GRILLED", "%s\nMoedas guardadas: %d" % [Historia.CHAMADA_DO_MENU, GameData.gold])
 	Menus.cartas_de_heroi(panel, Historia.CLASSES, choose_class)
 	Menus.botao(panel, "Rever a história", func(): show_prologue())
-	panel.add_child(Menus.texto("Mover: A/D ou setas   Pular: Espaço/W   Atacar: J/clique   Esquivar: Shift/L\nControle: analógico, A pula, X ataca, B esquiva", Menus.COR_DE_DICA))
+	panel.add_child(Menus.texto(Historia.dica_de_controles(DisplayServer.is_touchscreen_available()), Menus.COR_DE_DICA))
 
 func show_prologue() -> void:
+	_hide_play_ui()
 	menus.prologo(Historia.PROLOGO, 0, func():
 		GameData.viu_prologo = true
 		GameData.save_progress()

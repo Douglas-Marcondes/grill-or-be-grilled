@@ -13,3 +13,6 @@ grill-or-be-grilled/ferramentas/capturas/
 
 # Caches do Python do pipeline de arte
 tools/**/__pycache__/
+
+# Builds exportados (web/android): gerados por tools/exportar.sh
+/exportar/

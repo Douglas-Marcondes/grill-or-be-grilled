@@ -51,6 +51,16 @@ Próximas camadas, da que mais muda a cara do jogo para a que menos:
   explosão, onda de choque). Os projéteis já são sprites.
 - **A massa de terra das plataformas ainda é grande** no enquadramento de 480x270.
 
+## Celular
+
+- **APK de Android ainda não foi gerado**: falta instalar o Android SDK e os
+  templates de Android do Godot nesta máquina (passos no README). O build Web
+  roda no celular e foi conferido num Chrome emulando Android com toque.
+- **Testar num celular de verdade**: tamanho dos botões (30px de arte, área de
+  toque de 18px de raio) e posição foram calibrados por emulação.
+- **Sem botão de pausa**: o jogo não tem pausa em nenhuma plataforma; no celular
+  isso pesa mais, porque não há tecla Esc.
+
 ## Coleta de ovo
 
 `egg_pickup.gd` usa raio 16px para um ovo de 7x8px. É generoso de propósito

@@ -41,11 +41,26 @@ func _ready() -> void:
 		for f in 6:
 			await RenderingServer.frame_post_draw
 		_gravar(nome)
+	await _gravar_celular(game)
 	# Para o audio e espera o mixer soltar os playbacks antes de sair; saindo
 	# com som tocando o Godot acusa "resources still in use at exit".
 	Som.parar_musica()
 	await get_tree().create_timer(0.3).timeout
 	get_tree().quit()
+
+func _gravar_celular(game: Node) -> void:
+	"""Tela de celular deitado (20:9), com os botoes de toque forcados a
+	aparecer -- no PC eles somem, porque nao ha tela de toque."""
+	DisplayServer.window_set_size(Vector2i(2400, 1080))
+	game.player.camera.make_current()
+	game.player.global_position = Vector2(1300, 380)
+	game.player.camera.reset_smoothing()
+	for botao in game.toque.get_children():
+		botao.visibility_mode = TouchScreenButton.VISIBILITY_ALWAYS
+	for f in 30:
+		await RenderingServer.frame_post_draw
+	_gravar("celular")
+
 
 func _gravar(nome: String) -> void:
 	DirAccess.make_dir_recursive_absolute("res://ferramentas/capturas")

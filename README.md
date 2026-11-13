@@ -97,7 +97,7 @@ Dois detalhes de uso:
   confere que todos passam; cobre também a quina do `Trecho3`.
 - `teste_do_combate`, `teste_do_chefe`, `teste_dos_inimigos`,
   `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`,
-  `teste_da_iluminacao`, `teste_dos_adornos`, `teste_do_hud`, `teste_da_animacao`: um por camada.
+  `teste_da_iluminacao`, `teste_dos_adornos`, `teste_do_hud`, `teste_da_animacao`, `teste_do_toque`: um por camada.
 
 Todos de uma vez (sai com erro se algum falhar ou se o Godot registrar `ERROR`):
 
@@ -125,6 +125,37 @@ de ar, então `salto.gd` tira o "peso" só da assimetria subida/queda. As pedras
 `RotaAlta7/8/11/13/15` ficam **dentro** do vão como degrau, e não por cima da
 saída do trecho. Mudou o pulo ou o layout? Rode `teste_das_passagens`.
 
+## Jogar no celular
+
+Os controles de toque (`scripts/controles_de_toque.gd`) só aparecem em aparelho
+com tela de toque: setas à esquerda, pular/atacar/esquivar à direita. Eles
+disparam as mesmas ações do input map, então teclado e controle seguem iguais.
+No celular a tela se alarga para os lados (`aspect="expand"`) e usa escala
+fracionária para ocupar a tela toda; no PC continua em escala inteira.
+
+**Pelo navegador (pronto):**
+
+```
+tools/exportar.sh web      # gera exportar/web/
+tools/exportar.sh testar   # serve na rede local; abra o endereço no celular
+```
+
+Para jogar fora de casa, publique a pasta `exportar/web/` numa hospedagem
+estática (GitHub Pages, itch.io). É um PWA: no celular, "Adicionar à tela
+inicial" instala como app, em tela cheia e deitado.
+
+**APK de Android:** o preset já existe (`export_presets.cfg`), mas a máquina
+precisa de:
+
+1. Android SDK com `platform-tools` e `build-tools` (Android Studio ou
+   `cmdline-tools`) e o caminho dele em Editor → Configurações do Editor →
+   Exportar → Android.
+2. Os templates de exportação de Android do Godot 4.7.2 (Editor → Gerenciar
+   Templates de Exportação → Baixar).
+
+Depois: `tools/exportar.sh android` gera `exportar/android/grill-or-be-grilled.apk`
+assinado com a chave de debug, pronto para instalar no celular.
+
 ## Estrutura de código
 
 O projeto Godot fica em `grill-or-be-grilled/`.
@@ -148,6 +179,7 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 - `scripts/terreno.gd`: layout editável → colisão + textura, por região da fase.
 - `scripts/tochas.gd`: tochas animadas com halo e luz de verdade (`PointLight2D`).
 - `scripts/iluminacao.gd`: escuridão ambiente (`CanvasModulate`) que fecha a cada região; tochas, braseiros acesos e o herói abrem poças de luz.
+- `scripts/controles_de_toque.gd`: botões de toque (TouchScreenButton) que disparam as ações do input map; arte em `tools/arte/toque.py`.
 - `scripts/hud.gd`: HUD em ícones (barra de vida, vidas como chamas acesas/apagadas, ovos, galinhas; moedas fora da partida). Ícones em `tools/arte/icones.py`. A barra da Galinha Real fica embaixo, com nome.
 - `scripts/adornos.gd`: espalha adornos no topo das plataformas, com semente no nome da plataforma (sempre os mesmos lugares, no editor e no jogo).
 - `scripts/superficie.gd`: altura do chão num X, lida dos vértices dos `Polygon2D` (funciona no editor, onde não há raycast). Na fazenda as tochas descem até esse chão e ganham poste; sobre um vão elas somem.
