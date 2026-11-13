@@ -38,14 +38,17 @@ var _folga_de_borda := 0.0
 var _folga_de_antecipacao := 0.0
 
 
-func atualizar(corpo: CharacterBody2D, delta: float, pediu: bool, segura: bool) -> void:
-	"""Resolve o pulo do frame e aplica a gravidade. Chame antes de move_and_slide."""
+func atualizar(corpo: CharacterBody2D, delta: float, pediu: bool, segura: bool) -> bool:
+	"""Resolve o pulo do frame e aplica a gravidade. Chame antes de
+	move_and_slide. Devolve true no frame em que o pulo sai (para o som)."""
 	_contar_folgas(corpo, delta, pediu)
-	if _folga_de_antecipacao > 0.0 and _folga_de_borda > 0.0:
+	var saltou := _folga_de_antecipacao > 0.0 and _folga_de_borda > 0.0
+	if saltou:
 		_saltar(corpo)
 	elif not segura and corpo.velocity.y < VELOCIDADE_DE_TOQUE:
 		corpo.velocity.y = VELOCIDADE_DE_TOQUE
 	_aplicar_gravidade(corpo, delta)
+	return saltou
 
 
 func _contar_folgas(corpo: CharacterBody2D, delta: float, pediu: bool) -> void:

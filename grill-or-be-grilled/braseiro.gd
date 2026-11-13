@@ -45,6 +45,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if aceso or not body.is_in_group("player"):
 		return
 	aceso = true
+	Som.tocar("braseiro")
 	_mostrar_chama(true)
 	var game := get_tree().get_first_node_in_group("game")
 	if game:

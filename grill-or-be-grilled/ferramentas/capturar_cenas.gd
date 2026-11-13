@@ -37,6 +37,10 @@ func _ready() -> void:
 		for f in 6:
 			await RenderingServer.frame_post_draw
 		_gravar(nome)
+	# Para o audio e espera o mixer soltar os playbacks antes de sair; saindo
+	# com som tocando o Godot acusa "resources still in use at exit".
+	Som.parar_musica()
+	await get_tree().create_timer(0.3).timeout
 	get_tree().quit()
 
 func _gravar(nome: String) -> void:

@@ -142,6 +142,7 @@ func _atacar(delta: float) -> void:
 			attack_cooldown = PECK_COOLDOWN
 	elif attack_cooldown <= 0.0 and _player_in_peck_range():
 		attack_windup = PECK_WINDUP
+		Som.tocar("aviso")
 
 
 func _depois_de_mover(delta: float) -> void:
@@ -207,6 +208,7 @@ func _morrer(onde: Vector2) -> void:
 	# duas vezes no placar e soltava dois ovos.
 	if is_queued_for_deletion():
 		return
+	Som.tocar("cacarejo")
 	var game := get_tree().get_first_node_in_group("game")
 	if game:
 		game.spawn_egg(onde + Vector2(0, -14))

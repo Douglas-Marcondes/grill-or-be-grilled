@@ -189,6 +189,7 @@ func start_level() -> void:
 		var sign_label := get_node("EditorPreview/Cenario/%s" % sign_name) as Control
 		unread_signs[sign_name] = sign_label.global_position.x
 	show_message(Historia.INICIO_DA_FASE, 5.0)
+	Som.tocar_musica("musica_fase1")
 
 func _spawn_enemy(marker: Node2D) -> void:
 	var tipo := Bestiario.tipo_do_marcador(marker)
@@ -251,6 +252,8 @@ func boss_defeated(at: Vector2) -> void:
 	if screen != "playing":
 		return
 	screen = "celebrating"
+	Som.parar_musica()
+	Som.tocar("vitoria")
 	boss_bar.visible = false
 	var blast := Node2D.new()
 	blast.set_script(EffectScript)
@@ -313,6 +316,8 @@ func player_died() -> void:
 		_respawn_player.call_deferred()
 		return
 	screen = "dead"
+	Som.parar_musica()
+	Som.tocar("derrota")
 	GameData.fail_run()
 	GameData.save_progress()
 	show_end_panel(Historia.DERROTA, "Tentar de novo", func(): start_level())

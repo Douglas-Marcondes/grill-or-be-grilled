@@ -40,6 +40,7 @@ func _atacar(delta: float) -> void:
 			acertou = false
 	elif attack_cooldown <= 0.0 and _alvo_no_alcance_do_bote():
 		attack_windup = PREPARO_DO_BOTE
+		Som.tocar("aviso")
 
 
 func _investir(delta: float) -> void:

@@ -120,6 +120,7 @@ func _lutar(delta: float) -> void:
 
 func _preparar_golpe() -> void:
 	golpe = randi_range(0, 2) as Golpe
+	Som.tocar("aviso")
 	attack_windup = RITMO[fase][1]
 	attack_timer = RITMO[fase][0]
 
@@ -128,12 +129,14 @@ func _soltar_golpe() -> void:
 	match golpe:
 		Golpe.INVESTIDA:
 			investindo = DURACAO_DA_INVESTIDA
+			Som.tocar("investida")
 		Golpe.SALTO:
 			velocity.y = IMPULSO_DO_SALTO
 			velocity.x = facing * 140.0
 			saltando = true
 		Golpe.PENAS:
 			_lancar_penas(RITMO[fase][2])
+			Som.tocar("tiro")
 
 
 func _investir(delta: float) -> void:

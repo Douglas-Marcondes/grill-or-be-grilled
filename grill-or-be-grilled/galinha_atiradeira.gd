@@ -35,6 +35,7 @@ func _atacar(delta: float) -> void:
 		attack_windup -= delta
 		if attack_windup <= 0.0:
 			_arremessar()
+			Som.tocar("tiro")
 			attack_cooldown = RECARGA_DO_ARREMESSO
 	elif attack_cooldown <= 0.0 and _ameacada() and _na_faixa_de_tiro():
 		attack_windup = PREPARO_DO_ARREMESSO

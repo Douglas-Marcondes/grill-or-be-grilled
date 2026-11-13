@@ -91,7 +91,8 @@ func _physics_process(delta: float) -> void:
 		facing = signf(direction)
 	camera.direcao = facing
 	_resolver_horizontal(direction, delta)
-	salto.atualizar(self, delta, Input.is_action_just_pressed("pular"), Input.is_action_pressed("pular"))
+	if salto.atualizar(self, delta, Input.is_action_just_pressed("pular"), Input.is_action_pressed("pular")):
+		Som.tocar("pulo")
 	attack_timer = maxf(0.0, attack_timer - delta)
 	if Input.is_action_just_pressed("atacar") and attack_timer <= 0.0:
 		attack()
@@ -110,8 +111,8 @@ func _physics_process(delta: float) -> void:
 func _resolver_horizontal(direction: float, delta: float) -> void:
 	"""Esquiva, empurrao de dano ou corrida normal, nessa prioridade."""
 	esquiva.atualizar(delta)
-	if Input.is_action_just_pressed("esquivar") and knockback <= 0.0:
-		esquiva.iniciar()
+	if Input.is_action_just_pressed("esquivar") and knockback <= 0.0 and esquiva.iniciar():
+		Som.tocar("esquiva")
 	if esquiva.ativa():
 		velocity.x = facing * Esquiva.VELOCIDADE
 		return
@@ -170,6 +171,7 @@ func _animar() -> void:
 func attack() -> void:
 	attack_timer = 0.38
 	var damage := 1 + int(GameData.strength_bonus / 5)
+	Som.tocar("golpe" if GameData.equipped_weapon == "Espada" else "tiro")
 	if GameData.equipped_weapon == "Espada":
 		for enemy in get_tree().get_nodes_in_group("enemies"):
 			if is_instance_valid(enemy) and absf(enemy.global_position.x - global_position.x - facing * 24.0) < 27.0 and absf(enemy.global_position.y - global_position.y) < 27.0:

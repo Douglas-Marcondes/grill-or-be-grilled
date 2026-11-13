@@ -29,6 +29,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		GameData.run_eggs += values[egg_kind]
+		Som.tocar("ovo")
 		var game := get_tree().get_first_node_in_group("game")
 		if game:
 			game.show_message("Ovo %s! +%d" % [ ["comum", "menta", "azul", "rosa", "dourado"][egg_kind], values[egg_kind] ])
