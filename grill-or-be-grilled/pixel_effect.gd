@@ -6,9 +6,12 @@ var tint := Color("ffe18b")
 var age := 0.0
 var duration := 0.25
 var sparks: Array[Vector2] = []
+var reach_onda := 150.0
 
 func _ready() -> void:
-	if kind == "burst":
+	if kind == "onda":
+		duration = 0.4
+	elif kind == "burst":
 		duration = 1.5
 		for i in 34:
 			var angle := TAU * float(i) / 34.0 + randf_range(-0.12, 0.12)
@@ -24,7 +27,14 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var progress := clampf(age / duration, 0.0, 1.0)
-	if kind == "burst":
+	if kind == "onda":
+		# Onda de choque rente ao chao: dois arcos que correm para os lados ate o
+		# alcance real do golpe, para o jogador ver onde ela pega.
+		var frente := reach_onda * progress
+		for lado in [-1.0, 1.0]:
+			draw_rect(Rect2(lado * frente - 4, -10, 8, 10), Color(0.87, 0.44, 0.15, 1.0 - progress), true)
+			draw_rect(Rect2(minf(0.0, lado * frente), -2, absf(frente), 2), Color(0.98, 0.95, 0.21, 0.6 * (1.0 - progress)), true)
+	elif kind == "burst":
 		var radius := 18.0 + progress * 85.0
 		draw_circle(Vector2.ZERO, radius, Color(1.0, 0.88, 0.48, 0.30 * (1.0 - progress)))
 		draw_arc(Vector2.ZERO, radius, 0.0, TAU, 32, Color(1.0, 0.96, 0.72, 0.95 * (1.0 - progress)), 5.0)

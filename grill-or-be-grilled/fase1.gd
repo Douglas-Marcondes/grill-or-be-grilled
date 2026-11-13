@@ -242,6 +242,17 @@ func slash_effect(at: Vector2, facing: float, projectile: bool, tint: Color = Co
 	effect.position = at
 	add_child(effect)
 
+func shockwave_effect(at: Vector2, alcance: float) -> void:
+	var onda := Node2D.new()
+	onda.set_script(EffectScript)
+	onda.kind = "onda"
+	onda.reach_onda = alcance
+	onda.position = at
+	add_child(onda)
+
+func boss_enraged() -> void:
+	show_message("A Galinha Real se enfurece! Os golpes ficam mais rápidos.", 3.0)
+
 func player_died() -> void:
 	if screen != "playing":
 		return

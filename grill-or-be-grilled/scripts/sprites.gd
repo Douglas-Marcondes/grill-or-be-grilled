@@ -82,7 +82,9 @@ static func virar(sprite: Sprite2D, direcao: float) -> void:
 		sprite.flip_h = direcao < 0.0
 
 
-static func piscar(sprite: Sprite2D, clarao: float) -> void:
-	"""Aplica o clarao de dano enquanto o temporizador estiver correndo."""
+static func piscar(sprite: Sprite2D, clarao: float, base: Color = Color.WHITE) -> void:
+	"""Aplica o clarao de dano enquanto o temporizador estiver correndo; fora
+	dele volta para `base`, o tom proprio do personagem (a Galinha Real
+	enfurecida, por exemplo, fica avermelhada)."""
 	if sprite:
-		sprite.modulate = CLARAO if clarao > 0.0 else Color.WHITE
+		sprite.modulate = CLARAO if clarao > 0.0 else base
