@@ -94,7 +94,7 @@ Dois detalhes de uso:
   confere que todos passam; cobre também a quina do `Trecho3`.
 - `teste_do_combate`, `teste_do_chefe`, `teste_dos_inimigos`,
   `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`,
-  `teste_da_iluminacao`, `teste_dos_adornos`: um por camada.
+  `teste_da_iluminacao`, `teste_dos_adornos`, `teste_do_hud`: um por camada.
 
 Todos de uma vez (sai com erro se algum falhar ou se o Godot registrar `ERROR`):
 
@@ -145,6 +145,7 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 - `scripts/terreno.gd`: layout editável → colisão + textura, por região da fase.
 - `scripts/tochas.gd`: tochas animadas com halo e luz de verdade (`PointLight2D`).
 - `scripts/iluminacao.gd`: escuridão ambiente (`CanvasModulate`) que fecha a cada região; tochas, braseiros acesos e o herói abrem poças de luz.
+- `scripts/hud.gd`: HUD em ícones (barra de vida, vidas como chamas acesas/apagadas, ovos, galinhas; moedas fora da partida). Ícones em `tools/arte/icones.py`. A barra da Galinha Real fica embaixo, com nome.
 - `scripts/adornos.gd`: espalha adornos no topo das plataformas, com semente no nome da plataforma (sempre os mesmos lugares, no editor e no jogo).
 - `scripts/superficie.gd`: altura do chão num X, lida dos vértices dos `Polygon2D` (funciona no editor, onde não há raycast). Na fazenda as tochas descem até esse chão e ganham poste; sobre um vão elas somem.
 - `scripts/acabamento_do_terreno.gd`: sombra de profundidade (`vertex_colors`) e contorno escuro em cada bloco de terreno.

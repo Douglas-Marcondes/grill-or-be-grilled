@@ -80,6 +80,15 @@ def _gerar_adornos() -> int:
     return len(adornos.REGIOES)
 
 
+def _gerar_icones() -> int:
+    import icones
+    from tela import folha, salvar
+
+    quadros = icones.icones()
+    salvar(folha(quadros, len(quadros)), str(DESTINO / "icones_hud.png"))
+    return len(quadros)
+
+
 def main() -> int:
     import fonte
     import paleta
@@ -90,6 +99,7 @@ def main() -> int:
     print("folhas de personagem: %d" % _gerar_personagens())
     print("adereços: %d" % _gerar_props())
     print("folhas de adornos: %d" % _gerar_adornos())
+    print("icones do HUD: %d" % _gerar_icones())
     glifos = fonte.gerar(
         str(DESTINO / "fonte_pixel.fnt"),
         str(DESTINO / "fonte_pixel.png"),

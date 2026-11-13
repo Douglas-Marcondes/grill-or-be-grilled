@@ -14,6 +14,7 @@ const Limites = preload("res://scripts/limites.gd")
 const Historia = preload("res://scripts/historia.gd")
 const Menus = preload("res://scripts/menus.gd")
 const Iluminacao = preload("res://scripts/iluminacao.gd")
+const Hud = preload("res://scripts/hud.gd")
 
 const LEVEL_END := 10000.0
 var ui: CanvasLayer
@@ -22,7 +23,7 @@ var menus: Menus
 var unread_signs := {}
 var player: CharacterBody2D
 var boss: CharacterBody2D
-var hud_label: Label
+var hud: Hud
 var boss_bar: ProgressBar
 var notice_label: Label
 var screen := "select"
@@ -104,14 +105,19 @@ func _build_ui() -> void:
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.theme = TEMA
 	ui.add_child(root)
-	hud_label = Label.new()
-	hud_label.position = Vector2(5, 3)
-	root.add_child(hud_label)
+	hud = Hud.new()
+	root.add_child(hud)
+	# Barra do chefe embaixo, centrada e com nome, como em plataformistas de
+	# chefe: no topo ela disputava espaco com o HUD e com as falas da historia.
 	boss_bar = ProgressBar.new()
-	boss_bar.position = Vector2(150, 16)
-	boss_bar.size = Vector2(180, 7)
+	boss_bar.position = Vector2(140, 252)
+	boss_bar.size = Vector2(200, 6)
 	boss_bar.visible = false
 	boss_bar.show_percentage = false
+	var boss_name := Menus.texto("Galinha Real", Color("df7126"))
+	boss_name.position = Vector2(0, -11)
+	boss_name.size = Vector2(200, 0)
+	boss_bar.add_child(boss_name)
 	root.add_child(boss_bar)
 	# Aviso com quebra de linha e fundo escuro: as falas da historia passam de
 	# uma linha e, sem fundo, sumiam contra o ceu claro e as tochas.
@@ -345,16 +351,16 @@ func _respawn_player() -> void:
 	show_message("Você caiu! Restam %d vidas. De volta ao braseiro." % vidas if vidas > 1 else "Última vida! Cuidado.", 3.0)
 
 func update_hud() -> void:
-	if not hud_label:
+	if not hud:
 		return
 	if screen == "playing" and is_instance_valid(player):
-		hud_label.text = "%s  ♥ %d/%d  Vidas: %d  Ovos: %d  Galinhas: %d/%d" % [GameData.selected_class, player.health, player.max_health, vidas, GameData.run_eggs, chickens_defeated, total_chickens]
+		hud.mostrar_partida(player.health, player.max_health, vidas, VIDAS_POR_TENTATIVA, GameData.run_eggs, chickens_defeated, total_chickens)
 	else:
-		hud_label.text = "Ovos: %d   Moedas: %d" % [GameData.run_eggs, GameData.gold]
+		hud.mostrar_cofre(GameData.run_eggs, GameData.gold)
 
 func show_hud() -> void:
 	menus.esconder_paineis()
-	hud_label.visible = true
+	hud.visible = true
 	update_hud()
 
 func show_message(text: String, duration: float = 2.0) -> void:
@@ -365,10 +371,10 @@ func show_message(text: String, duration: float = 2.0) -> void:
 	message_timer = duration
 
 func _arm_menus() -> void:
-	menus = Menus.new(ui.get_child(0) as Control, [hud_label, boss_bar, notice_label])
+	menus = Menus.new(ui.get_child(0) as Control, [hud, boss_bar, notice_label])
 
 func _panel(title: String, subtitle: String) -> VBoxContainer:
-	hud_label.visible = false
+	hud.visible = false
 	show_message("", 0.0)
 	return menus.painel(title, subtitle)
 

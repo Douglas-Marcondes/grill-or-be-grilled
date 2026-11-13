@@ -45,7 +45,6 @@ Próximas camadas, da que mais muda a cara do jogo para a que menos:
 
 - **Bordas das plataformas são retas.** Uma borda irregular (franja de palha
   caindo, pedra lascada) no topo e nas quinas tira o ar de retângulo.
-- **HUD é texto puro.** Corações e ícone de ovo em vez de "♥ 50/50  Ovos: 0".
 - **A faixa do chão do ninho é reta** sob o piso curvo da arena: a laje aparece
   como uma banda horizontal atrás da curva.
 - **Adornos não sabem onde há inimigo ou ovo**: um feno pode cair atrás de um

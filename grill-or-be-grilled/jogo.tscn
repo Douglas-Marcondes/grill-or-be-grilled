@@ -21,6 +21,7 @@ repeat_size = Vector2(320, 0)
 repeat_times = 60
 
 [node name="Ceu" type="Sprite2D" parent="FundoParallax/CamadaCeu" unique_id=771200303]
+light_mask = 0
 texture_filter = 1
 position = Vector2(0, 0)
 centered = false
@@ -32,6 +33,7 @@ repeat_size = Vector2(1400, 0)
 repeat_times = 12
 
 [node name="Lua" type="Sprite2D" parent="FundoParallax/CamadaLua" unique_id=771200305]
+light_mask = 0
 texture_filter = 1
 position = Vector2(300, 38)
 centered = false
@@ -43,6 +45,7 @@ repeat_size = Vector2(640, 0)
 repeat_times = 30
 
 [node name="Silhueta" type="Sprite2D" parent="FundoParallax/CamadaSilhueta" unique_id=771200307]
+light_mask = 0
 texture_filter = 1
 position = Vector2(0, 106)
 centered = false
@@ -54,6 +57,7 @@ repeat_size = Vector2(640, 0)
 repeat_times = 30
 
 [node name="Colinas" type="Sprite2D" parent="FundoParallax/CamadaColinas" unique_id=771200313]
+light_mask = 0
 texture_filter = 1
 position = Vector2(0, 168)
 centered = false
@@ -65,6 +69,7 @@ repeat_size = Vector2(320, 0)
 repeat_times = 60
 
 [node name="Cerca" type="Sprite2D" parent="FundoParallax/CamadaCerca" unique_id=771200309]
+light_mask = 0
 texture_filter = 1
 position = Vector2(0, 162)
 centered = false

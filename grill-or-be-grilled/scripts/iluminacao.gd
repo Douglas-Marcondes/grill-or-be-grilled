@@ -8,6 +8,9 @@ extends CanvasModulate
 ## -- e o que da atmosfera de masmorra. A interface fica num CanvasLayer proprio
 ## e nao e afetada.
 ##
+## O fundo de parallax tem light_mask 0 em jogo.tscn: a lua e o horizonte
+## estao a quilometros, e tocha nenhuma os ilumina.
+##
 ## Segue a camera ativa, e nao o heroi, para valer tambem no menu e nas
 ## ferramentas de captura.
 ##
@@ -23,7 +26,7 @@ const AMBIENTE := {
 	"porao": Color(0.34, 0.32, 0.44),
 }
 const COR_DO_HEROI := Color(1.0, 0.92, 0.80)
-const COR_DO_FOGO := Color(1.0, 0.62, 0.30)
+const COR_DO_FOGO := Color(1.0, 0.78, 0.55)
 ## Quanto maior, mais rapido a luz muda ao cruzar a fronteira de regiao.
 const RAPIDEZ_DA_TRANSICAO := 1.5
 const LADO_DA_TEXTURA := 128
@@ -51,6 +54,10 @@ static func luz(cor: Color, energia: float, escala: float) -> PointLight2D:
 	ponto.color = cor
 	ponto.energy = energia
 	ponto.texture_scale = escala
+	# Mistura em vez de soma: somada, a luz da tocha mais a do heroi passava do
+	# brilho cheio e estourava o sprite em branco. Misturando, o pixel volta no
+	# maximo a sua cor original da paleta.
+	ponto.blend_mode = Light2D.BLEND_MODE_MIX
 	return ponto
 
 
