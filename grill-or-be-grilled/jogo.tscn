@@ -630,15 +630,12 @@ color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(3620, 445, 3740, 445, 3740, 469, 3620, 469)
 
 [node name="RotaAlta7" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1337101694]
-position = Vector2(-19, 52)
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(3930, 375, 3979.6477, 375, 4030, 375, 4030, 399, 3930, 399)
+polygon = PackedVector2Array(3970, 465, 4020, 465, 4020, 489, 3970, 489)
 
 [node name="RotaAlta8" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1260127198]
-position = Vector2(2404, 80)
-scale = Vector2(0.46666667, 1)
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(4470, 320, 4590, 320, 4590, 344, 4469.9995, 336, 4337.142, 330)
+polygon = PackedVector2Array(4475, 410, 4525, 410, 4525, 434, 4475, 434)
 
 [node name="RotaAlta9" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=758573470]
 position = Vector2(2703, 82)
@@ -653,18 +650,16 @@ color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(5570, 350, 5670, 350, 5670, 374, 5570, 374)
 
 [node name="RotaAlta11" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=96716806]
-position = Vector2(3, 64)
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(6110, 280, 6220, 280, 6220, 304, 6110, 304)
+polygon = PackedVector2Array(6170, 375, 6220, 375, 6220, 399, 6170, 399)
 
 [node name="RotaAlta12" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=2120445871]
 color = Color(0.341176, 0.262745, 0.305882, 1)
 polygon = PackedVector2Array(6710, 380, 6820, 380, 6820, 404, 6710, 404)
 
 [node name="RotaAlta13" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1461182575]
-position = Vector2(1, 41)
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(7352, 337, 7380, 337, 7430, 330, 7430, 354, 7376, 363, 7328, 372)
+polygon = PackedVector2Array(7380, 420, 7430, 420, 7430, 444, 7380, 444)
 
 [node name="RotaAlta14" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1303410915]
 color = Color(0.341176, 0.262745, 0.305882, 1)
@@ -672,7 +667,7 @@ polygon = PackedVector2Array(7900, 430, 8020, 430, 8020, 454, 7900, 454)
 
 [node name="RotaAlta15" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=348585692]
 color = Color(0.341176, 0.262745, 0.305882, 1)
-polygon = PackedVector2Array(8460, 360, 8560, 360, 8560, 384, 8460, 384)
+polygon = PackedVector2Array(8500, 465, 8550, 465, 8550, 489, 8500, 489)
 
 [node name="RotaAlta16" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=167738328]
 position = Vector2(78, 25)
@@ -875,13 +870,13 @@ polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 2
 
 [node name="Ovo7" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=650577095]
-position = Vector2(3980, 315)
+position = Vector2(3995, 400)
 color = Color(0.686275, 0.882353, 0.478431, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 1
 
 [node name="Ovo8" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1884325788]
-position = Vector2(4530, 280)
+position = Vector2(4500, 345)
 color = Color(0.737255, 0.607843, 0.917647, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 2
@@ -899,7 +894,7 @@ polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 2
 
 [node name="Ovo11" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1332958580]
-position = Vector2(6165, 240)
+position = Vector2(6195, 310)
 color = Color(0.686275, 0.882353, 0.478431, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 1
@@ -911,7 +906,7 @@ polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 2
 
 [node name="Ovo13" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=1210648948]
-position = Vector2(7380, 290)
+position = Vector2(7405, 355)
 color = Color(0.686275, 0.882353, 0.478431, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 1
@@ -923,7 +918,7 @@ polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 2
 
 [node name="Ovo15" type="Polygon2D" parent="EditorPreview/Personagens/Ovos" unique_id=406835020]
-position = Vector2(8510, 320)
+position = Vector2(8525, 400)
 color = Color(0.686275, 0.882353, 0.478431, 1)
 polygon = PackedVector2Array(-5, -8, 0, -11, 5, -8, 6, 0, 3, 5, -3, 5, -6, 0)
 metadata/egg_kind = 1

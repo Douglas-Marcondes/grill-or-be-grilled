@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const Sprites = preload("res://scripts/sprites.gd")
+const Limites = preload("res://scripts/limites.gd")
 
 var sprite: Sprite2D
 var health := 3
@@ -8,6 +9,8 @@ var speed := 92.0
 var gravity := 1000.0
 var target: CharacterBody2D
 var attack_cooldown := 0.0
+var attack_windup := 0.0
+var hit_stun := 0.0
 var flash := 0.0
 var facing := 1.0
 var animation_time := 0.0
@@ -22,6 +25,11 @@ const GAP_JUMP_VELOCITY := -520.0
 const GAP_JUMP_SPEED := 175.0
 const THREAT_RANGE := 320.0
 const PATROL_RADIUS := 135.0
+
+func configure_progression(index: int, total: int) -> void:
+	var progress := float(index) / maxf(1.0, float(total - 1))
+	health = 2 + int(progress * 2.0)
+	speed = 78.0 + progress * 38.0
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -41,6 +49,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity * delta
+	if hit_stun > 0.0:
+		hit_stun = maxf(0.0, hit_stun - delta)
+		velocity.x = move_toward(velocity.x, 0.0, 420.0 * delta)
+		move_and_slide()
+		_animar()
+		return
 	if not target or not is_instance_valid(target):
 		var players := get_tree().get_nodes_in_group("player")
 		if not players.is_empty():
@@ -66,15 +80,19 @@ func _physics_process(delta: float) -> void:
 					_animar()
 					return
 			else:
-				velocity.x = facing * (GAP_JUMP_SPEED if jumping_gap else speed)
+				velocity.x = facing * (GAP_JUMP_SPEED if jumping_gap else (0.0 if attack_windup > 0.0 else speed))
 		else:
 			_patrol()
 	else:
 		_patrol()
-	attack_cooldown -= delta
-	if target and is_instance_valid(target) and attack_cooldown <= 0.0 and absf(global_position.x - target.global_position.x) < 48.0 and absf(global_position.y - target.global_position.y) < 48.0:
-		target.take_damage(1)
-		attack_cooldown = 1.1
+	attack_cooldown = maxf(0.0, attack_cooldown - delta)
+	if attack_windup > 0.0:
+		attack_windup -= delta
+		if attack_windup <= 0.0 and _player_in_peck_range():
+			target.take_damage(1)
+			attack_cooldown = 1.35
+	elif target and is_instance_valid(target) and attack_cooldown <= 0.0 and _player_in_peck_range():
+		attack_windup = 0.48
 	move_and_slide()
 	if is_on_floor():
 		last_safe_position = global_position
@@ -83,7 +101,7 @@ func _physics_process(delta: float) -> void:
 			animation_time += delta * 13.0
 	flash = maxf(0.0, flash - delta)
 	_animar()
-	if global_position.y > 850.0:
+	if global_position.y > Limites.QUEDA_FATAL:
 		# Se um impulso externo ainda a derrubar, deixa o drop na última plataforma segura.
 		var game := get_tree().get_first_node_in_group("game")
 		if game:
@@ -126,6 +144,8 @@ func _has_landing_ahead(direction: float) -> bool:
 func take_damage(amount: int) -> void:
 	health -= amount
 	flash = 0.14
+	hit_stun = 0.16
+	velocity.x = signf(global_position.x - target.global_position.x) * 115.0 if is_instance_valid(target) else 0.0
 	if health <= 0:
 		var game := get_tree().get_first_node_in_group("game")
 		if game:
@@ -139,3 +159,8 @@ func _animar() -> void:
 	Sprites.virar(sprite, facing)
 	Sprites.piscar(sprite, flash)
 	sprite.frame = Sprites.quadro_do_passo(animation_time, 4)
+	if attack_windup > 0.0:
+		sprite.modulate = Color("fbf236") if int(Time.get_ticks_msec() / 90) % 2 == 0 else Color.WHITE
+
+func _player_in_peck_range() -> bool:
+	return is_instance_valid(target) and absf(global_position.x - target.global_position.x) < 31.0 and absf(global_position.y - target.global_position.y) < 27.0

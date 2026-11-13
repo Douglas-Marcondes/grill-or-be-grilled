@@ -8,6 +8,7 @@ const EffectScript = preload("res://pixel_effect.gd")
 const TEMA = preload("res://tema_pixel.tres")
 const Terreno = preload("res://scripts/terreno.gd")
 const Tochas = preload("res://scripts/tochas.gd")
+const Limites = preload("res://scripts/limites.gd")
 
 const LEVEL_END := 10000.0
 const LARGURA_PAINEL := 300.0
@@ -24,6 +25,8 @@ var total_chickens := 0
 var level_objects: Array[Node] = []
 var message_timer := 0.0
 var end_message := ""
+var proximo_marco := 4
+var boss_intro_shown := false
 
 func _ready() -> void:
 	var preview_characters := get_node_or_null("EditorPreview/Personagens")
@@ -42,6 +45,9 @@ func _process(delta: float) -> void:
 			notice_label.text = ""
 	if boss_bar:
 		boss_bar.visible = screen == "playing" and is_instance_valid(player) and is_instance_valid(boss) and absf(player.global_position.x - boss.global_position.x) < 700.0
+	if screen == "playing" and not boss_intro_shown and is_instance_valid(player) and is_instance_valid(boss) and absf(player.global_position.x - boss.global_position.x) < 430.0:
+		boss_intro_shown = true
+		show_message("A Galinha Real bloqueia o ninho. Leia o aviso, desvie e contra-ataque!", 4.0)
 
 func _build_playable_geometry() -> void:
 	var level_art := get_node_or_null("EditorPreview/Cenario")
@@ -104,13 +110,17 @@ func start_level() -> void:
 	_clear_level()
 	GameData.begin_run()
 	chickens_defeated = 0
+	proximo_marco = 4
+	boss_intro_shown = false
 	screen = "playing"
 	boss_bar.visible = false
 	var bot_markers := get_node("EditorPreview/Personagens/Bots").get_children()
 	total_chickens = bot_markers.size()
-	for marker in bot_markers:
+	for index in bot_markers.size():
+		var marker := bot_markers[index] as Node2D
 		var chicken := CharacterBody2D.new()
 		chicken.set_script(ChickenScript)
+		chicken.configure_progression(index, bot_markers.size())
 		chicken.position = marker.global_position
 		_register_level_object(chicken)
 	var egg_markers := get_node("EditorPreview/Personagens/Ovos").get_children()
@@ -127,12 +137,12 @@ func start_level() -> void:
 		camera.limit_left = 0
 		camera.limit_right = int(LEVEL_END)
 		camera.limit_top = 0
-		camera.limit_bottom = 700
+		camera.limit_bottom = int(Limites.FUNDO_DA_CAMERA)
 		camera.make_current()
 	_spawn_boss()
 	show_hud()
 	update_hud()
-	show_message("WASD ou setas: mover  |  Espaço/W/↑: pular  |  J ou clique: atacar", 5.0)
+	show_message("A fazenda caiu. Atravesse as ruínas, reúna os ovos e descubra por que a Galinha Real guarda o ninho.", 5.0)
 
 func _place_egg(at: Vector2, kind: int) -> void:
 	var egg := Area2D.new()
@@ -142,17 +152,38 @@ func _place_egg(at: Vector2, kind: int) -> void:
 	_register_level_object(egg)
 
 func spawn_egg(at: Vector2) -> void:
-	var egg := Area2D.new()
-	egg.set_script(EggScript)
+	# Adiado: a morte da galinha costuma vir de dentro de body_entered do
+	# projetil, e criar Area2D durante o flush de fisica gera "Can't change this
+	# state while flushing queries" (PENDENCIAS.md, 19/10/2026).
+	_place_egg.call_deferred(at, _sortear_raridade())
+
+func _sortear_raridade() -> int:
 	var roll := randf()
-	egg.egg_kind = 0 if roll < 0.55 else (1 if roll < 0.80 else (2 if roll < 0.93 else (3 if roll < 0.985 else 4)))
-	egg.global_position = at
-	add_child(egg)
-	level_objects.append(egg)
+	if roll < 0.55:
+		return 0
+	if roll < 0.80:
+		return 1
+	if roll < 0.93:
+		return 2
+	return 3 if roll < 0.985 else 4
 
 func enemy_defeated() -> void:
 	chickens_defeated += 1
 	update_hud()
+	if chickens_defeated >= proximo_marco and chickens_defeated < total_chickens:
+		_show_story_beat()
+		proximo_marco += 4
+	if chickens_defeated == total_chickens:
+		show_message("O ninho está à frente. A guardiã despertou!", 3.5)
+
+func _show_story_beat() -> void:
+	var fraction := float(chickens_defeated) / maxf(1.0, float(total_chickens))
+	var story := "As penas brilham no escuro. Alguém protege este lugar há muito tempo."
+	if fraction >= 0.75:
+		story = "O calor aumenta. A Galinha Real sente seus passos e chama suas últimas guardiãs."
+	elif fraction >= 0.5:
+		story = "Marcas antigas cobrem as paredes: o ninho mantém viva a chama da fazenda."
+	show_message(story, 4.0)
 
 func _spawn_boss() -> void:
 	if is_instance_valid(boss):
@@ -192,8 +223,9 @@ func boss_defeated(at: Vector2) -> void:
 	if armor_dropped:
 		GameData.owns_chicken_armor = true
 		GameData.save_progress()
-	end_message = "A armadura de galinha caiu! Bico, crista e barbela desbloqueados!" if armor_dropped else "A galinha explodiu em luz... mas a armadura não caiu desta vez. Tente de novo!"
-	show_message("PÓF! Uma explosão de penas e luz!", 2.2)
+	var epilogo := "A chama do ninho reacende. A fazenda ainda pode ser salva."
+	end_message = "%s\nA armadura de galinha caiu! Bico, crista e barbela desbloqueados!" % epilogo if armor_dropped else "%s\nA armadura sumiu na explosão. A guardiã pode voltar a deixar uma." % epilogo
+	show_message("PÓF! A chama do ninho voltou a brilhar!", 2.2)
 	await get_tree().create_timer(2.0).timeout
 	if not is_inside_tree():
 		return
@@ -284,7 +316,7 @@ func show_class_select() -> void:
 	screen = "select"
 	_clear_level()
 	boss_bar.visible = false
-	var panel := _panel("GRILL OR BE GRILLED", "Dungeon das Galinhas — escolha seu herói\nMoedas guardadas: %d" % GameData.gold)
+	var panel := _panel("GRILL OR BE GRILLED", "A fazenda foi tomada pela noite. A chama do ninho está enfraquecendo.\nEncontre a Galinha Real antes que ela se apague.\nMoedas guardadas: %d" % GameData.gold)
 	for class_choice in ["Guerreiro", "Arqueiro", "Mago"]:
 		var weapon: String = {"Guerreiro": "Espada", "Arqueiro": "Arco", "Mago": "Varinha"}[class_choice]
 		var chosen: String = class_choice

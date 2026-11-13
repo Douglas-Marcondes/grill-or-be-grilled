@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const Sprites = preload("res://scripts/sprites.gd")
+const Limites = preload("res://scripts/limites.gd")
 const Movimento = preload("res://scripts/character_movement.gd")
 const Salto = preload("res://scripts/salto.gd")
 
@@ -31,6 +32,7 @@ var invulnerability := 0.0
 var class_name_game := "Guerreiro"
 var animation_time := 0.0
 var salto := Salto.new()
+var knockback := 0.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -49,6 +51,7 @@ func _ready() -> void:
 	camera.position = Vector2(0, -40)
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 6.0
+	camera.offset.x = 28.0
 	add_child(camera)
 	max_health += GameData.health_bonus
 	health = max_health
@@ -78,14 +81,21 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("andar_esquerda", "andar_direita")
 	if not is_zero_approx(direction):
 		facing = signf(direction)
-	_mover_horizontal(direction, delta)
+	var camera := get_node_or_null("Camera2D") as Camera2D
+	if camera:
+		camera.offset.x = move_toward(camera.offset.x, facing * 34.0, 180.0 * delta)
+	if knockback > 0.0:
+		velocity.x = move_toward(velocity.x, 0.0, 380.0 * delta)
+		knockback = maxf(0.0, knockback - delta)
+	else:
+		_mover_horizontal(direction, delta)
 	salto.atualizar(self, delta, Input.is_action_just_pressed("pular"), Input.is_action_pressed("pular"))
 	attack_timer = maxf(0.0, attack_timer - delta)
 	if Input.is_action_just_pressed("atacar") and attack_timer <= 0.0:
 		attack()
 	invulnerability = maxf(0.0, invulnerability - delta)
 	move_and_slide()
-	if global_position.y > 850.0:
+	if global_position.y > Limites.QUEDA_FATAL:
 		$"..".player_died()
 		set_physics_process(false)
 		return
@@ -129,7 +139,7 @@ func attack() -> void:
 	var damage := 1 + int(GameData.strength_bonus / 5)
 	if GameData.equipped_weapon == "Espada":
 		for enemy in get_tree().get_nodes_in_group("enemies"):
-			if is_instance_valid(enemy) and absf(enemy.global_position.x - global_position.x - facing * 26.0) < 67.0 and absf(enemy.global_position.y - global_position.y) < 54.0:
+			if is_instance_valid(enemy) and absf(enemy.global_position.x - global_position.x - facing * 24.0) < 27.0 and absf(enemy.global_position.y - global_position.y) < 27.0:
 				enemy.take_damage(damage + 1)
 		$"..".slash_effect(global_position + Vector2(facing * 26.0, ALTURA_DA_MAO), facing, false)
 	else:
@@ -148,6 +158,9 @@ func take_damage(amount: int) -> void:
 		return
 	health -= maxi(1, amount - GameData.armor_bonus)
 	invulnerability = 0.9
+	knockback = 0.22
+	velocity.x = -facing * 190.0
+	velocity.y = -150.0
 	$"..".update_hud()
 	if health <= 0:
 		$"..".player_died()
