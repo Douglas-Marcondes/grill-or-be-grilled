@@ -84,31 +84,53 @@ Dois detalhes de uso:
   time, buffer, altura variável) num piso isolado. Imprime `SALTO_OK`.
 - `ferramentas/teste_de_fumaca.tscn`: roda a fase com o herói dirigido pelas
   **ações do input map** (não por `velocity` direta, senão não cobre aceleração
-  nem as folgas do pulo) e falha se o herói morrer ou se algum script quebrar.
-  Imprime `SMOKE_OK`.
+  nem as folgas do pulo), depois luta 8s na arena da Galinha Real. Falha se o
+  herói morrer, cair da arena ou se algum script quebrar. Imprime `SMOKE_OK`.
+- `ferramentas/teste_das_passagens.tscn`: pula cada vão da fase na borda e
+  confere que todos passam; cobre também a quina do `Trecho3`.
+- `teste_do_combate`, `teste_do_chefe`, `teste_dos_inimigos`,
+  `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`: um por camada.
+
+Todos de uma vez (sai com erro se algum falhar ou se o Godot registrar `ERROR`):
 
 ```
-G=./Godot_v4.7.2-stable_linux.x86_64
-$G --headless --path grill-or-be-grilled res://ferramentas/teste_da_previa.tscn
-$G --headless --path grill-or-be-grilled res://ferramentas/teste_do_salto.tscn
-$G --headless --path grill-or-be-grilled res://ferramentas/teste_de_fumaca.tscn
+tools/testar.sh
 ```
+
+Testes e ferramentas gravam em `user://ferramentas.cfg`, nunca no save do jogo.
+
+### Som
+
+```
+python3 tools/gerar_sons.py
+```
+
+Sintetiza os efeitos e a música em `Artes/sons/` (chiptune: onda quadrada,
+triangular e ruído com envelope; só biblioteca padrão). O autoload `Som`
+(`scripts/som.gd`) toca com `Som.tocar("pulo")`.
 
 ### O arco do pulo é restrito pela fase
 
-Alcance horizontal de um pulo = tempo de ar × velocidade de corrida. Os gaps
-largos da fase 1 estão calibrados no limite do arco original — `Trecho11` →
-`Trecho12` exige 90px de subida em 130px de vão, que da borda era impossível
-(-3px de margem) e só passava pela pedra `RotaAlta11`. Por isso `salto.gd`
-mantém altura (105px) e tempo de ar (0.78s) e tira o "peso" só da assimetria
-subida/queda. **Encurtar o tempo de ar de verdade exige reposicionar as pedras
-`RotaAlta*` ou subir a velocidade de corrida** — ver PENDENCIAS.md.
+Alcance horizontal de um pulo = tempo de ar × velocidade de corrida. Os vãos
+largos da fase 1 (110–130px) foram calibrados no arco de 105px de altura e 0.78s
+de ar, então `salto.gd` tira o "peso" só da assimetria subida/queda. As pedras
+`RotaAlta7/8/11/13/15` ficam **dentro** do vão como degrau, e não por cima da
+saída do trecho. Mudou o pulo ou o layout? Rode `teste_das_passagens`.
 
 ## Estrutura de código
 
 O projeto Godot fica em `grill-or-be-grilled/`.
 
+- `fase1.gd`: fluxo da fase (início, vidas, checkpoint, chefe, vitória).
 - `player.gd`: política de entrada e controle do herói jogável.
+- `chicken_enemy.gd`: galinha comum e base das variantes `galo.gd` e
+  `galinha_atiradeira.gd`; o tipo de cada marcador vem de `metadata/tipo`
+  (`scripts/bestiario.gd`).
+- `chicken_boss.gd`: Galinha Real, três golpes telegrafados e duas fases.
+- `braseiro.gd`: checkpoint (marcadores em `EditorPreview/Personagens/Braseiros`).
+- `scripts/historia.gd`: todo o texto narrativo. `scripts/menus.gd`: telas de menu.
+- `scripts/impacto.gd` (hitstop, tremor e som do golpe), `scripts/esquiva.gd`,
+  `scripts/camera_do_heroi.gd`, `scripts/limites.gd`.
 - `scripts/salto.gd`: pulo de plataforma com coyote time, buffer, altura variável e gravidade assimétrica.
 - `scripts/previa_do_editor.gd`: `@tool` que veste a fase dentro do editor com o mesmo código do jogo.
 - `perso1.gd`: política de entrada e controle do jogador (protótipo paralelo).
@@ -148,13 +170,18 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 ## Primeira fase jogável
 
 O projeto principal é `grill-or-be-grilled/`; a cena inicial jogável é `jogo.tscn`.
-Ao iniciar, escolha Guerreiro (espada), Arqueiro (arco) ou Mago (varinha). Atravesse
-a dungeon, derrote as cinco galinhas que perseguem o jogador, recolha seus ovos e
-vença a Galinha Real. Os ovos têm cinco raridades e são vendidos automaticamente
-na vitória. O boss tem investida, bicada e disparo de penas; sua armadura cômica
+A Chama do Ninho, que mantinha a Fazenda Brasa Viva acesa, foi roubada pelas
+galinhas, cansadas da grelha. Ao iniciar (com prólogo na primeira vez), escolha
+Guerreiro (espada), Arqueiro (arco) ou Mago (varinha), desça até o ninho e vença a
+Galinha Real. No caminho há galinhas comuns, Galos de Briga (bote pelo chão) e
+Galinhas Atiradeiras (ovos em arco). Cada braseiro aceso cura e vira ponto de
+volta, e há 3 vidas por tentativa. A Galinha Real avisa cada golpe com uma cor:
+amarelo é investida (esquive), laranja é salto com onda de choque (pule) e
+vermelho é leque de penas. Os ovos têm cinco raridades e são vendidos automaticamente
+na vitória. A armadura cômica da Galinha Real
 (bico, crista e barbela) tem 90% de chance de drop. A loja entre tentativas vende
-armas e melhorias permanentes, salvas localmente. Morrer reinicia o nível e perde
-os ovos da tentativa.
+armas e melhorias permanentes, salvas localmente. Perder as 3 vidas reinicia o nível e
+perde os ovos da tentativa.
 
 Controles (definidos no input map, em `project.godot` → `[input]`, lidos por
 posição física de tecla, então ABNT2 não precisa de remapeamento):
@@ -164,3 +191,4 @@ posição física de tecla, então ABNT2 não precisa de remapeamento):
 | `andar_esquerda` / `andar_direita` | A/D ou ←/→ | analógico esquerdo, direcional |
 | `pular` | Espaço, W ou ↑ | A |
 | `atacar` | J, K ou clique esquerdo | X |
+| `esquivar` | Shift ou L | B |
