@@ -10,11 +10,14 @@ const TEMA = preload("res://tema_pixel.tres")
 const Terreno = preload("res://scripts/terreno.gd")
 const Tochas = preload("res://scripts/tochas.gd")
 const Limites = preload("res://scripts/limites.gd")
+const Historia = preload("res://scripts/historia.gd")
+const Menus = preload("res://scripts/menus.gd")
 
 const LEVEL_END := 10000.0
-const LARGURA_PAINEL := 300.0
-const ALTURA_PAINEL := 220.0
 var ui: CanvasLayer
+var menus: Menus
+## Placas (Marco*) ainda nao lidas nesta tentativa: nome -> X da placa.
+var unread_signs := {}
 var player: CharacterBody2D
 var boss: CharacterBody2D
 var hud_label: Label
@@ -26,7 +29,6 @@ var total_chickens := 0
 var level_objects: Array[Node] = []
 var message_timer := 0.0
 var end_message := ""
-var proximo_marco := 4
 var boss_intro_shown := false
 ## Vidas por tentativa: acabar com elas e o "fim de jogo" que perde os ovos.
 const VIDAS_POR_TENTATIVA := 3
@@ -47,12 +49,23 @@ func _process(delta: float) -> void:
 	if message_timer > 0.0:
 		message_timer -= delta
 		if message_timer <= 0.0 and notice_label:
-			notice_label.text = ""
+			show_message("", 0.0)
 	if boss_bar:
 		boss_bar.visible = screen == "playing" and is_instance_valid(player) and is_instance_valid(boss) and absf(player.global_position.x - boss.global_position.x) < 700.0
 	if screen == "playing" and not boss_intro_shown and is_instance_valid(player) and is_instance_valid(boss) and absf(player.global_position.x - boss.global_position.x) < 430.0:
 		boss_intro_shown = true
-		show_message("A Galinha Real bloqueia o ninho. Leia o aviso, desvie e contra-ataque!", 4.0)
+		show_message(Historia.FALA_DO_CHEFE_AO_VER_O_HEROI, 4.0)
+	_read_passed_signs()
+
+func _read_passed_signs() -> void:
+	"""Mostra o texto de cada placa uma vez, quando o heroi passa por ela."""
+	if screen != "playing" or not is_instance_valid(player):
+		return
+	for sign_name in unread_signs.keys():
+		if player.global_position.x >= unread_signs[sign_name]:
+			unread_signs.erase(sign_name)
+			show_message(Historia.PLACAS[sign_name], 4.5)
+			return
 
 func _build_playable_geometry() -> void:
 	var level_art := get_node_or_null("EditorPreview/Cenario")
@@ -96,12 +109,18 @@ func _build_ui() -> void:
 	boss_bar.visible = false
 	boss_bar.show_percentage = false
 	root.add_child(boss_bar)
-	notice_label = Label.new()
-	notice_label.position = Vector2(20, 28)
-	notice_label.size = Vector2(440, 14)
-	notice_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	notice_label.add_theme_color_override("font_color", Color("fbf236"))
+	# Aviso com quebra de linha e fundo escuro: as falas da historia passam de
+	# uma linha e, sem fundo, sumiam contra o ceu claro e as tochas.
+	notice_label = Menus.texto("", Color("fbf236"))
+	notice_label.position = Vector2(40, 26)
+	notice_label.size = Vector2(400, 0)
+	var notice_box := StyleBoxFlat.new()
+	notice_box.bg_color = Color(0.054901, 0.047058, 0.098039, 0.78)
+	notice_box.set_content_margin_all(3)
+	notice_label.add_theme_stylebox_override("normal", notice_box)
+	notice_label.visible = false
 	root.add_child(notice_label)
+	_arm_menus()
 	update_hud()
 
 func _clear_level() -> void:
@@ -133,7 +152,6 @@ func start_level() -> void:
 	GameData.begin_run()
 	chickens_defeated = 0
 	vidas = VIDAS_POR_TENTATIVA
-	proximo_marco = 4
 	boss_intro_shown = false
 	screen = "playing"
 	boss_bar.visible = false
@@ -156,7 +174,7 @@ func start_level() -> void:
 	player.position = checkpoint
 	player.configure(GameData.selected_class)
 	_register_level_object(player)
-	var camera := player.get_node_or_null("Camera2D") as Camera2D
+	var camera: Camera2D = player.camera
 	if camera:
 		camera.limit_left = 0
 		camera.limit_right = int(LEVEL_END)
@@ -166,7 +184,11 @@ func start_level() -> void:
 	_spawn_boss()
 	show_hud()
 	update_hud()
-	show_message("A fazenda caiu. Atravesse as ruínas, reúna os ovos e descubra por que a Galinha Real guarda o ninho.", 5.0)
+	unread_signs.clear()
+	for sign_name in Historia.PLACAS:
+		var sign_label := get_node("EditorPreview/Cenario/%s" % sign_name) as Control
+		unread_signs[sign_name] = sign_label.global_position.x
+	show_message(Historia.INICIO_DA_FASE, 5.0)
 
 func _spawn_enemy(marker: Node2D) -> void:
 	var tipo := Bestiario.tipo_do_marcador(marker)
@@ -203,20 +225,11 @@ func _sortear_raridade() -> int:
 func enemy_defeated() -> void:
 	chickens_defeated += 1
 	update_hud()
-	if chickens_defeated >= proximo_marco and chickens_defeated < total_chickens:
-		_show_story_beat()
-		proximo_marco += 4
+	var recado := Historia.recado_de_avanco(chickens_defeated, total_chickens)
 	if chickens_defeated == total_chickens:
-		show_message("O ninho está à frente. A guardiã despertou!", 3.5)
-
-func _show_story_beat() -> void:
-	var fraction := float(chickens_defeated) / maxf(1.0, float(total_chickens))
-	var story := "As penas brilham no escuro. Alguém protege este lugar há muito tempo."
-	if fraction >= 0.75:
-		story = "O calor aumenta. A Galinha Real sente seus passos e chama suas últimas guardiãs."
-	elif fraction >= 0.5:
-		story = "Marcas antigas cobrem as paredes: o ninho mantém viva a chama da fazenda."
-	show_message(story, 4.0)
+		recado = Historia.TODAS_DERROTADAS
+	if not recado.is_empty():
+		show_message(recado, 4.0)
 
 func _spawn_boss() -> void:
 	if is_instance_valid(boss):
@@ -256,9 +269,8 @@ func boss_defeated(at: Vector2) -> void:
 	if armor_dropped:
 		GameData.owns_chicken_armor = true
 		GameData.save_progress()
-	var epilogo := "A chama do ninho reacende. A fazenda ainda pode ser salva."
-	end_message = "%s\nA armadura de galinha caiu! Bico, crista e barbela desbloqueados!" % epilogo if armor_dropped else "%s\nA armadura sumiu na explosão. A guardiã pode voltar a deixar uma." % epilogo
-	show_message("PÓF! A chama do ninho voltou a brilhar!", 2.2)
+	end_message = "%s\n%s" % [Historia.EPILOGO, Historia.ARMADURA_GANHA if armor_dropped else Historia.ARMADURA_PERDIDA]
+	show_message(Historia.QUEDA_DO_CHEFE, 2.2)
 	await get_tree().create_timer(2.0).timeout
 	if not is_inside_tree():
 		return
@@ -284,7 +296,7 @@ func shockwave_effect(at: Vector2, alcance: float) -> void:
 	add_child(onda)
 
 func boss_enraged() -> void:
-	show_message("A Galinha Real se enfurece! Os golpes ficam mais rápidos.", 3.0)
+	show_message(Historia.FALA_DO_CHEFE_ENFURECIDA, 3.0)
 
 func checkpoint_reached(at: Vector2) -> void:
 	checkpoint = at + Vector2(0, -2)
@@ -303,7 +315,7 @@ func player_died() -> void:
 	screen = "dead"
 	GameData.fail_run()
 	GameData.save_progress()
-	show_end_panel("Você virou omelete! Os ovos desta tentativa foram perdidos.", "Tentar de novo", func(): start_level())
+	show_end_panel(Historia.DERROTA, "Tentar de novo", func(): start_level())
 
 func _respawn_player() -> void:
 	"""Volta ao ultimo braseiro com vida cheia. A Galinha Real tambem se
@@ -328,9 +340,7 @@ func update_hud() -> void:
 		hud_label.text = "Ovos: %d   Moedas: %d" % [GameData.run_eggs, GameData.gold]
 
 func show_hud() -> void:
-	for child in ui.get_child(0).get_children():
-		if child != hud_label and child != boss_bar and child != notice_label:
-			child.visible = false
+	menus.esconder_paineis()
 	hud_label.visible = true
 	update_hud()
 
@@ -338,107 +348,64 @@ func show_message(text: String, duration: float = 2.0) -> void:
 	if not notice_label:
 		return
 	notice_label.text = text
+	notice_label.visible = not text.is_empty()
 	message_timer = duration
 
-func _panel(title: String, subtitle: String) -> VBoxContainer:
-	var root := ui.get_child(0) as Control
-	hud_label.visible = false
-	notice_label.text = ""
-	for child in root.get_children():
-		if child != hud_label and child != boss_bar and child != notice_label:
-			child.queue_free()
-	var shade := ColorRect.new()
-	shade.color = Color(0.054901, 0.047058, 0.098039, 0.88)
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	root.add_child(shade)
-	var panel := VBoxContainer.new()
-	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.position = Vector2(-LARGURA_PAINEL / 2.0, -ALTURA_PAINEL / 2.0)
-	panel.size = Vector2(LARGURA_PAINEL, ALTURA_PAINEL)
-	panel.add_theme_constant_override("separation", 3)
-	root.add_child(panel)
-	var heading := Label.new()
-	heading.text = title
-	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	# Titulo em 2x: ampliar fonte bitmap por inteiro mantem o pixel quadrado.
-	heading.add_theme_font_size_override("font_size", 24)
-	heading.add_theme_color_override("font_color", Color("fbf236"))
-	panel.add_child(heading)
-	var note := Label.new()
-	note.text = subtitle
-	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	note.add_theme_color_override("font_color", Color("eec39a"))
-	panel.add_child(note)
-	return panel
+func _arm_menus() -> void:
+	menus = Menus.new(ui.get_child(0) as Control, [hud_label, boss_bar, notice_label])
 
-func _button(parent: Container, text: String, callback: Callable) -> Button:
-	var button := Button.new()
-	button.text = text
-	button.custom_minimum_size = Vector2(190, 0)
-	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	button.pressed.connect(callback)
-	parent.add_child(button)
-	return button
+func _panel(title: String, subtitle: String) -> VBoxContainer:
+	hud_label.visible = false
+	show_message("", 0.0)
+	return menus.painel(title, subtitle)
 
 func show_class_select() -> void:
 	screen = "select"
 	_clear_level()
 	boss_bar.visible = false
-	var panel := _panel("GRILL OR BE GRILLED", "A fazenda foi tomada pela noite. A chama do ninho está enfraquecendo.\nEncontre a Galinha Real antes que ela se apague.\nMoedas guardadas: %d" % GameData.gold)
+	if not GameData.viu_prologo:
+		show_prologue()
+		return
+	var panel := _panel("GRILL OR BE GRILLED", "%s\nMoedas guardadas: %d" % [Historia.CHAMADA_DO_MENU, GameData.gold])
 	for class_choice in ["Guerreiro", "Arqueiro", "Mago"]:
 		var weapon: String = {"Guerreiro": "Espada", "Arqueiro": "Arco", "Mago": "Varinha"}[class_choice]
 		var chosen: String = class_choice
-		_button(panel, "%s  ·  %s" % [class_choice, weapon], func(): choose_class(chosen))
-	var controls := Label.new()
-	controls.text = "Derrote as galinhas, recolha ovos e vença o boss.\nMovimento: A/D ou setas   Pulo: Espaço/W   Ataque: J / clique\nControle: analógico/direcional, A para pular, X para atacar"
-	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	controls.add_theme_color_override("font_color", Color("9badb7"))
-	panel.add_child(controls)
-	hud_label.visible = false
-	notice_label.text = ""
+		Menus.botao(panel, "%s  ·  %s" % [class_choice, weapon], func(): choose_class(chosen))
+	Menus.botao(panel, "Rever a história", func(): show_prologue())
+	panel.add_child(Menus.texto("Mover: A/D ou setas   Pular: Espaço/W   Atacar: J/clique   Esquivar: Shift/L\nControle: analógico, A pula, X ataca, B esquiva", Menus.COR_DE_DICA))
 
-func show_shop(victory: bool) -> void:
+func show_prologue() -> void:
+	menus.prologo(Historia.PROLOGO, 0, func():
+		GameData.viu_prologo = true
+		GameData.save_progress()
+		show_class_select())
+
+func show_shop(_victory: bool) -> void:
 	screen = "shop"
 	boss_bar.visible = false
-	var result_text := "%s\nValor dos ovos vendidos: %d moedas   Saldo: %d moedas" % [end_message if not end_message.is_empty() else "A primeira fase foi vencida!", GameData.last_sale, GameData.gold]
+	var result_text := "%s\nOvos vendidos: %d moedas   Saldo: %d moedas" % [end_message if not end_message.is_empty() else "A primeira fase foi vencida!", GameData.last_sale, GameData.gold]
 	var panel := _panel("LOJA DO ACAMPAMENTO", result_text)
-	_button(panel, "Poção de força permanente (+5) — 20 moedas", func(): _buy("strength"))
-	_button(panel, "Poção de vida permanente (+5) — 20 moedas", func(): _buy("health"))
-	_button(panel, "Armadura resistente (+1 defesa) — 25 moedas", func(): _buy("armor"))
-	_button(panel, "Comprar/equipar Espada — 15 moedas", func(): _buy_weapon("Espada", 15))
-	_button(panel, "Comprar/equipar Arco — 15 moedas", func(): _buy_weapon("Arco", 15))
-	_button(panel, "Comprar/equipar Varinha — 15 moedas", func(): _buy_weapon("Varinha", 15))
-	_button(panel, "Voltar ao menu de heróis", func(): show_class_select())
+	Menus.botao(panel, "Poção de força permanente (+5) — 20 moedas", func(): _buy("forca"))
+	Menus.botao(panel, "Poção de vida permanente (+5) — 20 moedas", func(): _buy("vida"))
+	Menus.botao(panel, "Armadura resistente (+1 defesa) — 25 moedas", func(): _buy("armadura"))
+	for weapon in ["Espada", "Arco", "Varinha"]:
+		var chosen: String = weapon
+		Menus.botao(panel, "Comprar/equipar %s — %d moedas" % [weapon, GameData.PRECO_DE_ARMA], func(): _buy_weapon(chosen))
+	Menus.botao(panel, "Voltar ao menu de heróis", func(): show_class_select())
 
 func _buy(kind: String) -> void:
-	var price := 25 if kind == "armor" else 20
-	if GameData.gold < price:
+	if not GameData.comprar_melhoria(kind):
 		show_message("Ainda faltam moedas! Venda ovos vencendo uma fase.")
 		return
-	GameData.gold -= price
-	if kind == "strength":
-		GameData.strength_bonus += 5
-	elif kind == "health":
-		GameData.health_bonus += 5
-	else:
-		GameData.armor_bonus += 1
-	GameData.save_progress()
 	show_shop(true)
 
-func _buy_weapon(weapon: String, price: int) -> void:
-	if not GameData.owned_weapons.has(weapon) and GameData.gold < price:
+func _buy_weapon(weapon: String) -> void:
+	if not GameData.comprar_arma(weapon):
 		show_message("Ainda faltam moedas para essa arma!")
 		return
-	if not GameData.owned_weapons.has(weapon):
-		GameData.gold -= price
-		GameData.owned_weapons.append(weapon)
-	GameData.equipped_weapon = weapon
-	GameData.weapon_override = true
-	GameData.save_progress()
 	show_shop(true)
 
 func show_end_panel(text: String, button_text: String, callback: Callable) -> void:
 	var panel := _panel("FIM DE JOGO", text)
-	_button(panel, button_text, callback)
-	_button(panel, "Voltar ao menu de heróis", func(): show_class_select())
+	Menus.botao(panel, button_text, callback)
+	Menus.botao(panel, "Voltar ao menu de heróis", func(): show_class_select())

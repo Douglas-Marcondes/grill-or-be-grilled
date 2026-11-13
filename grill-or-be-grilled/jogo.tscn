@@ -683,49 +683,49 @@ width = 6.0
 default_color = Color(0.741176, 0.537255, 0.337255, 1)
 
 [node name="Marco1" type="Label" parent="EditorPreview/Cenario" unique_id=1456823570]
-offset_left = 900.0
-offset_top = 300.0
-offset_right = 900.0
-offset_bottom = 300.0
+offset_left = 880.0
+offset_top = 395.0
+offset_right = 880.0
+offset_bottom = 395.0
 theme = ExtResource("2_tema")
 theme_override_colors/font_color = Color(0.854902, 0.631373, 0.219608, 1)
 text = "RUINAS DO GALINHEIRO"
 
 [node name="Marco2" type="Label" parent="EditorPreview/Cenario" unique_id=1991461800]
-offset_left = 2900.0
-offset_top = 300.0
-offset_right = 2900.0
-offset_bottom = 300.0
+offset_left = 2950.0
+offset_top = 325.0
+offset_right = 2950.0
+offset_bottom = 325.0
 theme = ExtResource("2_tema")
 theme_override_colors/font_color = Color(0.854902, 0.631373, 0.219608, 1)
 text = "PENHASCO DOS OVOS"
 
 [node name="Marco3" type="Label" parent="EditorPreview/Cenario" unique_id=940312104]
-offset_left = 5100.0
-offset_top = 300.0
-offset_right = 5100.0
-offset_bottom = 300.0
+offset_left = 5180.0
+offset_top = 415.0
+offset_right = 5180.0
+offset_bottom = 415.0
 theme = ExtResource("2_tema")
 theme_override_colors/font_color = Color(0.854902, 0.631373, 0.219608, 1)
 text = "CAVERNA DAS PENAS"
 
 [node name="Marco4" type="Label" parent="EditorPreview/Cenario" unique_id=1140122773]
-offset_left = 7300.0
-offset_top = 300.0
-offset_right = 7300.0
-offset_bottom = 300.0
+offset_left = 6860.0
+offset_top = 395.0
+offset_right = 6860.0
+offset_bottom = 395.0
 theme = ExtResource("2_tema")
 theme_override_colors/font_color = Color(0.854902, 0.631373, 0.219608, 1)
 text = "TRILHA DAS ALTURAS"
 
 [node name="Marco5" type="Label" parent="EditorPreview/Cenario" unique_id=348592598]
-offset_left = 9250.0
-offset_top = 340.0
-offset_right = 9250.0
-offset_bottom = 340.0
+offset_left = 9200.0
+offset_top = 440.0
+offset_right = 9200.0
+offset_bottom = 440.0
 theme = ExtResource("2_tema")
 theme_override_colors/font_color = Color(0.854902, 0.631373, 0.219608, 1)
-text = "NINHO DA GALINHA REAL — FIM DA JORNADA"
+text = "NINHO DA GALINHA REAL"
 
 [node name="Personagens" type="Node2D" parent="EditorPreview" unique_id=2070939315]
 

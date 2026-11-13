@@ -16,8 +16,19 @@ func _ready() -> void:
 	for f in 4:
 		await RenderingServer.frame_post_draw
 	_gravar("menu")
+	GameData.viu_prologo = true
+	game.show_class_select()
+	for f in 4:
+		await RenderingServer.frame_post_draw
+	_gravar("escolha_de_heroi")
 	game.choose_class("Guerreiro")
 	await get_tree().process_frame
+	# Herói parado diante do primeiro braseiro, com a placa da região na tela.
+	game.player.global_position = Vector2(2402, 428)
+	game.player.camera.reset_smoothing()
+	for f in 90:
+		await RenderingServer.frame_post_draw
+	_gravar("braseiro_e_aviso")
 	var cam := Camera2D.new()
 	add_child(cam)
 	for nome in PONTOS:
