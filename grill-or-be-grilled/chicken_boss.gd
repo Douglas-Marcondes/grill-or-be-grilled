@@ -170,7 +170,7 @@ func _lancar_penas(quantas: int) -> void:
 		shot.direction = Vector2(facing, abertura).normalized()
 		shot.speed = 350.0
 		shot.damage = 1
-		shot.color = Color("f7a14c")
+		shot.tipo = "pena"
 		shot.target_mask = 1
 		get_tree().current_scene.add_child(shot)
 

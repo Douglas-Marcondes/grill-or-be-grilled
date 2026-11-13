@@ -37,7 +37,7 @@ const PROPRIEDADES_DA_VESTIMENTA := ["polygon", "offset", "scale", "texture",
 ## no editor, logo nao ha "arma equipada" para consultar aqui.
 const CLASSE_DA_PREVIA := "heroi_guerreiro"
 const ARMA_DA_PREVIA := "arma_espada"
-const QUADROS_DO_HEROI := 4
+const QUADROS_DO_HEROI := Jogador.QUADROS_DO_HEROI
 const QUADROS_DA_GALINHA := 4
 const QUADROS_DA_GALINHA_REAL := 2
 const QUADROS_DE_OVO := 5

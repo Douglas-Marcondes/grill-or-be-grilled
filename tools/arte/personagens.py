@@ -224,22 +224,67 @@ LINHA_DAS_PERNAS = 19
 PASSOS_HEROI = [(0, 0), (1, -1), (0, 0), (-1, 1)]
 
 
+## Poses fora da caminhada, na ordem da folha depois dos 4 passos (quadros 4,
+## 5 e 6; player.gd usa os mesmos indices). Cada uma: deslocamento do corpo em
+## (x, y), linhas de perna cortadas (joelho dobrado) e passo das duas pernas.
+## Sem elas o heroi congelava num quadro de caminhada no ar e a esquiva so
+## aparecia pelo rastro.
+POSES_HEROI = {
+    "pulo": ((0, 0), 2, (-1, 2)),
+    "queda": ((0, 0), 0, (-2, 2)),
+    "esquiva": ((2, 3), 3, (-2, 1)),
+}
+QUADROS_DO_HEROI = len(PASSOS_HEROI) + len(POSES_HEROI)
+
+
 def heroi(classe: str = "Guerreiro", quadro: int = 0) -> Tela:
-    """Heroi de uma das tres classes, num quadro do ciclo de caminhada."""
+    """Heroi de uma das tres classes: quadros 0-3 caminham, 4-6 sao as poses
+    de POSES_HEROI (pulo, queda, esquiva)."""
+    if not 0 <= quadro < QUADROS_DO_HEROI:
+        raise ValueError("quadro do heroi invalido: %d (esperado 0 a %d)"
+                         % (quadro, QUADROS_DO_HEROI - 1))
+    if quadro < len(PASSOS_HEROI):
+        atras, frente = PASSOS_HEROI[quadro]
+        return _pose_do_heroi(classe, (0, quadro % 2), 0, (atras, frente))
+    corpo, cortadas, passos = list(POSES_HEROI.values())[quadro - len(PASSOS_HEROI)]
+    return _pose_do_heroi(classe, corpo, cortadas, passos)
+
+
+def _pose_do_heroi(classe: str, corpo: tuple[int, int], cortadas: int,
+                   passos: tuple[int, int]) -> Tela:
+    """Recompoe o desenho base: corpo deslocado, pernas encurtadas pelo meio
+    (o pe continua sendo pe) e cada perna deslocada no X."""
     # HEROI mapeia caractere -> papel; a classe mapeia papel -> cor DB32. O
     # sprite e o mesmo desenho com a tunica e o chapeu repintados.
     cores = _cores_da_classe(classe)
     mapa = {letra: cores.get(papel, papel) for letra, papel in HEROI.items()}
     inteiro = de_ascii(CORPO_HEROI, mapa)
+    pernas = _pernas_encurtadas(inteiro, cortadas)
     tela = Tela(inteiro.largura, inteiro.altura)
-    altura_corpo = 1 if quadro % 2 else 0
+    dx, dy = corpo
     for y in range(LINHA_DAS_PERNAS):
         for x in range(inteiro.largura):
-            tela.definir(x, y + altura_corpo, inteiro.ler(x, y))
-    atras, frente = PASSOS_HEROI[quadro]
-    _mover_faixa(tela, inteiro, LINHA_DAS_PERNAS, 0, 9, atras)
-    _mover_faixa(tela, inteiro, LINHA_DAS_PERNAS, 9, inteiro.largura, frente)
+            pixel = inteiro.ler(x, y)
+            if pixel[3]:
+                tela.definir(x + dx, y + dy, pixel)
+    deslocada = Tela(inteiro.largura, inteiro.altura)
+    colar(deslocada, pernas, dx, dy)
+    atras, frente = passos
+    _mover_faixa(tela, deslocada, LINHA_DAS_PERNAS, 0, 9 + dx, atras)
+    _mover_faixa(tela, deslocada, LINHA_DAS_PERNAS, 9 + dx, inteiro.largura, frente)
     return tela
+
+
+def _pernas_encurtadas(inteiro: Tela, cortadas: int) -> Tela:
+    """Copia do desenho com `cortadas` linhas do meio da perna removidas."""
+    pernas = Tela(inteiro.largura, inteiro.altura)
+    linhas = list(range(LINHA_DAS_PERNAS, inteiro.altura))
+    meio = LINHA_DAS_PERNAS + 2
+    linhas = [y for y in linhas if not meio <= y < meio + cortadas]
+    for destino, origem in enumerate(linhas):
+        for x in range(inteiro.largura):
+            pernas.definir(x, LINHA_DAS_PERNAS + destino, inteiro.ler(x, origem))
+    return pernas
 
 
 def _mover_faixa(destino: Tela, origem: Tela, linha: int, x_inicio: int,

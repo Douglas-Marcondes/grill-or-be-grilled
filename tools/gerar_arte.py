@@ -51,7 +51,8 @@ def _gerar_personagens() -> int:
     }
     for classe in personagens.CORES_POR_CLASSE:
         folhas["heroi_%s" % classe.lower()] = [
-            personagens.heroi(classe, quadro) for quadro in range(4)
+            personagens.heroi(classe, quadro)
+            for quadro in range(personagens.QUADROS_DO_HEROI)
         ]
     for nome, quadros in folhas.items():
         salvar(folha(quadros, len(quadros)), str(DESTINO / ("%s.png" % nome)))
@@ -91,6 +92,15 @@ def _gerar_icones() -> int:
     return len(quadros)
 
 
+def _gerar_projeteis() -> int:
+    import projeteis
+    from tela import folha, salvar
+
+    quadros = projeteis.projeteis()
+    salvar(folha(quadros, len(quadros)), str(DESTINO / "projeteis.png"))
+    return len(quadros)
+
+
 def main() -> int:
     import fonte
     import paleta
@@ -102,6 +112,7 @@ def main() -> int:
     print("adereços: %d" % _gerar_props())
     print("folhas de adornos: %d" % _gerar_adornos())
     print("icones do HUD: %d" % _gerar_icones())
+    print("projeteis: %d" % _gerar_projeteis())
     glifos = fonte.gerar(
         str(DESTINO / "fonte_pixel.fnt"),
         str(DESTINO / "fonte_pixel.png"),

@@ -17,6 +17,11 @@ var sprite_armadura: Sprite2D
 ## linhas 12 a 15 das 26 do corpo, ou seja por volta de -12.
 const ALTURA_DA_MAO := -12.0
 const ALCANCE_DA_MAO := 5.0
+## Folha do heroi (tools/arte/personagens.py): 4 passos e depois as poses.
+const QUADROS_DO_HEROI := 7
+const QUADRO_DE_PULO := 4
+const QUADRO_DE_QUEDA := 5
+const QUADRO_DE_ESQUIVA := 6
 
 ## Chegar aos 270px/s em 0.1s le como resposta imediata sem ser liga/desliga.
 ## No ar o controle e mais fraco e o atrito quase nulo: o pulo conserva o
@@ -74,7 +79,7 @@ func configure(class_name_value: String) -> void:
 func _montar_visual() -> void:
 	"""Monta corpo, arma e armadura. Chamado depois de configure porque a folha
 	do corpo depende da classe e a da arma, do que esta equipado."""
-	sprite = Sprites.montar(self, "heroi_%s" % class_name_game.to_lower(), 4)
+	sprite = Sprites.montar(self, "heroi_%s" % class_name_game.to_lower(), QUADROS_DO_HEROI)
 	var folha_da_arma := "arma_%s" % GameData.equipped_weapon.to_lower()
 	largura_da_arma = Sprites.celula(folha_da_arma, 1).x
 	arma = Sprites.montar_centrado(self, folha_da_arma, 1)
@@ -146,6 +151,17 @@ func _mover_horizontal(direction: float, delta: float) -> void:
 	Movimento.accelerate_horizontal(self, direction, speed, taxa, delta)
 
 
+func _quadro_atual() -> int:
+	"""Pose pelo estado: esquiva vence tudo, no ar sobe ou cai, no chao anda."""
+	if esquiva.ativa():
+		return QUADRO_DE_ESQUIVA
+	if not is_on_floor():
+		return QUADRO_DE_PULO if velocity.y < 0.0 else QUADRO_DE_QUEDA
+	if absf(velocity.x) <= 1.0:
+		return 0
+	return Sprites.quadro_do_passo(animation_time, 4)
+
+
 func _animar() -> void:
 	if not sprite:
 		return
@@ -159,7 +175,7 @@ func _animar() -> void:
 			continue
 		Sprites.virar(parte, facing)
 		parte.visible = visivel
-	sprite.frame = 0 if is_on_floor() and absf(velocity.x) <= 1.0 else Sprites.quadro_do_passo(animation_time, 4)
+	sprite.frame = _quadro_atual()
 	if arma:
 		# A arma e ancorada pelo CABO na mao, nao pelo centro: centrada, a lamina
 		# de 20px da espada atravessava o corpo inteiro do heroi.
@@ -185,7 +201,7 @@ func attack() -> void:
 		shot.direction = Vector2(facing, 0)
 		shot.damage = damage
 		shot.speed = 570.0 if GameData.equipped_weapon == "Arco" else 430.0
-		shot.color = Color("b4e17b") if GameData.equipped_weapon == "Arco" else Color("bd9aff")
+		shot.tipo = "flecha" if GameData.equipped_weapon == "Arco" else "magia"
 		get_tree().current_scene.add_child(shot)
 		$"..".slash_effect(global_position + Vector2(facing * 23.0, ALTURA_DA_MAO), facing, true)
 

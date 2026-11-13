@@ -58,8 +58,7 @@ func _arremessar() -> void:
 	ovo.direction = lancamento.normalized()
 	ovo.speed = lancamento.length()
 	ovo.gravidade = GRAVIDADE_DO_OVO
-	ovo.forma = "ovo"
-	ovo.color = Color("eec39a")
+	ovo.tipo = "ovo"
 	ovo.target_mask = 1
 	get_tree().current_scene.add_child(ovo)
 

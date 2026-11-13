@@ -50,10 +50,8 @@ Próximas camadas, da que mais muda a cara do jogo para a que menos:
 
 - **A prévia do editor não cobre o parallax do fundo** (depende de simular a
   câmera).
-- **Projéteis e efeitos ainda são `draw_rect`** (`projectile.gd`,
-  `pixel_effect.gd`).
-- **O herói não tem quadro de pulo, queda nem esquiva.** No ar ele congela num
-  quadro de caminhada; a esquiva é mostrada só pelo rastro.
+- **Efeitos ainda são desenhados em código** (`pixel_effect.gd`: corte,
+  explosão, onda de choque). Os projéteis já são sprites.
 - **A massa de terra das plataformas ainda é grande** no enquadramento de 480x270.
 
 ## Coleta de ovo

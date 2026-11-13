@@ -33,7 +33,9 @@ terreno, camadas de fundo, folhas de personagem e adereços. Os módulos ficam e
 - `cenario.py`: tiles de terreno 16x16, desenhados para repetir sem costura.
 - `fundo.py`: céu com degradê ditherizado, silhuetas da fazenda (faixa de 640px,
   espaçamento irregular), colinas escuras até o rodapé, lua.
-- `personagens.py`: galinha, Galinha Real, herói (3 classes), ovos, armas.
+- `personagens.py`: galinha, Galinha Real, herói (3 classes; 4 passos mais pulo,
+  queda e esquiva), ovos, armas.
+- `projeteis.py`: flecha, orbe de magia, pena da Galinha Real e ovo arremessado.
 - `props.py`: tocha com chama de 4 quadros, halo de luz e poste.
 - `adornos.py`: uma folha de adornos por região (capim, feno e abóbora na
   fazenda; saco, caixote e barril na entrada; ossos, casca e cogumelos no porão),
@@ -94,7 +96,7 @@ Dois detalhes de uso:
   confere que todos passam; cobre também a quina do `Trecho3`.
 - `teste_do_combate`, `teste_do_chefe`, `teste_dos_inimigos`,
   `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`,
-  `teste_da_iluminacao`, `teste_dos_adornos`, `teste_do_hud`: um por camada.
+  `teste_da_iluminacao`, `teste_dos_adornos`, `teste_do_hud`, `teste_da_animacao`: um por camada.
 
 Todos de uma vez (sai com erro se algum falhar ou se o Godot registrar `ERROR`):
 
