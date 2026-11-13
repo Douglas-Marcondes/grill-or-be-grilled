@@ -77,6 +77,22 @@ CHAMAS = [
 _BAYER = ((0, 8, 2, 10), (12, 4, 14, 6), (3, 11, 1, 9), (15, 7, 13, 5))
 
 
+POSTE_ALTURA = 34
+
+
+def poste() -> Tela:
+    """Poste de madeira para a tocha ao ar livre: sem parede na fazenda, a
+    tocha ficava pendurada no ceu. O castical encaixa no topo."""
+    tela = Tela(7, POSTE_ALTURA)
+    retangulo(tela, 2, 0, 3, POSTE_ALTURA, "madeira")
+    retangulo(tela, 2, 0, 1, POSTE_ALTURA, "madeira_luz")
+    retangulo(tela, 1, POSTE_ALTURA - 3, 5, 3, "madeira_sombra")
+    retangulo(tela, 0, POSTE_ALTURA - 1, 7, 1, "madeira_sombra")
+    for x in (1, 5):
+        retangulo(tela, x, 0, 1, POSTE_ALTURA, "tinta")
+    return tela
+
+
 def tocha_suporte() -> Tela:
     return de_ascii(SUPORTE, CORES_DE_TOCHA)
 
@@ -115,4 +131,5 @@ def brilho(raio: int = 26) -> Tela:
 PROPS = {
     "tocha_suporte": tocha_suporte,
     "brilho": brilho,
+    "poste": poste,
 }

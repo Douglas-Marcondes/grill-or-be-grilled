@@ -8,6 +8,7 @@ extends Node2D
 #       res://ferramentas/teste_da_iluminacao.tscn
 
 const Iluminacao = preload("res://scripts/iluminacao.gd")
+const Terreno = preload("res://scripts/terreno.gd")
 const AcabamentoDoTerreno = preload("res://scripts/acabamento_do_terreno.gd")
 
 var _falhas: PackedStringArray = []
@@ -29,7 +30,7 @@ func _ready() -> void:
 
 
 func _testar_regioes() -> void:
-	var achadas := [Iluminacao.regiao_de(100.0), Iluminacao.regiao_de(4000.0), Iluminacao.regiao_de(9000.0)]
+	var achadas := [Terreno.regiao_em(100.0), Terreno.regiao_em(4000.0), Terreno.regiao_em(9000.0)]
 	_exigir("regiao por X", achadas == ["fazenda", "entrada", "porao"], str(achadas))
 	var fazenda: Color = Iluminacao.AMBIENTE["fazenda"]
 	var porao: Color = Iluminacao.AMBIENTE["porao"]

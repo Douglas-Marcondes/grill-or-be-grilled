@@ -70,6 +70,16 @@ def _gerar_props() -> int:
     return len(props.PROPS) + 1
 
 
+def _gerar_adornos() -> int:
+    import adornos
+    from tela import folha, salvar
+
+    for regiao, pecas in adornos.REGIOES.items():
+        quadros = pecas()
+        salvar(folha(quadros, len(quadros)), str(DESTINO / ("adornos_%s.png" % regiao)))
+    return len(adornos.REGIOES)
+
+
 def main() -> int:
     import fonte
     import paleta
@@ -79,6 +89,7 @@ def main() -> int:
     print("camadas de fundo: %d" % _gerar_fundo())
     print("folhas de personagem: %d" % _gerar_personagens())
     print("adereços: %d" % _gerar_props())
+    print("folhas de adornos: %d" % _gerar_adornos())
     glifos = fonte.gerar(
         str(DESTINO / "fonte_pixel.fnt"),
         str(DESTINO / "fonte_pixel.png"),

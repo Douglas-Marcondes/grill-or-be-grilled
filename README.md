@@ -34,7 +34,10 @@ terreno, camadas de fundo, folhas de personagem e adereços. Os módulos ficam e
 - `fundo.py`: céu com degradê ditherizado, silhuetas da fazenda (faixa de 640px,
   espaçamento irregular), colinas escuras até o rodapé, lua.
 - `personagens.py`: galinha, Galinha Real, herói (3 classes), ovos, armas.
-- `props.py`: tocha com chama de 4 quadros e halo de luz.
+- `props.py`: tocha com chama de 4 quadros, halo de luz e poste.
+- `adornos.py`: uma folha de adornos por região (capim, feno e abóbora na
+  fazenda; saco, caixote e barril na entrada; ossos, casca e cogumelos no porão),
+  do mais comum ao mais raro.
 
 > Os PNGs em `Artes/gerado/` são **ponto de partida**, não verdade final. Rodar o
 > script de novo sobrescreve a pasta inteira. Arte retocada no Aseprite deve ser
@@ -91,7 +94,7 @@ Dois detalhes de uso:
   confere que todos passam; cobre também a quina do `Trecho3`.
 - `teste_do_combate`, `teste_do_chefe`, `teste_dos_inimigos`,
   `teste_dos_braseiros`, `teste_da_historia`, `teste_dos_sons`,
-  `teste_da_iluminacao`: um por camada.
+  `teste_da_iluminacao`, `teste_dos_adornos`: um por camada.
 
 Todos de uma vez (sai com erro se algum falhar ou se o Godot registrar `ERROR`):
 
@@ -142,6 +145,8 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 - `scripts/terreno.gd`: layout editável → colisão + textura, por região da fase.
 - `scripts/tochas.gd`: tochas animadas com halo e luz de verdade (`PointLight2D`).
 - `scripts/iluminacao.gd`: escuridão ambiente (`CanvasModulate`) que fecha a cada região; tochas, braseiros acesos e o herói abrem poças de luz.
+- `scripts/adornos.gd`: espalha adornos no topo das plataformas, com semente no nome da plataforma (sempre os mesmos lugares, no editor e no jogo).
+- `scripts/superficie.gd`: altura do chão num X, lida dos vértices dos `Polygon2D` (funciona no editor, onde não há raycast). Na fazenda as tochas descem até esse chão e ganham poste; sobre um vão elas somem.
 - `scripts/acabamento_do_terreno.gd`: sombra de profundidade (`vertex_colors`) e contorno escuro em cada bloco de terreno.
 - `tema_pixel.tres`: fonte, cores e bordas da interface, num lugar só.
 - Arquivos `.tscn`: composição dos personagens e das fases; mantenha caminhos de recursos alinhados com os scripts anexados.

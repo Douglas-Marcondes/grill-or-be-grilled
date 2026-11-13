@@ -24,7 +24,7 @@ const FIM_DA_ENTRADA := 6500.0
 const MATERIAIS := {
 	"fazenda": {"corpo": "terra", "faixa": "palha", "parede": "parede_celeiro"},
 	"entrada": {"corpo": "madeira", "faixa": "tabua", "parede": "parede_celeiro"},
-	"porao": {"corpo": "pedra", "faixa": "musgo", "parede": "parede_porao"},
+	"porao": {"corpo": "pedra", "faixa": "laje", "parede": "parede_porao"},
 }
 
 const PREFIXOS_DE_CORPO := ["Trecho", "RotaAlta"]
@@ -87,6 +87,11 @@ static func _assar_escala(arte: Polygon2D) -> void:
 	arte.scale = Vector2.ONE
 
 
+static func e_corpo(no: Node) -> bool:
+	"""Bloco de terreno onde se pisa (tem colisao), e nao faixa nem parede."""
+	return no is Polygon2D and _tem_prefixo(no.name, PREFIXOS_DE_CORPO)
+
+
 static func _tem_prefixo(nome: StringName, prefixos: Array) -> bool:
 	for prefixo in prefixos:
 		if str(nome).begins_with(prefixo):
@@ -101,7 +106,7 @@ static func _caixa_global(arte: Polygon2D) -> Rect2:
 	tambem tem scale (RotaAlta8, por exemplo, e position (2404, 80) com scale
 	0.47), e ignorar a escala deslocava o centro em milhares de pixels -- uma
 	saliencia no meio da fazenda chegou a ser classificada como porao e saiu
-	coberta de musgo.
+	coberta com a faixa do porao.
 	"""
 	if arte.polygon.is_empty():
 		return Rect2()
@@ -112,7 +117,11 @@ static func _caixa_global(arte: Polygon2D) -> Rect2:
 
 
 static func _regiao_de(caixa: Rect2) -> String:
-	var x := caixa.get_center().x
+	return regiao_em(caixa.get_center().x)
+
+
+static func regiao_em(x: float) -> String:
+	"""Regiao da fase num X do mundo: fazenda, entrada ou porao."""
 	if x < FIM_DA_FAZENDA:
 		return "fazenda"
 	if x < FIM_DA_ENTRADA:

@@ -39,17 +39,8 @@ func _process(delta: float) -> void:
 	var camera := get_viewport().get_camera_2d()
 	if not camera:
 		return
-	var alvo: Color = AMBIENTE[regiao_de(camera.get_screen_center_position().x)]
+	var alvo: Color = AMBIENTE[Terreno.regiao_em(camera.get_screen_center_position().x)]
 	color = color.lerp(alvo, 1.0 - exp(-delta * RAPIDEZ_DA_TRANSICAO))
-
-
-static func regiao_de(x: float) -> String:
-	"""Mesmas fronteiras do material do terreno, para luz e chao mudarem juntos."""
-	if x < Terreno.FIM_DA_FAZENDA:
-		return "fazenda"
-	if x < Terreno.FIM_DA_ENTRADA:
-		return "entrada"
-	return "porao"
 
 
 static func luz(cor: Color, energia: float, escala: float) -> PointLight2D:

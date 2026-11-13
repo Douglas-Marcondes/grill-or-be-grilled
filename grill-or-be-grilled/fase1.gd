@@ -9,6 +9,7 @@ const BraseiroScript = preload("res://braseiro.gd")
 const TEMA = preload("res://tema_pixel.tres")
 const Terreno = preload("res://scripts/terreno.gd")
 const Tochas = preload("res://scripts/tochas.gd")
+const Adornos = preload("res://scripts/adornos.gd")
 const Limites = preload("res://scripts/limites.gd")
 const Historia = preload("res://scripts/historia.gd")
 const Menus = preload("res://scripts/menus.gd")
@@ -75,6 +76,7 @@ func _build_playable_geometry() -> void:
 		return
 	Terreno.montar(level_art)
 	Tochas.montar(level_art)
+	Adornos.montar(level_art)
 	add_child(Iluminacao.new())
 	_build_world_walls()
 

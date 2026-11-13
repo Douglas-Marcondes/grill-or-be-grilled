@@ -101,13 +101,21 @@ def tile_palha() -> Tela:
     return tela
 
 
-def tile_musgo() -> Tela:
-    """Faixa de musgo do porao: manchas verdes sobre pedra umida."""
+def tile_laje() -> Tela:
+    """Faixa de laje do porao: pedra lisa e clara, com junta e um fio de musgo.
+
+    Substituiu uma faixa toda verde, que lia como grama ao ar livre dentro da
+    masmorra. O musgo ficou so nas juntas, onde ele cresceria de verdade."""
     tela = Tela(LADO, LADO)
-    retangulo(tela, 0, 0, LADO, LADO, "musgo")
-    sorteio = _semeado("musgo")
-    _salpicar(tela, sorteio, "grama_sombra", 30)
-    _salpicar(tela, sorteio, "grama_luz", 16)
+    retangulo(tela, 0, 0, LADO, LADO, "pedra")
+    retangulo(tela, 0, 0, LADO, 2, "pena_sombra")
+    retangulo(tela, 0, LADO - 1, LADO, 1, "pedra_sombra")
+    retangulo(tela, 11, 2, 1, LADO - 3, "pedra_sombra")
+    sorteio = _semeado("laje")
+    _salpicar(tela, sorteio, "pedra_luz", 10)
+    for y in (3, 6, 9):
+        tela.definir(10, y + sorteio.randrange(2), cor("grama_sombra"))
+    tela.definir(12, 4, cor("grama"))
     return tela
 
 
@@ -154,7 +162,7 @@ TILES = {
     "pedra": tile_pedra,
     "madeira": tile_madeira,
     "palha": tile_palha,
-    "musgo": tile_musgo,
+    "laje": tile_laje,
     "tabua": tile_tabua,
     "parede_celeiro": tile_parede_celeiro,
     "parede_porao": tile_parede_porao,

@@ -23,6 +23,7 @@ extends Node2D
 
 const Terreno = preload("res://scripts/terreno.gd")
 const Tochas = preload("res://scripts/tochas.gd")
+const Adornos = preload("res://scripts/adornos.gd")
 const Sprites = preload("res://scripts/sprites.gd")
 const Jogador = preload("res://player.gd")
 const Bestiario = preload("res://scripts/bestiario.gd")
@@ -80,6 +81,7 @@ func vestir() -> void:
 	if cenario:
 		Terreno.montar(cenario)
 		Tochas.montar(cenario)
+		Adornos.montar(cenario)
 	_vestir_personagens()
 
 

@@ -17,9 +17,15 @@ extends RefCounted
 
 const Sprites = preload("res://scripts/sprites.gd")
 const Iluminacao = preload("res://scripts/iluminacao.gd")
+const Terreno = preload("res://scripts/terreno.gd")
+const Superficie = preload("res://scripts/superficie.gd")
 
 const PREFIXO := "Tocha"
 const QUADROS_DE_CHAMA := 4
+## Medidas de Artes/gerado/poste.png e do castical (tools/arte/props.py).
+const ALTURA_DO_POSTE := 34.0
+const ALTURA_DO_CASTICAL := 10.0
+const LARGURA_DO_POSTE := 7.0
 
 
 static func montar(cenario: Node2D) -> int:
@@ -33,9 +39,29 @@ static func montar(cenario: Node2D) -> int:
 			continue
 		for marcador in no.get_children():
 			marcador.hide()
-		no.add_child(Tocha.new())
+		var tocha := Tocha.new()
+		no.add_child(tocha)
+		if Terreno.regiao_em(no.global_position.x) == "fazenda":
+			_plantar_em_poste(cenario, tocha)
 		total += 1
 	return total
+
+
+static func _plantar_em_poste(cenario: Node2D, tocha: Tocha) -> void:
+	"""Ao ar livre nao ha parede onde prender a tocha: ela descia pendurada no
+	ceu. Aqui ela desce ate o chao abaixo do marcador e ganha um poste; sobre um
+	vao nao ha onde fincar, entao ela some (luz incluida)."""
+	var chao := Superficie.chao_abaixo(cenario, tocha.global_position)
+	if not is_finite(chao):
+		tocha.hide()
+		if tocha.luz:
+			tocha.luz.enabled = false
+		return
+	tocha.global_position.y = chao - ALTURA_DO_POSTE - ALTURA_DO_CASTICAL
+	var poste := Sprites.anexar(tocha, "poste", 1,
+			Vector2(-roundf(LARGURA_DO_POSTE / 2.0), ALTURA_DO_CASTICAL))
+	if poste:
+		poste.show_behind_parent = true
 
 
 ## Uma tocha acesa: castical, chama de 4 quadros e halo aditivo.
