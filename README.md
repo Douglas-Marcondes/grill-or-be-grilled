@@ -4,6 +4,29 @@ Projetinho de criação de jogo com Douglas e Jorge (Doujor/ Dojór)
 
 Pendências conhecidas e próximos passos: [PENDENCIAS.md](PENDENCIAS.md).
 
+## A ideia do jogo
+
+"Ou você grelha, ou é grelhado": o herói enfrenta a comida antes de ela virar
+churrasco, e o tom é cômico e caricato. A campanha sobe de fase em fase:
+
+1. **Galinhas** (fase 1, pronta): a Galinha Real roubou a Chama do Ninho.
+2. **Porcos** (fase 2): prompt de criação em [docs/prompt_fase2.md](docs/prompt_fase2.md).
+3. ... fases do meio ainda a definir ("3 ou 5?" níveis no plano original).
+4. **Chefe final: um sanduíche/hambúrguer gigante.**
+
+## Abrir no editor
+
+O projeto Godot fica na subpasta `grill-or-be-grilled/`, não na raiz do
+repositório. No gerenciador de projetos, importe `grill-or-be-grilled/project.godot`.
+Pelo terminal, na raiz do repositório:
+
+```
+./Godot_v4.7.2-stable_linux.x86_64 --editor --path grill-or-be-grilled
+```
+
+A primeira abertura depois de um `git pull` com arte nova reimporta os PNGs e pode
+levar alguns segundos com a janela parada; é normal.
+
 ## Arte e pipeline visual
 
 A arte do jogo é pixel art na paleta **DawnBringer 32** — a mesma paleta padrão do

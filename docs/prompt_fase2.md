@@ -4,9 +4,9 @@
 > repositório. Ele foi escrito em 13/11/2026, depois da fase 1 ficar completa
 > (jogabilidade, história, som, visual e versão mobile).
 >
-> **Confirme antes de usar:** nada no repositório fala em porcos. A fase 2 dos
-> porcos é uma lembrança do Jorge, então o tema, os nomes e a história abaixo são
-> uma proposta. Ajuste o texto se a ideia era outra.
+> A campanha confirmada pelo Jorge: galinhas (fase 1), **porcos (fase 2)**, e o
+> chefe final é um sanduíche/hambúrguer gigante (ver "A ideia do jogo" no
+> README). Os nomes, regiões e inimigos abaixo são proposta; ajuste à vontade.
 
 ---
 
@@ -23,7 +23,14 @@ cozinheiro..."). A fase 2 começa onde o túnel sai: no **chiqueiro** da fazenda
 vizinha. Lá os porcos, que também têm pavor da grelha (pernil, costelinha,
 leitão à pururuca), se aliaram às galinhas. A Galinha Real se esconde com eles.
 Proposta de chefe: o **Barão Pernil**, um porcão de cartola que defende a
-Galinha Real. Ao final, ela foge de novo, deixando o gancho para a fase 3.
+Galinha Real. O tom é cômico e caricato, como o resto do jogo: o Barão se acha
+nobre demais para virar torresmo.
+
+O fim da fase 2 deve apontar para o chefe final do jogo, um **sanduíche/hambúrguer
+gigante**. Proposta: derrotado, o Barão confessa que galinhas e porcos só
+obedecem a "Sua Majestade, o X-Tudo", que quer juntar todas as carnes da fazenda
+num lanche só. A Galinha Real foge de novo, levando o recado. Não implemente o
+hambúrguer agora: só o gancho na história.
 
 ## O que já existe e está amarrado à fase 1
 
