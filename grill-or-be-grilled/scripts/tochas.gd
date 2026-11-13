@@ -72,6 +72,7 @@ class Tocha extends Node2D:
 	const ENERGIA_DA_LUZ := 1.4
 	const ESCALA_DA_LUZ := 2.4
 
+	var suporte: Sprite2D
 	var chama: Sprite2D
 	var halo: Sprite2D
 	## Luz que ilumina o cenario em volta (so em jogo; no editor nao ha
@@ -83,8 +84,8 @@ class Tocha extends Node2D:
 		# Fase inicial sorteada: sem isso as 33 tochas da fase piscam no mesmo
 		# compasso e o cenario inteiro pulsa junto, o que entrega o truque.
 		tempo = randf() * 10.0
-		var suporte := Sprites.celula("tocha_suporte", 1)
-		Sprites.anexar(self, "tocha_suporte", 1, Vector2(-suporte.x / 2.0, 0))
+		var tamanho_do_suporte := Sprites.celula("tocha_suporte", 1)
+		suporte = Sprites.anexar(self, "tocha_suporte", 1, Vector2(-tamanho_do_suporte.x / 2.0, 0))
 		var tamanho_da_chama := Sprites.celula("tocha_chama", QUADROS_DE_CHAMA)
 		chama = Sprites.anexar(self, "tocha_chama", QUADROS_DE_CHAMA,
 				Vector2(-tamanho_da_chama.x / 2.0, -tamanho_da_chama.y))

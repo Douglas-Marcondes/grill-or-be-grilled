@@ -24,7 +24,7 @@ func _ready() -> void:
 	for falha in _falhas:
 		printerr("FALHOU: %s" % falha)
 	if _falhas.is_empty():
-		print("BRASEIROS_OK 3 verificacoes")
+		print("BRASEIROS_OK 4 verificacoes")
 	get_tree().quit(0 if _falhas.is_empty() else 1)
 
 
@@ -34,6 +34,18 @@ func _testar_acender(game: Node, braseiro: Vector2) -> void:
 	await _esperar(5)
 	_exigir("braseiro cura e marca a volta", game.player.health == game.player.max_health and game.checkpoint.distance_to(braseiro) < 4.0,
 		"vida=%d checkpoint=%s" % [game.player.health, game.checkpoint])
+	var acesos := 0
+	var apagados := 0
+	for no in game.get_children():
+		if not "fogueira" in no:
+			continue
+		var quadro: int = no.fogueira.frame
+		if no.aceso and quadro == no.QUADRO_ACESO and no.tocha.chama.visible:
+			acesos += 1
+		elif not no.aceso and quadro == no.QUADRO_APAGADO and not no.tocha.chama.visible:
+			apagados += 1
+	_exigir("fogueira muda de quadro ao acender", acesos >= 1 and apagados >= 1,
+		"acesos=%d apagados=%d" % [acesos, apagados])
 
 
 func _testar_queda_volta_ao_braseiro(game: Node, braseiro: Vector2) -> void:

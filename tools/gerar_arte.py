@@ -70,7 +70,8 @@ def _gerar_props() -> int:
         salvar(desenhar(), str(DESTINO / ("%s.png" % nome)))
     chamas = [props.tocha_chama(quadro) for quadro in range(len(props.CHAMAS))]
     salvar(folha(chamas, len(chamas)), str(DESTINO / "tocha_chama.png"))
-    return len(props.PROPS) + 1
+    salvar(folha([props.braseiro(0), props.braseiro(1)], 2), str(DESTINO / "braseiro.png"))
+    return len(props.PROPS) + 2
 
 
 def _gerar_adornos() -> int:

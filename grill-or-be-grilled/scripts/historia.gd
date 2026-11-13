@@ -18,6 +18,14 @@ const PROLOGO := [
 ]
 
 const CHAMADA_DO_MENU := "A Chama do Ninho foi roubada e a fazenda está esfriando.\nDesça até o ninho da Galinha Real e traga-a de volta."
+## Arma e estilo de cada classe, na carta da escolha de heroi. Cabe numa
+## linha da carta de 92px (uns 14 caracteres): mais que isso quebra e vaza.
+const CLASSES := {
+	"Guerreiro": "Espada · perto",
+	"Arqueiro": "Arco · longe",
+	"Mago": "Varinha · luz",
+}
+
 const INICIO_DA_FASE := "Siga as penas até o celeiro. Os braseiros do caminho guardam um pouco da Chama."
 
 ## Texto de cada placa (Marco* no jogo.tscn), mostrado quando o heroi passa por ela.

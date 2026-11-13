@@ -386,10 +386,7 @@ func show_class_select() -> void:
 		show_prologue()
 		return
 	var panel := _panel("GRILL OR BE GRILLED", "%s\nMoedas guardadas: %d" % [Historia.CHAMADA_DO_MENU, GameData.gold])
-	for class_choice in ["Guerreiro", "Arqueiro", "Mago"]:
-		var weapon: String = {"Guerreiro": "Espada", "Arqueiro": "Arco", "Mago": "Varinha"}[class_choice]
-		var chosen: String = class_choice
-		Menus.botao(panel, "%s  ·  %s" % [class_choice, weapon], func(): choose_class(chosen))
+	Menus.cartas_de_heroi(panel, Historia.CLASSES, choose_class)
 	Menus.botao(panel, "Rever a história", func(): show_prologue())
 	panel.add_child(Menus.texto("Mover: A/D ou setas   Pular: Espaço/W   Atacar: J/clique   Esquivar: Shift/L\nControle: analógico, A pula, X ataca, B esquiva", Menus.COR_DE_DICA))
 

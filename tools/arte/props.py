@@ -9,7 +9,7 @@ de proposito, coisa que luz dinamica nao faz.
 import random
 
 from paleta import cor
-from tela import Tela, de_ascii, retangulo
+from tela import Tela, colar, contornar, de_ascii, retangulo
 
 CORES_DE_TOCHA = {
     "o": "tinta",
@@ -73,6 +73,47 @@ CHAMAS = [
         ".fffff.",
     ],
 ]
+
+CORES_DE_BRASEIRO = {
+    **CORES_DE_TOCHA,
+    "w": "madeira_sombra",
+    "S": "pedra",
+    "s": "pedra_sombra",
+    "L": "pedra_luz",
+}
+
+## Fogueira do checkpoint: tigela de pedra com lenha. Apagada a lenha e
+## madeira; acesa vira brasa (mesmo desenho, outras cores) e ganha chama.
+BRASEIRO = [
+    "....mMw..wMm....",
+    "...wMMmwmMMMw...",
+    "..mMwMMmMMwMMm..",
+    "SLSsSLSsSLSsSLSS",
+    "sSSSSSSSSSSSSSSs",
+    ".sSSSSSSSSSSSSs.",
+    "..ssSSSSSSSSss..",
+    "...ss......ss...",
+]
+
+
+def _braseiro(aceso: bool) -> Tela:
+    linhas = BRASEIRO
+    if aceso:
+        brasa = str.maketrans({"m": "f", "M": "n", "w": "F"})
+        linhas = [linha.translate(brasa) for linha in BRASEIRO]
+    desenho = de_ascii(linhas, CORES_DE_BRASEIRO)
+    tela = Tela(desenho.largura + 2, desenho.altura + 2)
+    colar(tela, desenho, 1, 1)
+    contornar(tela, "tinta")
+    return tela
+
+
+def braseiro(quadro: int = 0) -> Tela:
+    """Quadro 0 apagado, 1 aceso (braseiro.gd usa esses indices)."""
+    if quadro not in (0, 1):
+        raise ValueError("quadro de braseiro invalido: %d (esperado 0 ou 1)" % quadro)
+    return _braseiro(quadro == 1)
+
 
 _BAYER = ((0, 8, 2, 10), (12, 4, 14, 6), (3, 11, 1, 9), (15, 7, 13, 5))
 

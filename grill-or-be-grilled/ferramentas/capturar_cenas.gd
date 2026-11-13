@@ -26,7 +26,11 @@ func _ready() -> void:
 	# Herói parado diante do primeiro braseiro, com a placa da região na tela.
 	game.player.global_position = Vector2(2402, 428)
 	game.player.camera.reset_smoothing()
-	for f in 90:
+	for f in 30:
+		await RenderingServer.frame_post_draw
+	# Acendeu; recua para a fogueira aparecer inteira ao lado do heroi.
+	game.player.global_position.x -= 36.0
+	for f in 60:
 		await RenderingServer.frame_post_draw
 	_gravar("braseiro_e_aviso")
 	var cam := Camera2D.new()

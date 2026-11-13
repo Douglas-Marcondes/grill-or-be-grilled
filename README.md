@@ -36,7 +36,8 @@ terreno, camadas de fundo, folhas de personagem e adereços. Os módulos ficam e
 - `personagens.py`: galinha, Galinha Real, herói (3 classes; 4 passos mais pulo,
   queda e esquiva), ovos, armas.
 - `projeteis.py`: flecha, orbe de magia, pena da Galinha Real e ovo arremessado.
-- `props.py`: tocha com chama de 4 quadros, halo de luz e poste.
+- `props.py`: tocha com chama de 4 quadros, halo de luz, poste e a fogueira do
+  braseiro de checkpoint (apagada e acesa).
 - `adornos.py`: uma folha de adornos por região (capim, feno e abóbora na
   fazenda; saco, caixote e barril na entrada; ossos, casca e cogumelos no porão),
   do mais comum ao mais raro.
@@ -134,8 +135,8 @@ O projeto Godot fica em `grill-or-be-grilled/`.
   `galinha_atiradeira.gd`; o tipo de cada marcador vem de `metadata/tipo`
   (`scripts/bestiario.gd`).
 - `chicken_boss.gd`: Galinha Real, três golpes telegrafados e duas fases.
-- `braseiro.gd`: checkpoint (marcadores em `EditorPreview/Personagens/Braseiros`).
-- `scripts/historia.gd`: todo o texto narrativo. `scripts/menus.gd`: telas de menu.
+- `braseiro.gd`: checkpoint (marcadores em `EditorPreview/Personagens/Braseiros`), fogueira de pedra que acende com chama dupla.
+- `scripts/historia.gd`: todo o texto narrativo. `scripts/menus.gd`: telas de menu, com cartas de herói (retrato da classe em 2×) na escolha.
 - `scripts/impacto.gd` (hitstop, tremor e som do golpe), `scripts/esquiva.gd`,
   `scripts/camera_do_heroi.gd`, `scripts/limites.gd`.
 - `scripts/salto.gd`: pulo de plataforma com coyote time, buffer, altura variável e gravidade assimétrica.

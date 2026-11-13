@@ -26,9 +26,6 @@ Atualizada em 13/11/2026, depois da rodada de jogabilidade, desafio, história e
   capturas de tela; os números de esquiva (`scripts/esquiva.gd`), hitstop
   (`scripts/impacto.gd`) e ritmo do chefe (`RITMO` em `chicken_boss.gd`) são
   primeiros palpites e pedem uma partida jogada para afinar.
-- **O braseiro apagado é discreto**: é o castiçal da tocha (7x10px) fincado no
-  chão. Aceso, o halo aparece bem. Uma arte própria de fogueira ajudaria a ver o
-  checkpoint de longe.
 - **Variantes são troca de plumagem.** Galo e atiradeira usam a silhueta da
   galinha com outra cor (`PLUMAGENS` em `tools/arte/personagens.py`). Uma
   silhueta própria (cauda de galo, pose de arremesso) leria melhor.
