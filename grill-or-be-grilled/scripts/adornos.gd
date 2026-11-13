@@ -31,6 +31,8 @@ const PASSO_MAXIMO := 64
 ## Distancia da quina: adorno na beirada parece pendurado no vazio.
 const MARGEM := 10.0
 const LARGURA_MINIMA := 40.0
+const PREFIXO_DO_NINHO := "Ninho"
+const PALHA_DO_NINHO := "res://Artes/gerado/tile_palha.png"
 
 
 static func montar(cenario: Node2D) -> int:
@@ -42,7 +44,32 @@ static func montar(cenario: Node2D) -> int:
 	for no in cenario.get_children():
 		if Terreno.e_corpo(no):
 			total += _adornar(no)
+		elif str(no.name).begins_with(PREFIXO_DO_NINHO):
+			_trancar_ninho(no)
 	return total
+
+
+static func _trancar_ninho(ninho: Node) -> void:
+	"""Veste as fibras do ninho (Line2D desenhados no editor) com palha.
+
+	Eram linhas marrons lisas de 6px: no chao do porao liam como uma faixa
+	atravessando a arena, nao como ninho. Textura de palha repetida ao longo da
+	linha mais um contorno escuro por tras resolvem sem mexer no desenho."""
+	var palha := load(PALHA_DO_NINHO) as Texture2D
+	for fibra in ninho.get_children():
+		if not fibra is Line2D:
+			continue
+		var contorno := Line2D.new()
+		contorno.name = "ContornoDoNinho"
+		contorno.points = fibra.points
+		contorno.width = fibra.width + 2.0
+		contorno.default_color = Color.BLACK
+		contorno.show_behind_parent = true
+		fibra.add_child(contorno)
+		fibra.texture = palha
+		fibra.texture_mode = Line2D.LINE_TEXTURE_TILE
+		fibra.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		fibra.default_color = Color.WHITE
 
 
 static func _adornar(arte: Polygon2D) -> int:

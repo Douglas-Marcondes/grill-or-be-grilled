@@ -9,6 +9,7 @@ extends Node2D
 const Superficie = preload("res://scripts/superficie.gd")
 const Adornos = preload("res://scripts/adornos.gd")
 const Tochas = preload("res://scripts/tochas.gd")
+const AcabamentoDoTerreno = preload("res://scripts/acabamento_do_terreno.gd")
 
 var _falhas: PackedStringArray = []
 
@@ -16,10 +17,12 @@ func _ready() -> void:
 	_testar_superficie()
 	_testar_adornos_deterministicos()
 	_testar_tochas_da_fazenda()
+	_testar_faixa_curva()
+	_testar_ninho()
 	for falha in _falhas:
 		printerr("FALHOU: %s" % falha)
 	if _falhas.is_empty():
-		print("ADORNOS_OK 5 verificacoes")
+		print("ADORNOS_OK 8 verificacoes")
 	get_tree().quit(0 if _falhas.is_empty() else 1)
 
 
@@ -85,6 +88,42 @@ func _testar_tochas_da_fazenda() -> void:
 	_exigir("tocha da fazenda no poste, e escondida sobre o vao",
 		is_equal_approx(plantada.global_position.y, altura_esperada) and plantada.visible and not no_vao.visible,
 		"y=%s esperado=%s vao_visivel=%s" % [plantada.global_position.y, altura_esperada, no_vao.visible])
+	cenario.free()
+
+
+func _testar_faixa_curva() -> void:
+	# Faixa em V: topo desce de 400 a 420 e volta, com 10px de espessura.
+	var faixa := _bloco("Grama1", [Vector2(0, 400), Vector2(50, 420), Vector2(100, 400),
+		Vector2(100, 410), Vector2(50, 430), Vector2(0, 410)])
+	add_child(faixa)
+	var fundo := Superficie.fundo_em(faixa, 50.0)
+	AcabamentoDoTerreno.aplicar_faixa(faixa, "palha")
+	var alturas_no_tile: Array[float] = []
+	for ponto in faixa.uv:
+		alturas_no_tile.append(ponto.y)
+	_exigir("textura da faixa segue o topo da curva",
+		is_equal_approx(fundo, 430.0) and alturas_no_tile == [0.0, 0.0, 0.0, 10.0, 10.0, 10.0],
+		"fundo=%s uv_y=%s" % [fundo, alturas_no_tile])
+	var franja := faixa.get_node_or_null("Franja") as Polygon2D
+	_exigir("franja pendurada na borda de baixo",
+		franja != null and franja.polygon.has(Vector2(50, 430)) and franja.polygon.has(Vector2(50, 436)),
+		str(franja.polygon if franja else "sem franja"))
+	faixa.free()
+
+
+func _testar_ninho() -> void:
+	var cenario := Node2D.new()
+	add_child(cenario)
+	var ninho := Node2D.new()
+	ninho.name = "Ninho"
+	cenario.add_child(ninho)
+	var fibra := Line2D.new()
+	fibra.points = PackedVector2Array([Vector2.ZERO, Vector2(40, 5)])
+	ninho.add_child(fibra)
+	Adornos.montar(cenario)
+	_exigir("fibras do ninho com palha e contorno",
+		fibra.texture != null and fibra.texture_mode == Line2D.LINE_TEXTURE_TILE and fibra.get_child_count() == 1,
+		"textura=%s filhos=%d" % [fibra.texture, fibra.get_child_count()])
 	cenario.free()
 
 

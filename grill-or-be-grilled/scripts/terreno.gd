@@ -55,10 +55,13 @@ static func montar(cenario: Node2D) -> int:
 			var papel := "faixa" if caixa.size.y <= ALTURA_DE_SALIENCIA else "corpo"
 			_vestir(arte, MATERIAIS[regiao][papel])
 			AcabamentoDoTerreno.aplicar(arte)
+			if papel == "faixa":
+				AcabamentoDoTerreno.aplicar_faixa(arte, MATERIAIS[regiao]["faixa"])
 			if _criar_colisao(arte):
 				corpos += 1
 		elif str(arte.name).begins_with(PREFIXO_DE_FAIXA):
 			_vestir(arte, MATERIAIS[regiao]["faixa"])
+			AcabamentoDoTerreno.aplicar_faixa(arte, MATERIAIS[regiao]["faixa"])
 		elif str(arte.name).begins_with(PREFIXO_DE_PAREDE):
 			_vestir(arte, MATERIAIS[regiao]["parede"])
 	return corpos

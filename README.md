@@ -148,7 +148,7 @@ O projeto Godot fica em `grill-or-be-grilled/`.
 - `scripts/hud.gd`: HUD em ícones (barra de vida, vidas como chamas acesas/apagadas, ovos, galinhas; moedas fora da partida). Ícones em `tools/arte/icones.py`. A barra da Galinha Real fica embaixo, com nome.
 - `scripts/adornos.gd`: espalha adornos no topo das plataformas, com semente no nome da plataforma (sempre os mesmos lugares, no editor e no jogo).
 - `scripts/superficie.gd`: altura do chão num X, lida dos vértices dos `Polygon2D` (funciona no editor, onde não há raycast). Na fazenda as tochas descem até esse chão e ganham poste; sobre um vão elas somem.
-- `scripts/acabamento_do_terreno.gd`: sombra de profundidade (`vertex_colors`) e contorno escuro em cada bloco de terreno.
+- `scripts/acabamento_do_terreno.gd`: sombra de profundidade (`vertex_colors`) e contorno escuro em cada bloco de terreno; nas faixas de superfície, textura que segue o topo (UV medido a partir dele, vale para o piso curvo do ninho) e franja irregular pendurada embaixo (`franja_*.png`).
 - `tema_pixel.tres`: fonte, cores e bordas da interface, num lugar só.
 - Arquivos `.tscn`: composição dos personagens e das fases; mantenha caminhos de recursos alinhados com os scripts anexados.
 

@@ -43,10 +43,8 @@ profundidade e contorno no terreno, colinas no fundo, horizonte menos repetido,
 tochas da fazenda em poste, adornos no topo das plataformas e laje no porão.
 Próximas camadas, da que mais muda a cara do jogo para a que menos:
 
-- **Bordas das plataformas são retas.** Uma borda irregular (franja de palha
-  caindo, pedra lascada) no topo e nas quinas tira o ar de retângulo.
-- **A faixa do chão do ninho é reta** sob o piso curvo da arena: a laje aparece
-  como uma banda horizontal atrás da curva.
+- **Quinas das plataformas são retas.** A borda de baixo da faixa ganhou
+  franja; as quinas laterais ainda são cantos vivos.
 - **Adornos não sabem onde há inimigo ou ovo**: um feno pode cair atrás de um
   ovo. Por ora são pequenos e ficam atrás dos personagens.
 

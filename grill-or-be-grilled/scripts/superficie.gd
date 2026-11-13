@@ -17,15 +17,28 @@ const Terreno = preload("res://scripts/terreno.gd")
 
 static func topo_em(arte: Polygon2D, x: float) -> float:
 	"""Y global mais alto do poligono na vertical X; INF se X fica fora dele."""
+	var cortes := _cortes(arte, x)
+	return cortes.x if cortes.x <= cortes.y else INF
+
+
+static func fundo_em(arte: Polygon2D, x: float) -> float:
+	"""Y global mais baixo do poligono na vertical X; INF se X fica fora dele."""
+	var cortes := _cortes(arte, x)
+	return cortes.y if cortes.x <= cortes.y else INF
+
+
+static func _cortes(arte: Polygon2D, x: float) -> Vector2:
+	"""Menor e maior Y onde as arestas cruzam a vertical X (x > y se nenhuma)."""
 	var pontos := arte.polygon
-	var topo := INF
+	var cortes := Vector2(INF, -INF)
 	for indice in pontos.size():
 		var a := arte.to_global(pontos[indice])
 		var b := arte.to_global(pontos[(indice + 1) % pontos.size()])
 		if is_equal_approx(a.x, b.x) or x < minf(a.x, b.x) or x > maxf(a.x, b.x):
 			continue
-		topo = minf(topo, lerpf(a.y, b.y, (x - a.x) / (b.x - a.x)))
-	return topo
+		var y := lerpf(a.y, b.y, (x - a.x) / (b.x - a.x))
+		cortes = Vector2(minf(cortes.x, y), maxf(cortes.y, y))
+	return cortes
 
 
 static func chao_abaixo(cenario: Node, ponto: Vector2) -> float:

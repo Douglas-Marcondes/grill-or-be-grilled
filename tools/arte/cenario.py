@@ -157,6 +157,45 @@ def tile_parede_porao() -> Tela:
     return tela
 
 
+ALTURA_DA_FRANJA = 6
+
+
+def _fios_pendurados(nome: str, tons: list[str], maximo: int) -> Tela:
+    """Franja de 16xALTURA: fios de comprimento sorteado pendendo da linha de
+    cima. E o que tira o corte reto embaixo da faixa de superficie -- a borda
+    reta e o que mais faz plataforma de pixel art parecer retangulo."""
+    tela = Tela(LADO, ALTURA_DA_FRANJA)
+    sorteio = _semeado("franja_%s" % nome)
+    retangulo(tela, 0, 0, LADO, 1, tons[0])
+    for x in range(LADO):
+        comprimento = sorteio.choice([0, 1, 1, 2, 2, 3, maximo])
+        for y in range(1, 1 + comprimento):
+            tela.definir(x, y, cor(tons[min(y, len(tons) - 1)]))
+    return tela
+
+
+def franja_palha() -> Tela:
+    """Palha seca escorrendo da beirada da fazenda."""
+    return _fios_pendurados("palha", ["palha_sombra", "palha", "palha_sombra", "terra_luz"], 5)
+
+
+def franja_laje() -> Tela:
+    """Musgo pingando pela junta da laje do porao."""
+    return _fios_pendurados("laje", ["pedra_sombra", "grama_sombra", "grama", "grama_sombra"], 4)
+
+
+def franja_tabua() -> Tela:
+    """Sombra irregular sob a tabua da entrada, com farpa de madeira aqui e ali."""
+    return _fios_pendurados("tabua", ["madeira_sombra", "madeira_sombra", "madeira"], 3)
+
+
+FRANJAS = {
+    "palha": franja_palha,
+    "laje": franja_laje,
+    "tabua": franja_tabua,
+}
+
+
 TILES = {
     "terra": tile_terra,
     "pedra": tile_pedra,

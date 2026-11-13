@@ -620,7 +620,7 @@ polygon = PackedVector2Array(9140, 490, 9445, 492.91504, 9501, 505.54663, 9595, 
 [node name="Grama17" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=1520934960]
 position = Vector2(-19, -4)
 color = Color(0.572549, 0.643137, 0.360784, 1)
-polygon = PackedVector2Array(9140, 490, 9434, 500, 9680, 509, 10000, 490, 10000, 500, 9984.905, 499.99994, 9675, 525, 9595, 524, 9140, 500)
+polygon = PackedVector2Array(9140, 499, 9445, 502, 9501, 515, 9595, 528, 9700, 529, 9733, 527, 9814, 521, 9866, 514, 9920, 499, 9939, 489, 10020, 499, 10020, 509, 9939, 499, 9920, 509, 9866, 524, 9814, 531, 9733, 537, 9700, 539, 9595, 538, 9501, 525, 9445, 512, 9140, 509)
 
 [node name="RotaAlta1" type="Polygon2D" parent="EditorPreview/Cenario" unique_id=210560154]
 color = Color(0.341176, 0.262745, 0.305882, 1)

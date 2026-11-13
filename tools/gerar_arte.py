@@ -23,7 +23,9 @@ def _gerar_tiles() -> int:
 
     for nome, desenhar in cenario.TILES.items():
         salvar(desenhar(), str(DESTINO / ("tile_%s.png" % nome)))
-    return len(cenario.TILES)
+    for nome, desenhar in cenario.FRANJAS.items():
+        salvar(desenhar(), str(DESTINO / ("franja_%s.png" % nome)))
+    return len(cenario.TILES) + len(cenario.FRANJAS)
 
 
 def _gerar_fundo() -> int:
