@@ -160,8 +160,14 @@ fracionária para ocupar a tela toda; no PC continua em escala inteira.
 
 ```
 tools/exportar.sh web      # gera exportar/web/
-tools/exportar.sh testar   # serve na rede local; abra o endereço no celular
+tools/exportar.sh testar   # serve por HTTPS na rede local; abra o endereço no celular
 ```
+
+O Godot Web só roda em contexto seguro (HTTPS ou `localhost`): por HTTP no IP da
+rede, o celular mostra "Secure Context - use HTTPS". Por isso o `testar` usa um
+certificado autoassinado (`tools/servir_https.py`, guardado em
+`exportar/certificados/`). No celular, o aviso de conexão não particular é
+esperado: **Avançado → Continuar**.
 
 **Publicar no itch.io:** `.github/workflows/publicar-itch.yml` exporta a versão
 Web e envia para o itch.io (com o butler) a cada push na `main`. O itch.io e não
