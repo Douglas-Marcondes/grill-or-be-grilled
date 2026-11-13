@@ -38,28 +38,30 @@ def _gerar_fundo() -> int:
 
 
 def _gerar_personagens() -> int:
-    import personagens
+    import chefe
+    import galinhas
+    import heroi
+    import itens
     from tela import folha, salvar
 
     folhas = {
         **{
-            plumagem: [personagens.galinha(quadro, plumagem) for quadro in range(4)]
-            for plumagem in personagens.PLUMAGENS
+            plumagem: [galinhas.galinha(quadro, plumagem) for quadro in range(galinhas.QUADROS)]
+            for plumagem in galinhas.PLUMAGENS
         },
-        "galinha_real": [personagens.galinha_real(quadro) for quadro in range(2)],
-        "ovos": [personagens.ovo(raridade) for raridade in range(5)],
+        "galinha_real": [chefe.galinha_real(quadro) for quadro in range(chefe.QUADROS)],
+        "ovos": [itens.ovo(raridade) for raridade in range(len(itens.RAMPAS_DE_OVO))],
     }
-    for classe in personagens.CORES_POR_CLASSE:
+    for classe in heroi.FIGURINOS:
         folhas["heroi_%s" % classe.lower()] = [
-            personagens.heroi(classe, quadro)
-            for quadro in range(personagens.QUADROS_DO_HEROI)
+            heroi.heroi(classe, quadro) for quadro in range(heroi.QUADROS_DO_HEROI)
         ]
     for nome, quadros in folhas.items():
         salvar(folha(quadros, len(quadros)), str(DESTINO / ("%s.png" % nome)))
-    for nome in personagens.ARMAS:
-        salvar(personagens.arma(nome), str(DESTINO / ("arma_%s.png" % nome.lower())))
-    salvar(personagens.armadura_galinha(), str(DESTINO / "armadura_galinha.png"))
-    return len(folhas) + len(personagens.ARMAS) + 1
+    for nome in itens.ARMAS:
+        salvar(itens.arma(nome), str(DESTINO / ("arma_%s.png" % nome.lower())))
+    salvar(itens.armadura_galinha(), str(DESTINO / "armadura_galinha.png"))
+    return len(folhas) + len(itens.ARMAS) + 1
 
 
 def _gerar_props() -> int:
@@ -68,10 +70,19 @@ def _gerar_props() -> int:
 
     for nome, desenhar in props.PROPS.items():
         salvar(desenhar(), str(DESTINO / ("%s.png" % nome)))
-    chamas = [props.tocha_chama(quadro) for quadro in range(len(props.CHAMAS))]
+    chamas = [props.tocha_chama(quadro) for quadro in range(props.QUADROS_DE_CHAMA)]
     salvar(folha(chamas, len(chamas)), str(DESTINO / "tocha_chama.png"))
     salvar(folha([props.braseiro(0), props.braseiro(1)], 2), str(DESTINO / "braseiro.png"))
     return len(props.PROPS) + 2
+
+
+def _gerar_efeitos() -> int:
+    import efeitos
+    from tela import folha, salvar
+
+    quadros = [efeitos.corte(quadro) for quadro in range(efeitos.QUADROS_DE_CORTE)]
+    salvar(folha(quadros, len(quadros)), str(DESTINO / "corte.png"))
+    return len(quadros)
 
 
 def _gerar_adornos() -> int:
@@ -114,7 +125,7 @@ def _gerar_toque() -> int:
 
 def main() -> int:
     import fonte
-    import paleta
+    import rampas
 
     DESTINO.mkdir(parents=True, exist_ok=True)
     print("tiles: %d" % _gerar_tiles())
@@ -125,14 +136,15 @@ def main() -> int:
     print("icones do HUD: %d" % _gerar_icones())
     print("projeteis: %d" % _gerar_projeteis())
     print("botoes de toque: %d" % _gerar_toque())
+    print("quadros de efeito: %d" % _gerar_efeitos())
     glifos = fonte.gerar(
         str(DESTINO / "fonte_pixel.fnt"),
         str(DESTINO / "fonte_pixel.png"),
         "fonte_pixel.png",
     )
     print("fonte_pixel: %d glifos" % glifos)
-    paleta.paleta_db32_png(str(DESTINO / "paleta_db32.png"))
-    print("paleta_db32: %d cores" % len(paleta.DB32))
+    rampas.paleta_png(str(DESTINO / "paleta.png"))
+    print("paleta: %d rampas" % len(rampas.RAMPAS))
     return 0
 
 

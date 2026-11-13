@@ -39,6 +39,10 @@ const PECK_WINDUP := 0.48
 const PECK_COOLDOWN := 1.35
 ## Cor do aviso de golpe, piscando com o branco.
 const COR_DO_AVISO := Color("fbf236")
+## Folha da galinha (tools/arte/galinhas.py): 4 passos e o bote.
+const QUADROS := 5
+const QUADROS_DE_PASSO := 4
+const QUADRO_DE_BOTE := 4
 
 
 func configure_progression(progress: float) -> void:
@@ -63,7 +67,7 @@ func _ready() -> void:
 	add_child(shape)
 	last_safe_position = global_position
 	home_position = global_position
-	sprite = Sprites.montar(self, folha_do_sprite, 4)
+	sprite = Sprites.montar(self, folha_do_sprite, QUADROS)
 
 
 func _physics_process(delta: float) -> void:
@@ -216,12 +220,18 @@ func _morrer(onde: Vector2) -> void:
 	queue_free()
 
 
+func _no_bote() -> bool:
+	"""Preparando o ataque: cabeca baixa e bico apontado. As variantes somam o
+	proprio golpe (a investida do galo)."""
+	return attack_windup > 0.0
+
+
 func _animar() -> void:
 	if not sprite:
 		return
 	Sprites.virar(sprite, facing)
 	Sprites.piscar(sprite, flash)
-	sprite.frame = Sprites.quadro_do_passo(animation_time, 4)
+	sprite.frame = QUADRO_DE_BOTE if _no_bote() else Sprites.quadro_do_passo(animation_time, QUADROS_DE_PASSO)
 	if attack_windup > 0.0 and flash <= 0.0:
 		sprite.modulate = COR_DO_AVISO if int(Time.get_ticks_msec() / 90) % 2 == 0 else Color.WHITE
 

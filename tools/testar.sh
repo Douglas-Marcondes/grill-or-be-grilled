@@ -7,6 +7,12 @@ set -u
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
 G="$RAIZ/Godot_v4.7.2-stable_linux.x86_64"
 falhou=0
+# Gerador de arte (tools/arte): motor de escultura, ladrilhos e folhas.
+saida=$(python3 -m unittest discover -s "$RAIZ/tools/arte" -p "teste_*.py" 2>&1)
+codigo=$?
+echo "== teste_da_arte (saida=$codigo)"
+echo "$saida" | tail -3
+if [ "$codigo" -ne 0 ]; then falhou=1; fi
 for cena in "$RAIZ"/grill-or-be-grilled/ferramentas/teste_*.tscn; do
   nome=$(basename "$cena" .tscn)
   saida=$(timeout 120 "$G" --headless --path "$RAIZ/grill-or-be-grilled" "res://ferramentas/$nome.tscn" 2>&1)

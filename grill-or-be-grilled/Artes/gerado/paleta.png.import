@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f54a832qqmys"
-path="res://.godot/imported/fundo_lua.png-36facb5e65545c39026285e0d5abc327.ctex"
+uid="uid://bsr8po3fwo4dp"
+path="res://.godot/imported/paleta.png-206acfb73846f4dc35a6637052334467.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Artes/gerado/fundo_lua.png"
-dest_files=["res://.godot/imported/fundo_lua.png-36facb5e65545c39026285e0d5abc327.ctex"]
+source_file="res://Artes/gerado/paleta.png"
+dest_files=["res://.godot/imported/paleta.png-206acfb73846f4dc35a6637052334467.ctex"]
 
 [params]
 

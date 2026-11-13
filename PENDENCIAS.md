@@ -26,14 +26,27 @@ Atualizada em 13/11/2026, depois da rodada de jogabilidade, desafio, história e
   capturas de tela; os números de esquiva (`scripts/esquiva.gd`), hitstop
   (`scripts/impacto.gd`) e ritmo do chefe (`RITMO` em `chicken_boss.gd`) são
   primeiros palpites e pedem uma partida jogada para afinar.
-- **Variantes são troca de plumagem.** Galo e atiradeira usam a silhueta da
-  galinha com outra cor (`PLUMAGENS` em `tools/arte/personagens.py`). Uma
-  silhueta própria (cauda de galo, pose de arremesso) leria melhor.
 - **Flechas e penas atravessam o terreno**; só o ovo da atiradeira quebra no
   chão. Mudar isso altera o alcance das classes de tiro, então é decisão de
   balanceamento.
 
 ## Arte
+
+Redesenho completo em 13/11/2026, com o Metal Slug X de referência: rampas de
+cinco tons no lugar da DB32, sprites esculpidos (`tools/arte/volume.py`),
+ladrilhos de 64px, fundo de fim de tarde pintado em cor e silhueta própria para
+galo e atiradeira. O que ficou de fora dessa rodada:
+
+- **Interface ainda é a antiga**: fonte, painéis do HUD/menus e botões de toque
+  seguem na DB32 e no fundo roxo-escuro, pensados para a fase noturna.
+- **Sem quadros de ataque nem de dano**: o herói tem corrida, pulo, queda e
+  esquiva; golpe e dano ainda são só o avanço da arma e o clarão branco.
+- **A armadura de galinha não acompanha a cabeça** no pulo e na esquiva (é um
+  sprite fixo sobre a pose parada).
+- **Entrada e porão usam o fundo da fazenda** atrás das paredes; cada região
+  pediria um parallax próprio.
+
+Camadas anteriores (ainda valem):
 
 Camadas visuais feitas em 13/11/2026: luz e escuridão por região, sombra de
 profundidade e contorno no terreno, colinas no fundo, horizonte menos repetido,

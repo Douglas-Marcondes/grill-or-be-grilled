@@ -7,21 +7,26 @@ const Salto = preload("res://scripts/salto.gd")
 const Esquiva = preload("res://scripts/esquiva.gd")
 const CameraDoHeroi = preload("res://scripts/camera_do_heroi.gd")
 const Impacto = preload("res://scripts/impacto.gd")
+const GolpeDaArma = preload("res://scripts/golpe_da_arma.gd")
 
 var sprite: Sprite2D
 var arma: Sprite2D
 var largura_da_arma := 0.0
 var sprite_armadura: Sprite2D
 
-## Onde a arma e segurada, em relacao ao pe do heroi. A mao do sprite fica nas
-## linhas 12 a 15 das 26 do corpo, ou seja por volta de -12.
+## Onde a arma e segurada, em relacao ao pe do heroi: a mao da frente do sprite
+## fica 12px acima do chao (tools/arte/heroi.py).
 const ALTURA_DA_MAO := -12.0
 const ALCANCE_DA_MAO := 5.0
-## Folha do heroi (tools/arte/personagens.py): 4 passos e depois as poses.
-const QUADROS_DO_HEROI := 7
+## Folha do heroi (tools/arte/heroi.py): 4 passos e depois as poses.
+const QUADROS_DO_HEROI := 9
 const QUADRO_DE_PULO := 4
 const QUADRO_DE_QUEDA := 5
 const QUADRO_DE_ESQUIVA := 6
+const QUADRO_DE_GOLPE := 7
+const QUADRO_DE_DANO := 8
+## Tempo ate poder atacar de novo; a coreografia da arma dura o mesmo.
+const DURACAO_DO_GOLPE := 0.38
 
 ## Chegar aos 270px/s em 0.1s le como resposta imediata sem ser liga/desliga.
 ## No ar o controle e mais fraco e o atrito quase nulo: o pulo conserva o
@@ -88,7 +93,9 @@ func _montar_visual() -> void:
 	if GameData.owns_chicken_armor:
 		sprite_armadura = Sprites.montar(self, "armadura_galinha", 1)
 		if sprite_armadura:
-			sprite_armadura.position = Vector2(0, -24)
+			# Assenta na testa do heroi (tools/arte/heroi.py: a cabeca fica 1px a
+			# frente do centro da celula e o topo dela a 28px do chao).
+			sprite_armadura.position = Vector2(1, -25)
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("andar_esquerda", "andar_direita")
@@ -152,9 +159,14 @@ func _mover_horizontal(direction: float, delta: float) -> void:
 
 
 func _quadro_atual() -> int:
-	"""Pose pelo estado: esquiva vence tudo, no ar sobe ou cai, no chao anda."""
+	"""Pose pelo estado: esquiva vence tudo, depois o tranco do dano e a ida
+	do golpe; no ar sobe ou cai, no chao anda."""
 	if esquiva.ativa():
 		return QUADRO_DE_ESQUIVA
+	if knockback > 0.0:
+		return QUADRO_DE_DANO
+	if _progresso_do_golpe() < GolpeDaArma.IDA:
+		return QUADRO_DE_GOLPE
 	if not is_on_floor():
 		return QUADRO_DE_PULO if velocity.y < 0.0 else QUADRO_DE_QUEDA
 	if absf(velocity.x) <= 1.0:
@@ -180,12 +192,19 @@ func _animar() -> void:
 		# A arma e ancorada pelo CABO na mao, nao pelo centro: centrada, a lamina
 		# de 20px da espada atravessava o corpo inteiro do heroi.
 		arma.offset.x = 0.0 if facing > 0.0 else -largura_da_arma
-		# Avanca no instante do golpe; fora dele volta para o lado do corpo.
-		var avanco := 5.0 if attack_timer > 0.24 else 0.0
-		arma.position.x = facing * (ALCANCE_DA_MAO + avanco)
+		# Gira e avanca conforme o golpe corre; fora dele repousa ao lado do
+		# corpo. O giro e em torno do cabo, que e onde o no esta.
+		var progresso := _progresso_do_golpe()
+		arma.rotation = facing * GolpeDaArma.giro(GameData.equipped_weapon, progresso)
+		arma.position.x = facing * (ALCANCE_DA_MAO + GolpeDaArma.avanco(GameData.equipped_weapon, progresso))
+
+
+func _progresso_do_golpe() -> float:
+	"""0 quando o golpe acabou de sair, 1 quando terminou (ou nao ha golpe)."""
+	return 1.0 - attack_timer / DURACAO_DO_GOLPE
 
 func attack() -> void:
-	attack_timer = 0.38
+	attack_timer = DURACAO_DO_GOLPE
 	var damage := 1 + int(GameData.strength_bonus / 5)
 	Som.tocar("golpe" if GameData.equipped_weapon == "Espada" else "tiro")
 	if GameData.equipped_weapon == "Espada":

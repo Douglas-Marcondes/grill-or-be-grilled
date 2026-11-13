@@ -29,10 +29,23 @@ levar alguns segundos com a janela parada; é normal.
 
 ## Arte e pipeline visual
 
-A arte do jogo é pixel art na paleta **DawnBringer 32** — a mesma paleta padrão do
-Aseprite, que a arte original da galinha (`Artes/GalinhaAndando*.png`) já usava.
-Manter DB32 deixa sprite gerado por código e sprite pintado à mão convivendo sem
-destoar.
+A direção de arte é pixel art de arcade, inspirada no **Metal Slug X**: cabeça
+grande e corpo atarracado, quatro ou cinco tons por material, contorno escuro
+*colorido* (não preto) e cenário pintado em cor, com a distância feita de névoa.
+O clima é fim de tarde na fazenda, a hora do churrasco, e o humor vem do
+figurino: a comida se armou para não virar espeto.
+
+- **Galinha rasa**: branca e brava. **Galo de Briga**: penas de fogo, cauda de
+  foice e faixa de lutador na testa. **Galinha Atiradeira**: caipira de capacete
+  e cartucheira de ovos. **Galinha Real**: gorda, de coroa torta e capa de arminho.
+- **Herói**: Guerreiro de bandana, Arqueiro de gorro com pena e aljava, Mago de
+  chapéu pontudo e barba.
+
+Cada material tem uma **rampa** de cinco tons em `tools/arte/rampas.py`
+(contorno, sombra, base, luz, brilho) que muda de matiz junto com o brilho.
+`Artes/gerado/paleta.png` traz todas as rampas para carregar no Aseprite. A
+DawnBringer 32, paleta antiga do jogo inteiro, ficou só na interface (fonte e
+botões de toque).
 
 O jogo roda num viewport de **480x270** ampliado em escala inteira
 (`window/stretch/mode="viewport"` + `scale_mode="integer"`), então cada pixel de
@@ -61,21 +74,33 @@ Escreve tudo em `grill-or-be-grilled/Artes/gerado/`: fonte bitmap, tiles de
 terreno, camadas de fundo, folhas de personagem e adereços. Os módulos ficam em
 `tools/arte/`:
 
-- `paleta.py`: DB32 e os papéis semânticos (`palha`, `pena`, `pedra_luz`...).
-- `tela.py`: grade de pixels, ASCII art → PNG, spritesheets, contorno e dither.
+- `rampas.py`: as rampas de cor, uma por material.
+- `volume.py`: a **Escultura**. O sprite é montado com elipses, cápsulas e
+  polígonos; a luz vem de cima e da esquerda e o tom de cada pixel sai da
+  inclinação da forma. Mudar a pose é mover as formas, e a sombra acompanha.
+- `ladrilho.py`: grade de textura que repete sem emenda (toda escrita dá a
+  volta na borda).
+- `tela.py` / `paleta.py`: a grade de pixels final e ASCII art → PNG para peça
+  miúda (ícones, fonte); `cor("crista#3")` alcança um tom de rampa.
 - `glifos.py` / `fonte.py`: fonte 5x7 proporcional com acentuação portuguesa,
   exportada em BMFont (lido nativamente pelo Godot, sem TTF nem plugin).
-- `cenario.py`: tiles de terreno 16x16, desenhados para repetir sem costura.
-- `fundo.py`: céu com degradê ditherizado, silhuetas da fazenda (faixa de 640px,
-  espaçamento irregular), colinas escuras até o rodapé, lua.
-- `personagens.py`: galinha, Galinha Real, herói (3 classes; 4 passos mais pulo,
-  queda e esquiva), ovos, armas.
+- `galinhas.py`, `chefe.py`, `heroi.py`: os personagens. O herói é montado por
+  **pose** (onde estão os pés, a mão, quanto o tronco inclina): 4 quadros de
+  corrida, pulo, queda e esquiva.
+- `itens.py`: ovos por raridade, as três armas e a armadura de galinha.
+- `cenario.py`: ladrilhos de 64px (terra com pedras, tábuas, alvenaria), faixas
+  de superfície (grama, prancha, laje), paredes de fundo e franjas.
+- `fundo.py`: céu em degradê de bandas com nuvens e serra, sol, fazenda
+  distante (celeiro, silo, moinho, árvores), colinas de lavoura e cerca com
+  girassóis.
 - `projeteis.py`: flecha, orbe de magia, pena da Galinha Real e ovo arremessado.
 - `props.py`: tocha com chama de 4 quadros, halo de luz, poste e a fogueira do
-  braseiro de checkpoint (apagada e acesa).
-- `adornos.py`: uma folha de adornos por região (capim, feno e abóbora na
-  fazenda; saco, caixote e barril na entrada; ossos, casca e cogumelos no porão),
-  do mais comum ao mais raro.
+  braseiro de checkpoint (apagada e em brasa).
+- `adornos.py`: uma folha de adornos por região (capim, flores, abóbora e fardo
+  de feno na fazenda; saco, caixote e barril na entrada; ossos, casca e
+  cogumelos no porão), do mais comum ao mais raro.
+- `icones.py` / `toque.py`: ícones do HUD e botões de toque.
+- `teste_da_arte.py`: testes do gerador (`tools/testar.sh` roda junto).
 
 > Os PNGs em `Artes/gerado/` são **ponto de partida**, não verdade final. Rodar o
 > script de novo sobrescreve a pasta inteira. Arte retocada no Aseprite deve ser
@@ -86,7 +111,7 @@ terreno, camadas de fundo, folhas de personagem e adereços. Os módulos ficam e
 O desenho da fase continua sendo `Polygon2D` arrastável no editor do Godot
 (`jogo.tscn` → `EditorPreview/Cenario`). `scripts/terreno.gd` lê esse desenho e
 deriva dele a colisão e a textura, escolhendo o material por região de X —
-fazenda (terra e palha) até 3500, entrada de madeira até 6500, porão de pedra
+fazenda (terra e grama) até 3500, entrada de madeira até 6500, porão de pedra
 depois disso. Mover uma plataforma no editor não exige tocar em código.
 
 `scripts/tochas.gd` faz o mesmo com as tochas: esconde o marcador chapado e

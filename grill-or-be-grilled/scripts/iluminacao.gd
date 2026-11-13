@@ -2,13 +2,14 @@ extends CanvasModulate
 
 ## Escuridao ambiente da fase, mais fechada a cada regiao que se desce.
 ##
-## Antes tudo era desenhado em brilho cheio: a tocha "acesa" nao iluminava nada
-## e o porao tinha a mesma luz da fazenda ao luar. Com o CanvasModulate o mundo
+## A fazenda e fim de tarde, quase em brilho cheio; a entrada do celeiro e o
+## porao escurecem. Sem isso a tocha "acesa" nao iluminava nada e o porao tinha
+## a mesma luz da fazenda. Com o CanvasModulate o mundo
 ## escurece e cada PointLight2D (tochas, braseiros, heroi) abre uma poca de luz
 ## -- e o que da atmosfera de masmorra. A interface fica num CanvasLayer proprio
 ## e nao e afetada.
 ##
-## O fundo de parallax tem light_mask 0 em jogo.tscn: a lua e o horizonte
+## O fundo de parallax tem light_mask 0 em jogo.tscn: o sol e o horizonte
 ## estao a quilometros, e tocha nenhuma os ilumina.
 ##
 ## Segue a camera ativa, e nao o heroi, para valer tambem no menu e nas
@@ -21,9 +22,9 @@ extends CanvasModulate
 const Terreno = preload("res://scripts/terreno.gd")
 
 const AMBIENTE := {
-	"fazenda": Color(0.66, 0.62, 0.82),
-	"entrada": Color(0.46, 0.40, 0.52),
-	"porao": Color(0.34, 0.32, 0.44),
+	"fazenda": Color(1.0, 0.97, 0.92),
+	"entrada": Color(0.62, 0.54, 0.58),
+	"porao": Color(0.44, 0.42, 0.58),
 }
 const COR_DO_HEROI := Color(1.0, 0.92, 0.80)
 const COR_DO_FOGO := Color(1.0, 0.78, 0.55)

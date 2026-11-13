@@ -97,7 +97,7 @@ func _testar_faixa_curva() -> void:
 		Vector2(100, 410), Vector2(50, 430), Vector2(0, 410)])
 	add_child(faixa)
 	var fundo := Superficie.fundo_em(faixa, 50.0)
-	AcabamentoDoTerreno.aplicar_faixa(faixa, "palha")
+	AcabamentoDoTerreno.aplicar_faixa(faixa, "grama")
 	var alturas_no_tile: Array[float] = []
 	for ponto in faixa.uv:
 		alturas_no_tile.append(ponto.y)

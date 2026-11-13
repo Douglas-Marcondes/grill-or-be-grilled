@@ -53,6 +53,11 @@ func _investir(delta: float) -> void:
 		target.take_damage(DANO_DO_BOTE, global_position)
 
 
+func _no_bote() -> bool:
+	# A investida inteira e de cabeca baixa, nao so o preparo.
+	return investindo > 0.0 or super()
+
+
 func _alvo_no_alcance_do_bote() -> bool:
 	return is_instance_valid(target) and absf(target.global_position.x - global_position.x) < ALCANCE_DO_BOTE and absf(target.global_position.y - global_position.y) < 30.0
 

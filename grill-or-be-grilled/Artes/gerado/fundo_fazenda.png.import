@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgwpv4b8khebq"
-path="res://.godot/imported/fundo_silhueta.png-4804c812156ecc7d88b55acb6b9a112c.ctex"
+uid="uid://bjgcewygep4d2"
+path="res://.godot/imported/fundo_fazenda.png-0ba0927014287d4f9f2a51d2742a3b39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Artes/gerado/fundo_silhueta.png"
-dest_files=["res://.godot/imported/fundo_silhueta.png-4804c812156ecc7d88b55acb6b9a112c.ctex"]
+source_file="res://Artes/gerado/fundo_fazenda.png"
+dest_files=["res://.godot/imported/fundo_fazenda.png-0ba0927014287d4f9f2a51d2742a3b39.ctex"]
 
 [params]
 

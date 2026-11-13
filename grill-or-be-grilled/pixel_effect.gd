@@ -1,5 +1,9 @@
 extends Node2D
 
+const Sprites = preload("res://scripts/sprites.gd")
+## Folha Artes/gerado/corte.png (tools/arte/efeitos.py).
+const QUADROS_DE_CORTE := 4
+
 var kind := "slash"
 var direction := 1.0
 var tint := Color("ffe18b")
@@ -7,6 +11,7 @@ var age := 0.0
 var duration := 0.25
 var sparks: Array[Vector2] = []
 var reach_onda := 150.0
+var _corte: Sprite2D
 
 func _ready() -> void:
 	if kind == "onda":
@@ -16,17 +21,25 @@ func _ready() -> void:
 		for i in 34:
 			var angle := TAU * float(i) / 34.0 + randf_range(-0.12, 0.12)
 			sparks.append(Vector2.from_angle(angle) * randf_range(20.0, 125.0))
+	elif kind == "corte":
+		duration = 0.16
+		_corte = Sprites.montar_centrado(self, "corte", QUADROS_DE_CORTE)
+		Sprites.virar(_corte, direction)
 	else:
 		duration = 0.2
 
 func _process(delta: float) -> void:
 	age += delta
+	if _corte:
+		_corte.frame = mini(int(age / duration * QUADROS_DE_CORTE), QUADROS_DE_CORTE - 1)
 	queue_redraw()
 	if age >= duration:
 		queue_free()
 
 func _draw() -> void:
 	var progress := clampf(age / duration, 0.0, 1.0)
+	if kind == "corte":
+		return
 	if kind == "onda":
 		# Onda de choque rente ao chao: dois arcos que correm para os lados ate o
 		# alcance real do golpe, para o jogador ver onde ela pega.

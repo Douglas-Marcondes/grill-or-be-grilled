@@ -317,7 +317,8 @@ func boss_defeated(at: Vector2) -> void:
 func slash_effect(at: Vector2, facing: float, projectile: bool, tint: Color = Color("ffe18b")) -> void:
 	var effect := Node2D.new()
 	effect.set_script(EffectScript)
-	effect.kind = "slash"
+	# Corpo a corpo deixa o rastro da lamina; tiro, o clarao da boca da arma.
+	effect.kind = "slash" if projectile else "corte"
 	effect.direction = facing
 	effect.tint = tint if projectile else Color("f8e2a3")
 	effect.position = at

@@ -38,7 +38,7 @@ const PROPRIEDADES_DA_VESTIMENTA := ["polygon", "offset", "scale", "texture",
 const CLASSE_DA_PREVIA := "heroi_guerreiro"
 const ARMA_DA_PREVIA := "arma_espada"
 const QUADROS_DO_HEROI := Jogador.QUADROS_DO_HEROI
-const QUADROS_DA_GALINHA := 4
+const QUADROS_DA_GALINHA := 5
 const QUADROS_DA_GALINHA_REAL := 2
 const QUADROS_DE_OVO := 5
 

@@ -15,11 +15,13 @@ const COR_DO_TITULO := Color("fbf236")
 const COR_DO_TEXTO := Color("eec39a")
 const COR_DE_DICA := Color("9badb7")
 const COR_DA_SOMBRA_DO_TITULO := Color("ac3232")
-## Fundo do painel: deixa a fazenda noturna aparecer atras do menu. Com 0.88 a
+## Fundo do painel: deixa a fazenda aparecer atras do menu. Com 0.88 a
 ## tela de titulo era um retangulo escuro com texto.
 const OPACIDADE_DO_FUNDO := 0.62
-## Celula do heroi na folha (tools/arte/personagens.py) e escala inteira.
-const CELULA_DO_HEROI := Vector2(18, 26)
+## Busto do heroi no primeiro quadro da folha (tools/arte/heroi.py), em escala
+## inteira. E um recorte e nao a celula toda: a celula tem 30x38 para caber o
+## chapeu do mago e a esquiva, e inteira ela estourava a altura da carta.
+const RECORTE_DO_RETRATO := Rect2(2, 2, 26, 26)
 const ESCALA_DO_RETRATO := 2.0
 const TAMANHO_DA_CARTA := Vector2(92, 86)
 
@@ -123,12 +125,12 @@ static func _carta(classe: String, descricao: String, acao: Callable) -> Button:
 static func _retrato(classe: String) -> TextureRect:
 	var recorte := AtlasTexture.new()
 	recorte.atlas = load("res://Artes/gerado/heroi_%s.png" % classe.to_lower())
-	recorte.region = Rect2(Vector2.ZERO, CELULA_DO_HEROI)
+	recorte.region = RECORTE_DO_RETRATO
 	var retrato := TextureRect.new()
 	retrato.texture = recorte
 	retrato.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	retrato.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	retrato.custom_minimum_size = CELULA_DO_HEROI * ESCALA_DO_RETRATO
+	retrato.custom_minimum_size = RECORTE_DO_RETRATO.size * ESCALA_DO_RETRATO
 	retrato.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	return retrato
 

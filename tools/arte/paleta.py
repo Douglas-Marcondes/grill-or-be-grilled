@@ -1,13 +1,14 @@
-"""Paleta oficial do Grill or Be Grilled: DawnBringer 32.
+"""Cores por nome para ASCII art: DawnBringer 32 e os tons das rampas.
 
-A arte original da galinha (Artes/GalinhaAndando*.png) ja foi pintada nessas
-cores -- elas sao a paleta padrao do Aseprite. Manter DB32 deixa Douglas e Jorge
-pintando no Aseprite sem converter nada, e garante que sprite gerado por codigo
-e sprite pintado a mao convivam sem destoar.
+A DB32 (paleta padrao do Aseprite) era a paleta do jogo inteiro. Personagens e
+cenario passaram para as rampas de rampas.py, que tem cinco tons por material;
+a DB32 ficou para a interface (fonte, botoes de toque), onde cor chapada e o
+que se quer.
 
 Uso:
     from paleta import cor
-    cor("palha")  # -> (217, 160, 102, 255)
+    cor("laranja")   # -> (223, 113, 38, 255), nome DB32
+    cor("crista#3")  # -> nivel 3 da rampa "crista"
 """
 
 DB32: dict[str, str] = {
@@ -45,57 +46,8 @@ DB32: dict[str, str] = {
     "mostarda": "8a6f30",
 }
 
-# Apelidos de papel: o codigo de arte fala em funcao ("palha", "pena"), nao em
-# cor crua, para que trocar o tom de um material seja uma linha so.
-PAPEIS: dict[str, str] = {
-    "tinta": "preto",
-    # O ceu clareia do topo para o horizonte; as silhuetas sao mais escuras que
-    # a faixa do horizonte, que e onde elas aparecem -- e assim que recorte de
-    # paisagem noturna le como recorte.
-    "ceu_alto": "preto",
-    "ceu": "roxo_noite",
-    "bruma": "vinho",
-    "silhueta": "roxo_noite",
-    "silhueta_perto": "preto",
-    "janela_acesa": "mostarda",
-    "luar": "azul_gelo",
-    "luar_fraco": "azul_petroleo",
-    "madeira_sombra": "vinho",
-    "madeira": "marrom_escuro",
-    "madeira_luz": "marrom",
-    "terra_sombra": "vinho",
-    "terra": "marrom_escuro",
-    "terra_luz": "marrom",
-    "palha_sombra": "mostarda",
-    "palha": "areia",
-    "palha_luz": "creme",
-    "grama_sombra": "oliva",
-    "grama": "verde_musgo",
-    "grama_luz": "verde_palha",
-    # A pedra do piso ficava mais clara que a parede do porao e puxava o olho
-    # para o chao; agora o piso e medio e a parede continua sendo a mais escura.
-    "pedra_sombra": "cinza_verde",
-    "pedra": "cinza",
-    "pedra_luz": "cinza_escuro",
-    "musgo": "verde_musgo",
-    "pena_sombra": "cinza_azulado",
-    "pena": "azul_gelo",
-    "pena_luz": "branco",
-    "bico": "laranja",
-    "bico_sombra": "marrom",
-    "crista": "vermelho",
-    "crista_luz": "rosa_vermelho",
-    "fogo_nucleo": "amarelo",
-    "fogo": "laranja",
-    "fogo_borda": "vermelho",
-    "ouro": "amarelo",
-    "magia": "roxo",
-    "magia_luz": "rosa",
-    "aco": "cinza_azulado",
-    "aco_luz": "azul_gelo",
-    "pele": "creme",
-    "pele_sombra": "areia",
-}
+# Unico apelido que sobrou: o contorno preto dos icones e dos botoes.
+PAPEIS: dict[str, str] = {"tinta": "preto"}
 
 TRANSPARENTE = (0, 0, 0, 0)
 
@@ -108,6 +60,12 @@ def cor(nome: str) -> tuple[int, int, int, int]:
     """
     if nome == ".":
         return TRANSPARENTE
+    if "#" in nome:
+        # "crista#3": nivel 3 da rampa crista (rampas.py). Deixa ASCII art
+        # pequena (icones) usar os mesmos tons dos sprites esculpidos.
+        from rampas import tom
+        rampa, nivel = nome.split("#")
+        return tom(rampa, int(nivel))
     chave = PAPEIS.get(nome, nome)
     if chave not in DB32:
         raise ValueError(
@@ -120,14 +78,3 @@ def cor(nome: str) -> tuple[int, int, int, int]:
 
 def _hex_para_rgba(valor: str) -> tuple[int, int, int, int]:
     return (int(valor[0:2], 16), int(valor[2:4], 16), int(valor[4:6], 16), 255)
-
-
-def paleta_db32_png(caminho: str) -> None:
-    """Exporta a paleta como faixa de 1px para abrir no Aseprite."""
-    from PIL import Image
-
-    nomes = list(DB32)
-    imagem = Image.new("RGBA", (len(nomes), 1))
-    for x, nome in enumerate(nomes):
-        imagem.putpixel((x, 0), cor(nome))
-    imagem.save(caminho)

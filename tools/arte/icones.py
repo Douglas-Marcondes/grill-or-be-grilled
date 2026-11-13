@@ -11,19 +11,19 @@ para ler sobre o ceu claro da fazenda e sobre o painel do HUD.
 from tela import Tela, colar, contornar, de_ascii
 
 CORES = {
-    "r": "crista",
-    "R": "crista_luz",
-    "f": "fogo_borda",
-    "F": "fogo",
-    "n": "fogo_nucleo",
-    "s": "pedra_sombra",
-    "S": "pedra",
-    "B": "pena_luz",
-    "b": "pena_sombra",
+    "r": "crista#2",
+    "R": "crista#4",
+    "f": "fogo#1",
+    "F": "fogo#2",
+    "n": "fogo#3",
+    "s": "pedra#1",
+    "S": "pedra#3",
+    "B": "pena#3",
+    "b": "pena#1",
     "o": "tinta",
-    "y": "bico",
-    "m": "palha_sombra",
-    "Y": "ouro",
+    "y": "bico#2",
+    "m": "ouro#1",
+    "Y": "ouro#3",
 }
 
 CORACAO = [

@@ -22,7 +22,7 @@ const FIM_DA_ENTRADA := 6500.0
 
 ## Material por regiao: corpo da plataforma e faixa de superficie.
 const MATERIAIS := {
-	"fazenda": {"corpo": "terra", "faixa": "palha", "parede": "parede_celeiro"},
+	"fazenda": {"corpo": "terra", "faixa": "grama", "parede": "parede_celeiro"},
 	"entrada": {"corpo": "madeira", "faixa": "tabua", "parede": "parede_celeiro"},
 	"porao": {"corpo": "pedra", "faixa": "laje", "parede": "parede_porao"},
 }

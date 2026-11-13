@@ -4,8 +4,8 @@
 [ext_resource type="Theme" path="res://tema_pixel.tres" id="2_tema"]
 [ext_resource type="Script" path="res://scripts/previa_do_editor.gd" id="3_previa"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_ceu.png" id="10_ceu"]
-[ext_resource type="Texture2D" path="res://Artes/gerado/fundo_lua.png" id="11_lua"]
-[ext_resource type="Texture2D" path="res://Artes/gerado/fundo_silhueta.png" id="12_silhueta"]
+[ext_resource type="Texture2D" path="res://Artes/gerado/fundo_sol.png" id="11_sol"]
+[ext_resource type="Texture2D" path="res://Artes/gerado/fundo_fazenda.png" id="12_fazenda"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_cerca.png" id="13_cerca"]
 [ext_resource type="Texture2D" path="res://Artes/gerado/fundo_colinas.png" id="14_colinas"]
 
@@ -17,8 +17,8 @@ z_index = -50
 
 [node name="CamadaCeu" type="Parallax2D" parent="FundoParallax" unique_id=771200302]
 scroll_scale = Vector2(0.06, 0)
-repeat_size = Vector2(320, 0)
-repeat_times = 60
+repeat_size = Vector2(640, 0)
+repeat_times = 30
 
 [node name="Ceu" type="Sprite2D" parent="FundoParallax/CamadaCeu" unique_id=771200303]
 light_mask = 0
@@ -27,29 +27,29 @@ position = Vector2(0, 0)
 centered = false
 texture = ExtResource("10_ceu")
 
-[node name="CamadaLua" type="Parallax2D" parent="FundoParallax" unique_id=771200304]
+[node name="CamadaSol" type="Parallax2D" parent="FundoParallax" unique_id=771200304]
 scroll_scale = Vector2(0.03, 0)
 repeat_size = Vector2(1400, 0)
 repeat_times = 12
 
-[node name="Lua" type="Sprite2D" parent="FundoParallax/CamadaLua" unique_id=771200305]
+[node name="Sol" type="Sprite2D" parent="FundoParallax/CamadaSol" unique_id=771200305]
 light_mask = 0
 texture_filter = 1
 position = Vector2(300, 38)
 centered = false
-texture = ExtResource("11_lua")
+texture = ExtResource("11_sol")
 
-[node name="CamadaSilhueta" type="Parallax2D" parent="FundoParallax" unique_id=771200306]
+[node name="CamadaFazenda" type="Parallax2D" parent="FundoParallax" unique_id=771200306]
 scroll_scale = Vector2(0.28, 0)
 repeat_size = Vector2(640, 0)
 repeat_times = 30
 
-[node name="Silhueta" type="Sprite2D" parent="FundoParallax/CamadaSilhueta" unique_id=771200307]
+[node name="Fazenda" type="Sprite2D" parent="FundoParallax/CamadaFazenda" unique_id=771200307]
 light_mask = 0
 texture_filter = 1
 position = Vector2(0, 106)
 centered = false
-texture = ExtResource("12_silhueta")
+texture = ExtResource("12_fazenda")
 
 [node name="CamadaColinas" type="Parallax2D" parent="FundoParallax" unique_id=771200312]
 scroll_scale = Vector2(0.4, 0)
@@ -65,13 +65,13 @@ texture = ExtResource("14_colinas")
 
 [node name="CamadaCerca" type="Parallax2D" parent="FundoParallax" unique_id=771200308]
 scroll_scale = Vector2(0.52, 0)
-repeat_size = Vector2(320, 0)
-repeat_times = 60
+repeat_size = Vector2(640, 0)
+repeat_times = 30
 
 [node name="Cerca" type="Sprite2D" parent="FundoParallax/CamadaCerca" unique_id=771200309]
 light_mask = 0
 texture_filter = 1
-position = Vector2(0, 162)
+position = Vector2(0, 152)
 centered = false
 texture = ExtResource("13_cerca")
 

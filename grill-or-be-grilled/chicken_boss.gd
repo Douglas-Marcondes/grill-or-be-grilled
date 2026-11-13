@@ -236,8 +236,8 @@ func _animar(delta: float) -> void:
 ## golpe que vem. Fica em no proprio para nao reintroduzir um _draw no corpo do
 ## boss, que agora e sprite.
 class AvisoDeGolpe extends Node2D:
-	## Logo acima da cabeca: o sprite da Galinha Real tem 46px de altura.
-	const ALTURA_DO_AVISO := -52
+	## Logo acima da coroa: o sprite da Galinha Real tem 58px de altura.
+	const ALTURA_DO_AVISO := -64
 
 	var ativo := false
 	var cor := Color("fbf236")

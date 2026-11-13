@@ -63,7 +63,7 @@ Antes de criar conteúdo, transforme em dado da fase o que hoje é constante:
 2. **Progressão.** O save passa a guardar as fases vencidas. A fase 2 é
    desbloqueada ao vencer a fase 1. O menu ganha a escolha de fase, e o
    epílogo da fase 1 leva para ela. A loja continua entre tentativas.
-3. **Cenário do chiqueiro** em `tools/arte/` (paleta DB32, mesmo estilo). Proposta
+3. **Cenário do chiqueiro** em `tools/arte/` (rampas de `tools/arte/rampas.py`, mesmo estilo esculpido). Proposta
    de regiões: *Pocilga* (lama, cerca de ripas, cocho), *Celeiro de Milho* (sacas,
    espigas, palha) e *Defumadouro* (fumaça, ganchos, linguiças penduradas, a arena
    do chefe). Cada região tem tiles, faixa com franja, parede de fundo, adornos,
