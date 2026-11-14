@@ -14,6 +14,7 @@ extends CharacterBody2D
 
 const Sprites = preload("res://scripts/sprites.gd")
 const Impacto = preload("res://scripts/impacto.gd")
+const Limites = preload("res://scripts/limites.gd")
 
 enum Golpe { INVESTIDA, SALTO, PENAS }
 
@@ -25,8 +26,8 @@ const COR_DO_GOLPE := {
 ## Ela acorda quando entra no quadro; com 620px acordava antes de aparecer e o
 ## braseiro da porta da arena caia dentro da luta.
 const DISTANCIA_DE_DESPERTAR := 420.0
-const VELOCIDADE_DA_INVESTIDA := 470.0
-const DURACAO_DA_INVESTIDA := 0.5
+const VELOCIDADE_DA_INVESTIDA := 360.0
+const DURACAO_DA_INVESTIDA := 0.38
 const IMPULSO_DO_SALTO := -560.0
 const ALCANCE_DA_ONDA := 150.0
 const DANO := 2
@@ -51,9 +52,11 @@ var flash := 0.0
 var balanco := 0.0
 var defeated := false
 var despertou := false
+var posicao_da_arena := Vector2.ZERO
 
 
 func _ready() -> void:
+	posicao_da_arena = global_position
 	add_to_group("enemies")
 	collision_layer = 2
 	collision_mask = 1
@@ -84,6 +87,8 @@ func _physics_process(delta: float) -> void:
 	despertou = true
 	_lutar(delta)
 	move_and_slide()
+	if global_position.y > Limites.QUEDA_FATAL:
+		_recuperar_da_queda()
 	_pousar_se_saltava()
 	flash = maxf(0.0, flash - delta)
 	_animar(delta)
@@ -140,11 +145,25 @@ func _soltar_golpe() -> void:
 
 
 func _investir(delta: float) -> void:
-	"""Dispara pelo chao e machuca no contato; para na beira da arena."""
+	"""Faz uma investida curta pelo chao e para ao chegar a uma beirada."""
+	if investindo <= 0.0 or not _tem_chao_a_frente():
+		investindo = 0.0
+		velocity.x = 0.0
+		return
 	investindo = maxf(0.0, investindo - delta)
-	velocity.x = facing * VELOCIDADE_DA_INVESTIDA if _tem_chao_a_frente() else 0.0
+	velocity.x = facing * VELOCIDADE_DA_INVESTIDA
 	if absf(target.global_position.x - global_position.x) < 26.0 and absf(target.global_position.y - global_position.y) < 40.0:
 		target.take_damage(DANO, global_position)
+
+
+func _recuperar_da_queda() -> void:
+	"""Recoloca o chefe na arena para a luta nao ficar travada."""
+	global_position = posicao_da_arena
+	velocity = Vector2.ZERO
+	investindo = 0.0
+	saltando = false
+	attack_windup = 0.0
+	attack_timer = 1.0
 
 
 func _pousar_se_saltava() -> void:
